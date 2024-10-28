@@ -1,0 +1,83 @@
+﻿<Window x:Class="AppEnteringTrackingAndOrders.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppEnteringTrackingAndOrders"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="MainWindow" Height="1080" Width="1920">
+
+    <Window.Resources>
+        <local:HalfSizeConverter x:Key="HalfSizeConverter"/>
+    </Window.Resources>
+
+    
+    
+    <Grid x:Name="BackgroundGrid" Style="{DynamicResource BackgroundGridStyle}">
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="473*"/>
+            <ColumnDefinition Width="14*"/>
+            <ColumnDefinition Width="473*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="125*"/>
+            <RowDefinition Height="282*"/>
+            <RowDefinition Height="125*"/>
+        </Grid.RowDefinitions>
+        <Canvas Grid.Row="0" Grid.Column="0"/>
+        <Canvas Grid.Row="1" Grid.Column="0">
+            <Border Height="72" Width="598" Canvas.Left="126" Canvas.Top="115" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
+                </Border.Effect>
+                <TextBox x:Name="textBox" materialDesign:HintAssist.Hint="Логин" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="24" Height="66" Margin="39,3,39,3"/>
+            </Border>
+            <Border Height="72" Width="598" Canvas.Left="126" Canvas.Top="217" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
+                </Border.Effect>
+                <PasswordBox x:Name="passwordBox" materialDesign:HintAssist.Hint="Пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontSize="24" Height="66" Margin="39,3,39,3"/>
+            </Border>
+            <Button x:Name="ButtonEnter" Content="Войти" Canvas.Left="126" Canvas.Top="316" Height="72" Width="598" Style="{DynamicResource ButtonEnterLogin}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Click="ButtonEnter_Click"/>
+        </Canvas>
+        <Canvas Grid.Row="2" Grid.Column="0"/>
+        <Canvas Grid.Row="0" Grid.Column="1"/>
+        <Canvas x:Name="Canvas11" Grid.Row="1" Grid.Column="1">
+            <Border Style="{DynamicResource BorderCenterLine}" 
+                    Width="4" 
+                    Height="360" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    CornerRadius="2"
+                    Canvas.Left="{Binding ActualWidth, ElementName=Canvas11, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-2}"
+                    Canvas.Top="{Binding ActualHeight, ElementName=Canvas11, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-180}">
+            </Border>
+        </Canvas>
+        <Canvas Grid.Row="2" Grid.Column="1"/>
+        <Canvas Grid.Row="0" Grid.Column="2">
+            <ComboBox x:Name="styleBox" Width="72" HorizontalAlignment="Right" />
+        </Canvas>
+        <Canvas Grid.Row="1" Grid.Column="2">
+            <Grid Height="463" Width="466" Canvas.Left="144" Canvas.Top="51" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button x:Name="TopMiddleButtonTwo" Content="2" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Center" VerticalAlignment="Top" Click="TopMiddleButtonTwo_Click" Focusable="False"/>
+                <Button x:Name="TopRightButtonThree" Content="3" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150" HorizontalAlignment="Right" VerticalAlignment="Top" Click="TopRightButtonThree_Click" Focusable="False"/>
+                <Button x:Name="TopLeftButtonOne" Content="1" Style="{DynamicResource ButtonStyleTopLeft}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="36" Click="TopLeftButtonOne_Click" Focusable="False"/>
+                <Button x:Name="CenterMiddleButtonFive" Content="5" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Center" VerticalAlignment="Center" Click="CenterMiddleButtonFive_Click" Focusable="False"/>
+                <Button x:Name="CenterLeftButtonFour" Content="4" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Left" VerticalAlignment="Center" Click="CenterLeftButtonFour_Click" Focusable="False"/>
+                <Button x:Name="CenterRightButtonSix" Content="6" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Right" VerticalAlignment="Center" Click="CenterRightButtonSix_Click" Focusable="False"/>
+                <Button x:Name="DownMiddleButtonEight" Content="8" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Focusable="False" Click="DownMiddleButtonEight_Click"/>
+                <Button x:Name="DownLeftButtonSeven" Content="7" Style="{DynamicResource ButtonStyleDownLeft}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Focusable="False" Click="DownLeftButtonSeven_Click"/>
+                <Button x:Name="DownRightButtonNine" Content="9" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Focusable="False" Click="DownRightButtonNine_Click"/>
+            </Grid>
+            <Grid Height="463" Width="317" Canvas.Left="619" Canvas.Top="51" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button x:Name="TopButtonDelete" Content="Del" Style="{DynamicResource ButtonStyleTopRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="36" Focusable="False" Click="TopButtonDelete_Click"/>
+                <Button x:Name="CenterButtonPoint" Content="." Style="{DynamicResource ButtonStyleNo}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="72"  Focusable="False" Click="CenterButtonPoint_Click"/>
+                <Button x:Name="DownButtonZero" Content="0" Style="{DynamicResource ButtonStyleDownRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="36" Focusable="False" Click="DownButtonZero_Click"/>
+            </Grid>
+        </Canvas>
+        <Canvas Grid.Row="2" Grid.Column="2"/>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="3" Grid.RowSpan="3" />
+    </Grid>
+</Window>
