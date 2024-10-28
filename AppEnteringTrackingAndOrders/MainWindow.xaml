@@ -96,6 +96,6 @@
 
         </Canvas>
         <Canvas Grid.Row="2" Grid.Column="2"/>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="3" Grid.RowSpan="3" />
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="3" Grid.RowSpan="3" /> <!--Эту хуйню убираем когда редачим-->
     </Grid>
 </Window>
