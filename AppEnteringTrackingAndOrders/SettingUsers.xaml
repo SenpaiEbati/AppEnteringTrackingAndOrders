@@ -29,8 +29,8 @@
         <Canvas x:Name="Canvas10" Grid.Row="1" Grid.Column="0">
             <Border Height="72"
                 Width="598" 
-                Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-350}"
-                Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-125}" 
+                Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-300}"
+                Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-200}" 
                 Background="#FFEAEAEA" 
                 CornerRadius="20" 
                 HorizontalAlignment="Center" 
@@ -41,45 +41,68 @@
                 </Border.Effect>
                 <TextBox x:Name="textBox" materialDesign:HintAssist.Hint="Логин" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="24" Height="66" Margin="39,3,39,3"/>
             </Border>
-            <Border Height="72" 
+
+            <Border x:Name="BorderPasswordBoxOne" Height="72" 
                 Width="598" 
-                Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-350}"
-                Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-36}" 
-                Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top">
+                Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-300}"
+                Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-20}" 
+                Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
                 </Border.Effect>
-                <PasswordBox x:Name="passwordBox" materialDesign:HintAssist.Hint="Пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontSize="24" Height="66" Margin="39,3,39,3"/>
+                <PasswordBox x:Name="passwordBoxOne" materialDesign:HintAssist.Hint="Пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontSize="24" Height="66" Margin="39,3,39,3"/>
             </Border>
 
-            <Border Height="72" 
+            <Border x:Name="BorderPasswordBoxTwo" Height="72" 
                     Width="598" 
-                    Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-350}"
-                    Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=53}" 
-                    Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-300}"
+                    Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=70}" 
+                    Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
                 </Border.Effect>
-                <ComboBox x:Name="comboboxroles" Height="72" Margin="39,0,39,0" FontSize="24"/>
+                <PasswordBox x:Name="passwordBoxTwo" materialDesign:HintAssist.Hint="Повторите пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontSize="24" Height="66" Margin="39,3,39,3"/>
+            </Border>
+
+            <Border x:Name="BorderComboBoxRolesChange" Height="72" 
+                    Width="598" 
+                    Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-300}"
+                    Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=160}" 
+                    Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
+                </Border.Effect>
+                <ComboBox x:Name="ComboBoxRolesChange" Height="72"  Margin="39,0,39,0" FontSize="24"/>
+            </Border>
+
+            <Border x:Name="BorderComboBoxRolesAdd" Height="72" 
+                    Width="598" 
+                    Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-300}"
+                    Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=70}" 
+                    Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
+                </Border.Effect>
+                <ComboBox x:Name="ComboBoxRolesAdd" Height="72" Margin="39,0,39,0" FontSize="24"/>
             </Border>
 
             <Button x:Name="ButtonAddUser" Height="72" Width="72" Style="{DynamicResource ButtonEnterLogin}"
-                Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=300}"
-                Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-125}" Click="ButtonAddUser_Click">
+                Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-300}"
+                Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-110}" Click="ButtonAddUser_Click" Background="#FF33C55D">
                 <Button.OpacityMask>
                     <ImageBrush ImageSource="/add.png"/>
                 </Button.OpacityMask>
             </Button>
             <Button x:Name="ButtonEditUser" Height="72" Width="72" Style="{DynamicResource ButtonEnterLogin}"
-                    Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=300}"
-                    Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-36}" Click="ButtonEditUser_Click">
+                    Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-40}"
+                    Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-110}" Click="ButtonEditUser_Click">
                 <Button.OpacityMask>
                     <ImageBrush ImageSource="/change.png"/>
                 </Button.OpacityMask>
             </Button>
             <Button x:Name="ButtonDeleteUser" Height="72" Width="72" Style="{DynamicResource ButtonEnterLogin}"
-                    Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=300}"
-                    Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=53}" Click="ButtonDeleteUser_Click">
+                    Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=220}"
+                    Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-110}" Click="ButtonDeleteUser_Click" Background="#FFC53333">
                 <Button.OpacityMask>
                     <ImageBrush ImageSource="/delete.png"/>
                 </Button.OpacityMask>
@@ -123,7 +146,7 @@
 
         </Canvas>
         <Canvas Grid.Row="2" Grid.Column="2"/>
-        <!--<Frame x:Name="SettingUsers" NavigationUIVisibility="Hidden" Grid.ColumnSpan="3" Grid.RowSpan="3" />-->
+        <Frame x:Name="SettingFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="3" Grid.RowSpan="3" />
         <!--Эту хуйню убираем когда редачим-->
     </Grid>
 </Page>
