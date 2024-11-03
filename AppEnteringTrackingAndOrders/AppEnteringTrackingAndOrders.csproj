@@ -9,8 +9,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="add.png" />
+    <None Remove="change.png" />
+    <None Remove="delete.png" />
+    <None Remove="settinguser.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="MaterialDesignColors" Version="3.1.0" />
     <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="change.png" />
+    <Resource Include="add.png" />
+    <Resource Include="delete.png" />
+    <Resource Include="settinguser.png" />
   </ItemGroup>
 
 </Project>

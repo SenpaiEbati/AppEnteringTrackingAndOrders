@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
@@ -22,6 +24,8 @@ namespace AppEnteringTrackingAndOrders
         public MainWindow()
         {
             InitializeComponent();
+            InitializeRoles();
+            InitializeAdminUser();
             // Для Тестирования белой и темной темы
             // -----------
             List<string> styles = new List<string> { "light", "dark" };
@@ -218,7 +222,77 @@ namespace AppEnteringTrackingAndOrders
 
         private void ButtonEnter_Click(object sender, RoutedEventArgs e)
         {
+            AuthenticateUser(textBox.Text, passwordBox.Password);
             MainFrame.Navigate(new ListTableWaiters());
         }
+
+        private void ButtonSettingUser_Click(object sender, RoutedEventArgs e)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var user = context.Users
+                    .Include(u => u.Roles)
+                    .FirstOrDefault(u => u.Username == textBox.Text);
+
+                if (user != null && PasswordHasher.VerifyPassword(passwordBox.Password, user.PasswordHash))
+                {
+                    MainFrame.Navigate(new SettingUsers());
+                }
+            }
+        }
+
+        // Инициализация ролей 
+        private void InitializeRoles()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                if (!context.Roles.Any())
+                {
+                    context.Roles.AddRange(
+                        new Role { RoleName = "Руководитель" },
+                        new Role { RoleName = "Администратор" },
+                        new Role { RoleName = "Официант" }
+                    );
+                    context.SaveChanges();
+                }
+            }
+        }
+        // Инициализация руководителя
+        private void InitializeAdminUser()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                if (!context.Users.Any())
+                {
+                    var user = new User
+                    {
+                        Username = "1",
+                        PasswordHash = PasswordHasher.HashPassword("123456789"),
+                        Roles = context.Roles.Where(r => r.RoleId == 1).ToList()
+                    };
+                    context.Users.Add(user);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        // Логика аутентификации 
+        public User AuthenticateUser(string username, string password)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var user = context.Users
+                    .Include(u => u.Roles)
+                    .FirstOrDefault(u => u.Username == username);
+
+                if (user != null && PasswordHasher.VerifyPassword(password, user.PasswordHash))
+                {
+                    return user;
+                }
+                return null;
+            }
+        }
+
+        
     }
 }
