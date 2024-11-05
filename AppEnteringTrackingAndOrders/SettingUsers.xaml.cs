@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MaterialDesignThemes.Wpf;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static MaterialDesignThemes.Wpf.Theme;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AppEnteringTrackingAndOrders
 {
@@ -27,7 +29,7 @@ namespace AppEnteringTrackingAndOrders
             InitializeComponent();
 
             List<string> roles = new List<string> { "Официант", "Администратор" };
-            ComboBoxRolesChange.ItemsSource = ComboBoxRolesAdd.ItemsSource = roles;
+            ComboBoxRoles.ItemsSource = roles;
             
         }
 
@@ -279,40 +281,64 @@ namespace AppEnteringTrackingAndOrders
 
         private void ButtonAddUser_Click(object sender, RoutedEventArgs e)
         {
-            BorderComboBoxRolesChange.Visibility = Visibility.Hidden;
-            BorderPasswordBoxTwo.Visibility = Visibility.Hidden;
+            if (textBox.Text.Length != 0)
+            {
+                BorderPasswordBoxTwo.Visibility = Visibility.Hidden;
+                BorderPasswordBoxOne.Visibility = Visibility.Visible;
+                BorderComboBoxRoles.Visibility = Visibility.Visible;
+                textBox.Foreground = Brushes.Black;
+                HintAssist.SetHint(textBox, "Введите логин");
+            }
+            else
+            {
+                BorderPasswordBoxTwo.Visibility = Visibility.Hidden;
+                BorderPasswordBoxOne.Visibility = Visibility.Hidden;
+                BorderComboBoxRoles.Visibility = Visibility.Hidden;
+                textBox.Foreground = Brushes.Red;
+                HintAssist.SetHint(textBox, "Неверно введён логин");
+            }
 
-            BorderPasswordBoxOne.Visibility = Visibility.Visible;
-            BorderComboBoxRolesAdd.Visibility = Visibility.Visible;
         }
 
         private void ButtonEditUser_Click(object sender, RoutedEventArgs e)
         {
             if (FindUser(textBox.Text))
             {
-                BorderComboBoxRolesChange.Visibility = Visibility.Visible;
                 BorderPasswordBoxTwo.Visibility = Visibility.Visible;
-
                 BorderPasswordBoxOne.Visibility = Visibility.Visible;
-                BorderComboBoxRolesAdd.Visibility = Visibility.Hidden;
+                BorderComboBoxRoles.Visibility = Visibility.Visible;
+                textBox.Foreground = Brushes.Black;
+                HintAssist.SetHint(textBox, "Введите логин");
             }
             else 
             {
-                BorderComboBoxRolesChange.Visibility = Visibility.Hidden;
                 BorderPasswordBoxTwo.Visibility = Visibility.Hidden;
-
                 BorderPasswordBoxOne.Visibility = Visibility.Hidden;
-                BorderComboBoxRolesAdd.Visibility = Visibility.Hidden;
+                BorderComboBoxRoles.Visibility = Visibility.Hidden;
+                textBox.Foreground = Brushes.Red;
+                HintAssist.SetHint(textBox, "Неверно введён логин");
             }
         }
 
         private void ButtonDeleteUser_Click(object sender, RoutedEventArgs e)
         {
-            BorderComboBoxRolesChange.Visibility = Visibility.Hidden;
-            BorderPasswordBoxTwo.Visibility = Visibility.Visible;
-
-            BorderPasswordBoxOne.Visibility = Visibility.Visible;
-            BorderComboBoxRolesAdd.Visibility = Visibility.Hidden;
+            if (FindUser(textBox.Text))
+            {
+                BorderPasswordBoxTwo.Visibility = Visibility.Visible;
+                BorderPasswordBoxOne.Visibility = Visibility.Visible;
+                BorderComboBoxRoles.Visibility = Visibility.Hidden;
+                textBox.Foreground = Brushes.Black;
+                HintAssist.SetHint(textBox, "Введите логин");
+                
+            }
+            else
+            {
+                BorderPasswordBoxTwo.Visibility = Visibility.Hidden;
+                BorderPasswordBoxOne.Visibility = Visibility.Hidden;
+                BorderComboBoxRoles.Visibility = Visibility.Hidden;
+                textBox.Foreground = Brushes.Red;
+                HintAssist.SetHint(textBox, "Неверно введён логин");
+            }
         }
 
         public bool FindUser(string username)
@@ -329,6 +355,11 @@ namespace AppEnteringTrackingAndOrders
                 }
                 return false;
             }
+        }
+
+        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            textBox.Foreground = Brushes.Black;
         }
     }
 }

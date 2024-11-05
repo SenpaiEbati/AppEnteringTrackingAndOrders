@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AppEnteringTrackingAndOrders"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="MainWindow" Height="1080" Width="1920">
+        Title="MainWindow" Height="1200" Width="1920">
 
     <Window.Resources>
         <local:HalfSizeConverter x:Key="HalfSizeConverter"/>

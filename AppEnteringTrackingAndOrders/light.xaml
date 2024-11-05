@@ -148,8 +148,8 @@
     <Style x:Key="BackgroundGridStyle" TargetType="Grid">
         <Setter Property="Background" Value="#c9d1f5" />
     </Style>
-    
-    
+
+
     <Style x:Key="BorderCenterLine" TargetType="Border">
         <Setter Property="Background" Value="Black"/>
         <Setter Property="Effect">
