@@ -41,6 +41,116 @@ namespace AppEnteringTrackingAndOrders
                 .UsingEntity(j => j.ToTable("UserRoles"));
         }
     }
+
+    public static class ConstantsInitialValuesMethodsDb
+    {
+        public static List<string> _roles = new List<string> { "Руководитель", "Администратор", "Официант"};
+
+        // Инициализация ролей 
+        public static void InitializeRoles()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                if (!context.Roles.Any())
+                {
+                    context.Roles.AddRange(
+                        new Role { RoleName = "Руководитель" },
+                        new Role { RoleName = "Администратор" },
+                        new Role { RoleName = "Официант" }
+                    );
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        // Инициализация руководителя
+        public static void InitializeAdminUser()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                if (!context.Users.Any())
+                {
+                    var user = new User
+                    {
+                        Username = "1",
+                        PasswordHash = PasswordHasher.HashPassword("123456789"),
+                        Roles = context.Roles.Where(r => r.RoleId == 1).ToList()
+                    };
+                    context.Users.Add(user);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        // Логика аутентификации 
+        public static User AuthenticateUser(string username, string password)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var user = context.Users
+                    .Include(u => u.Roles)
+                    .FirstOrDefault(u => u.Username == username);
+
+                if (user != null && PasswordHasher.VerifyPassword(password, user.PasswordHash))
+                {
+                    return user;
+                }
+                return null;
+            }
+        }
+
+        // Логика назначения ролей
+        public static void AddUserWithRoles(string username, string password, string rolename)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var user = new User
+                {
+                    Username = username,
+                    PasswordHash = PasswordHasher.HashPassword(password),
+                    Roles = context.Roles.Where(r => r.RoleName == rolename).ToList()
+                };
+                context.Users.Add(user);
+                context.SaveChanges();
+            }
+        }
+
+        public static void EditUserWithRoles(string username, string password, string rolename)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var user = context.Users
+                    .Include(u => u.Roles)
+                    .FirstOrDefault(u => u.Username == username);
+
+                if (user != null)
+                {
+                    user.PasswordHash = PasswordHasher.HashPassword(password);
+                    user.Roles = context.Roles.Where(r => r.RoleName == rolename).ToList();
+                    
+                    context.Users.Update(user);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public static void DeleteUserWithRoles(string username)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var user = context.Users
+                    .Include(u => u.Roles)
+                    .FirstOrDefault(u => u.Username == username);
+
+                if (user != null)
+                {
+                    context.Users.Remove(user);
+                    context.SaveChanges();
+                }
+            }
+        }
+    }
+
     /*// Логика назначения ролей (класс)
     public void AddUserWithRoles(string username, string password, List<string> roleNames)
     {

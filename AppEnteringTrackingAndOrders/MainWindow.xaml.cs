@@ -24,8 +24,8 @@ namespace AppEnteringTrackingAndOrders
         public MainWindow()
         {
             InitializeComponent();
-            InitializeRoles();
-            InitializeAdminUser();
+            ConstantsInitialValuesMethodsDb.InitializeRoles();
+            ConstantsInitialValuesMethodsDb.InitializeAdminUser();
             // Для Тестирования белой и темной темы
             // -----------
             List<string> styles = new List<string> { "light", "dark" };
@@ -222,7 +222,7 @@ namespace AppEnteringTrackingAndOrders
 
         private void ButtonEnter_Click(object sender, RoutedEventArgs e)
         {
-            AuthenticateUser(textBox.Text, passwordBox.Password);
+            ConstantsInitialValuesMethodsDb.AuthenticateUser(textBox.Text, passwordBox.Password);
             MainFrame.Navigate(new ListTableWaiters());
         }
 
@@ -240,59 +240,5 @@ namespace AppEnteringTrackingAndOrders
                 }
             }
         }
-
-        // Инициализация ролей 
-        private void InitializeRoles()
-        {
-            using (var context = new ApplicationDbContext())
-            {
-                if (!context.Roles.Any())
-                {
-                    context.Roles.AddRange(
-                        new Role { RoleName = "Руководитель" },
-                        new Role { RoleName = "Администратор" },
-                        new Role { RoleName = "Официант" }
-                    );
-                    context.SaveChanges();
-                }
-            }
-        }
-        // Инициализация руководителя
-        private void InitializeAdminUser()
-        {
-            using (var context = new ApplicationDbContext())
-            {
-                if (!context.Users.Any())
-                {
-                    var user = new User
-                    {
-                        Username = "1",
-                        PasswordHash = PasswordHasher.HashPassword("123456789"),
-                        Roles = context.Roles.Where(r => r.RoleId == 1).ToList()
-                    };
-                    context.Users.Add(user);
-                    context.SaveChanges();
-                }
-            }
-        }
-
-        // Логика аутентификации 
-        public User AuthenticateUser(string username, string password)
-        {
-            using (var context = new ApplicationDbContext())
-            {
-                var user = context.Users
-                    .Include(u => u.Roles)
-                    .FirstOrDefault(u => u.Username == username);
-
-                if (user != null && PasswordHasher.VerifyPassword(password, user.PasswordHash))
-                {
-                    return user;
-                }
-                return null;
-            }
-        }
-
-        
     }
 }

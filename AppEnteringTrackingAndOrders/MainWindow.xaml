@@ -38,7 +38,7 @@
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
                 </Border.Effect>
-                <TextBox x:Name="textBox" materialDesign:HintAssist.Hint="Логин" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="24" Height="66" Margin="39,3,39,3"/>
+                <TextBox x:Name="textBox" materialDesign:HintAssist.Hint="Логин" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="24" Height="66" Margin="39,3,39,3" Foreground="Black"/>
             </Border>
             <Border Height="72" 
                     Width="598" 
@@ -48,7 +48,7 @@
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
                 </Border.Effect>
-                <PasswordBox x:Name="passwordBox" materialDesign:HintAssist.Hint="Пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontSize="24" Height="66" Margin="39,3,39,3"/>
+                <PasswordBox x:Name="passwordBox" materialDesign:HintAssist.Hint="Пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontSize="24" Height="66" Margin="39,3,39,3" Foreground="Black"/>
             </Border>
             <Button x:Name="ButtonEnter" 
                     Content="Войти" 
