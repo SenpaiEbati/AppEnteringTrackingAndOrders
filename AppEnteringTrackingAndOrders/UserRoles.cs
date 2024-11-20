@@ -149,6 +149,36 @@ namespace AppEnteringTrackingAndOrders
                 }
             }
         }
+
+        public static bool FindUser(string username)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var user = context.Users
+                    .Include(u => u.Roles)
+                    .FirstOrDefault(u => u.Username == username);
+
+                if (user != null)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public static int? GetRoleIdForUser(User user)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var roleId = context.Users
+                    .Include(u => u.Roles)
+                    .Where(u => u.UserId == user.UserId)
+                    .SelectMany(u => u.Roles.Select(r => r.RoleId))
+                    .FirstOrDefault();
+
+                return roleId == 0 ? null : roleId;
+            }
+        }
     }
 
     /*// Логика назначения ролей (класс)

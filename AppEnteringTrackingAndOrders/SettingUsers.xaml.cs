@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static MaterialDesignThemes.Wpf.Theme;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using static AppEnteringTrackingAndOrders.ConstantsInitialValuesMethodsDb;
 
 namespace AppEnteringTrackingAndOrders
 {
@@ -31,8 +32,8 @@ namespace AppEnteringTrackingAndOrders
         {
             InitializeComponent();
 
-            _rolesbuttonchangeadmin = ConstantsInitialValuesMethodsDb._roles.SkipLast(2).ToList();
-            _rolesbuttonadd = ConstantsInitialValuesMethodsDb._roles.Skip(1).ToList();
+            _rolesbuttonchangeadmin = _roles.SkipLast(2).ToList();
+            _rolesbuttonadd = _roles.Skip(1).ToList();
             ComboBoxRoles.ItemsSource = _rolesbuttonadd;
         }
 
@@ -270,7 +271,7 @@ namespace AppEnteringTrackingAndOrders
         {
             if (!FindUser(textBox.Text) && passwordBoxOne.Password.Length != 0 && ComboBoxRoles.Text.Length != 0)
             {   
-                ConstantsInitialValuesMethodsDb.AddUserWithRoles(textBox.Text, passwordBoxOne.Password, ComboBoxRoles.Text);
+                AddUserWithRoles(textBox.Text, passwordBoxOne.Password, ComboBoxRoles.Text);
 
                 MessageBox.Show("ADD USER");
 
@@ -362,9 +363,9 @@ namespace AppEnteringTrackingAndOrders
         {
             if (FindUser(textBox.Text) && passwordBoxOne.Password.Length != 0 && passwordBoxTwo.Password.Length != 0 && ComboBoxRoles.Text.Length != 0) 
             {
-                if (ConstantsInitialValuesMethodsDb.AuthenticateUser(textBox.Text, passwordBoxOne.Password) != null)
+                if (AuthenticateUser(textBox.Text, passwordBoxOne.Password) != null)
                 {
-                    ConstantsInitialValuesMethodsDb.EditUserWithRoles(textBox.Text, passwordBoxTwo.Password,ComboBoxRoles.Text);
+                    EditUserWithRoles(textBox.Text, passwordBoxTwo.Password,ComboBoxRoles.Text);
 
                     MessageBox.Show("EDIT USER");
 
@@ -523,14 +524,14 @@ namespace AppEnteringTrackingAndOrders
         {
             if (FindUser(textBox.Text) && passwordBoxOne.Password.Length != 0 && passwordBoxTwo.Password.Length != 0)
             {
-                if (ConstantsInitialValuesMethodsDb.AuthenticateUser(textBox.Text, passwordBoxOne.Password) != null)
+                if (AuthenticateUser(textBox.Text, passwordBoxOne.Password) != null)
                 {
                     HintAssist.SetHint(passwordBoxOne, "Введите старый пароль пользователя");
                     passwordBoxOne.Foreground = Brushes.Black;
 
-                    if (ConstantsInitialValuesMethodsDb.AuthenticateUser(textBox.Text, passwordBoxTwo.Password) != null)
+                    if (AuthenticateUser(textBox.Text, passwordBoxTwo.Password) != null)
                     {
-                        ConstantsInitialValuesMethodsDb.DeleteUserWithRoles(textBox.Text);
+                        DeleteUserWithRoles(textBox.Text);
 
                         MessageBox.Show("DELETE USER");
 
@@ -635,24 +636,6 @@ namespace AppEnteringTrackingAndOrders
             }
         }
 
-        public bool FindUser(string username)
-        {
-            using (var context = new ApplicationDbContext())
-            {
-                var user = context.Users
-                    .Include(u => u.Roles)
-                    .FirstOrDefault(u => u.Username == username);
-                
-                if (user != null )
-                {
-                    return true;
-                }
-                return false;
-            }
-        }
-        
-
-
         private void passwordBoxOne_GotFocus(object sender, RoutedEventArgs e)
         {
             passwordBoxOne.Foreground = Brushes.Black;
@@ -681,6 +664,11 @@ namespace AppEnteringTrackingAndOrders
         private void ComboBoxRoles_DropDownClosed(object sender, EventArgs e)
         {
             ComboBoxRoles.Foreground = Brushes.Black;
+        }
+
+        private void BackMainButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }
