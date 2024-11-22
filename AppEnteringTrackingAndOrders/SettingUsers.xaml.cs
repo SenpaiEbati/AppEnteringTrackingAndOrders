@@ -270,31 +270,64 @@ namespace AppEnteringTrackingAndOrders
         }
         // ---------------------------------------
 
+        private void ShowError(Control control, string hintMessage)
+        {
+            if (control is System.Windows.Controls.TextBox textBox) textBox.Foreground = Brushes.Red;
+            if (control is System.Windows.Controls.PasswordBox passwordBox) passwordBox.Foreground = Brushes.Red;
+            if (control is System.Windows.Controls.ComboBox comboBox) comboBox.Foreground = Brushes.Red;
+
+            HintAssist.SetHint(control, hintMessage);
+        }
+
+        private void ResetForm()
+        {
+            passwordBoxOne.Password = "";
+            passwordBoxTwo.Password = "";
+            ComboBoxRoles.Text = "";
+
+            BorderPasswordBoxOne.Visibility = Visibility.Hidden;
+            BorderPasswordBoxTwo.Visibility = Visibility.Hidden;
+            BorderComboBoxRoles.Visibility = Visibility.Hidden;
+
+            textBox.Foreground = Brushes.Black;
+            passwordBoxOne.Foreground = Brushes.Black;
+            passwordBoxTwo.Foreground = Brushes.Black;
+            ComboBoxRoles.Foreground = Brushes.Black;
+        }
+
+        private void UpdateRolesBasedOnUser(string userText)
+        {
+            ComboBoxRoles.ItemsSource = userText == "1" ? _rolesbuttonchangeadmin : _rolesbuttonadd;
+        }
+
         // Реализация кнопки добавление нового пользователя и обработка ошибок при вводе
         // ---------------------------------------
         private void ButtonAddUser_Click(object sender, RoutedEventArgs e)
         {
-            if (IsInputValidAddUser())
+            if (textBox.Text.Length > 0 && !FindUser(textBox.Text) && passwordBoxOne.Password.Length != 0 && ComboBoxRoles.Text.Length != 0)
             {
                 AddNewUser();
             }
-            else if (IsRoleMissingAddUser())
+            else if (textBox.Text.Length > 0 && !FindUser(textBox.Text) && passwordBoxOne.Password.Length != 0 && ComboBoxRoles.Text.Length == 0)
             {
                 ShowRoleErrorAddUser();
             }
-            else if (IsPasswordMissingAddUser())
+            else if (textBox.Text.Length > 0 && !FindUser(textBox.Text) && passwordBoxOne.Password.Length == 0 && ComboBoxRoles.Text.Length != 0)
             {
                 ShowPasswordErrorAddUser();
             }
-            else if (IsRoleAndPasswordMissingAddUser())
+            else if (textBox.Text.Length > 0 && !FindUser(textBox.Text)
+                    && passwordBoxOne.Password.Length == 0 && BorderPasswordBoxOne.Visibility == Visibility.Visible
+                    && ComboBoxRoles.Text.Length == 0 && BorderComboBoxRoles.Visibility == Visibility.Visible
+                    && BorderPasswordBoxTwo.Visibility != Visibility.Visible)
             {
                 ShowRoleAndPasswordErrorAddUser();
             }
-            else if (IsUserNoExistsAddUser())
+            else if (textBox.Text.Length > 0 && !FindUser(textBox.Text))
             {
                 OpenFormAddUser();
             }
-            else if (IsUserExistsAddUser())
+            else if (textBox.Text.Length > 0 && FindUser(textBox.Text))
             {
                 HandleExistingAddUser();
             }
@@ -303,107 +336,57 @@ namespace AppEnteringTrackingAndOrders
                 HandleInvalidInputAddUser();
             }
         }
-
-        // Проверка валидности ввода
-        private bool IsInputValidAddUser()
-        {
-            return textBox.Text.Length > 0 
-                && !FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length != 0
-                && ComboBoxRoles.Text.Length != 0;
-        }
-
-        // Проверка на отсутствие роли
-        private bool IsRoleMissingAddUser()
-        {
-            return textBox.Text.Length > 0
-                && !FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length != 0
-                && ComboBoxRoles.Text.Length == 0;
-        }
-
-        // Проверка на отсутствие пароля
-        private bool IsPasswordMissingAddUser()
-        {
-            return textBox.Text.Length > 0
-                && !FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length == 0
-                && ComboBoxRoles.Text.Length != 0;
-        }
-
-        // Проверка на отсутствие роли и пароля
-        private bool IsRoleAndPasswordMissingAddUser()
-        {
-            return textBox.Text.Length > 0
-                && !FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length == 0
-                && BorderPasswordBoxOne.Visibility == Visibility.Visible
-                && ComboBoxRoles.Text.Length == 0
-                && BorderComboBoxRoles.Visibility == Visibility.Visible
-                && BorderPasswordBoxTwo.Visibility != Visibility.Visible;
-        }
-
-        // Проверка на существование пользователя
-        private bool IsUserExistsAddUser()
-        {
-            return textBox.Text.Length > 0
-                && FindUser(textBox.Text);
-        }
-
-        private bool IsUserNoExistsAddUser()
-        {
-            return textBox.Text.Length > 0
-                && !FindUser(textBox.Text);
-        }
-
         // Добавление нового пользователя
         private void AddNewUser()
         {
             AddUserWithRoles(textBox.Text, passwordBoxOne.Password, ComboBoxRoles.Text);
 
-            MessageBox.Show("ADD USER");
+            MessageBox.Show("ADD USER");  // ----
 
-            ResetFormAddUser();
+            ResetForm();
             UpdateHintsAddUser("Добавлен новый пользователь", Brushes.Green);
         }
 
         // Отображение ошибки роли
         private void ShowRoleErrorAddUser()
         {
-            ComboBoxRoles.Foreground = Brushes.Red;
-            HintAssist.SetHint(ComboBoxRoles, "Не выбрана роль!");
-            MessageBox.Show("ERROR ADD USER NO ComboBoxRoles");
+            ShowError(ComboBoxRoles, "Не выбрана роль!");
+
+            passwordBoxOne.Foreground = Brushes.Black;
+            HintAssist.SetHint(passwordBoxOne, "Введите пароль");
+
+            MessageBox.Show("ERROR ADD USER NO ComboBoxRoles"); // ----
         }
 
         // Отображение ошибки пароля
         private void ShowPasswordErrorAddUser()
         {
-            passwordBoxOne.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxOne, "Не введен пароль!");
-            MessageBox.Show("ERROR ADD USER NO passwordBoxOne");
+            ShowError(passwordBoxOne, "Не введен пароль!");
+
+            ComboBoxRoles.Foreground = Brushes.Black;
+
+            MessageBox.Show("ERROR ADD USER NO passwordBoxOne"); // ----
         }
 
         // Отображение ошибки роли и пароля
         private void ShowRoleAndPasswordErrorAddUser()
         {
-            ComboBoxRoles.Foreground = Brushes.Red;
-            HintAssist.SetHint(ComboBoxRoles, "Не выбрана роль!");
-            passwordBoxOne.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxOne, "Не введен пароль!");
-            MessageBox.Show("ERROR ADD USER NO ComboBoxRoles AND passwordBoxOne");
+            ShowError(ComboBoxRoles, "Не выбрана роль!");
+            ShowError(passwordBoxOne, "Не введен пароль!");
+            MessageBox.Show("ERROR ADD USER NO ComboBoxRoles AND passwordBoxOne"); // ----
         }
 
         // Обработка существующего пользователя
         private void HandleExistingAddUser()
         {
-            ResetFormAddUser();
+            ResetForm();
             UpdateHintsAddUser("Данный пользователь уже существует!", Brushes.Red);
         }
 
         // Обработка некорректного ввода
         private void HandleInvalidInputAddUser()
         {
-            ResetFormAddUser();
+            ResetForm();
             UpdateHintsAddUser("Неверно введен логин!", Brushes.Red);
         }
 
@@ -430,23 +413,6 @@ namespace AppEnteringTrackingAndOrders
             HintAssist.SetHint(ComboBoxRoles, "Выберите роль");
         }
 
-        // Сброс формы
-        private void ResetFormAddUser()
-        {
-            passwordBoxOne.Password = "";
-            passwordBoxTwo.Password = "";
-            ComboBoxRoles.Text = "";
-
-            BorderPasswordBoxOne.Visibility = Visibility.Hidden;
-            BorderPasswordBoxTwo.Visibility = Visibility.Hidden;
-            BorderComboBoxRoles.Visibility = Visibility.Hidden;
-
-            textBox.Foreground = Brushes.Black;
-            passwordBoxOne.Foreground = Brushes.Black;
-            passwordBoxTwo.Foreground = Brushes.Black;
-            ComboBoxRoles.Foreground = Brushes.Black;
-        }
-
         // Обновление подсказок
         private void UpdateHintsAddUser(string textBoxHint, Brush textBoxColor)
         {
@@ -455,45 +421,56 @@ namespace AppEnteringTrackingAndOrders
             HintAssist.SetHint(passwordBoxOne, "Введите пароль");
             HintAssist.SetHint(ComboBoxRoles, "Выберите роль");
         }
+
         // ---------------------------------------
 
         // Реализация кнопки изменения пользователя и обработка ошибок при вводе
         // ---------------------------------------
         private void ButtonEditUser_Click(object sender, RoutedEventArgs e)
         {
-            if (IsInputValidForEditUser())
+            if (FindUser(textBox.Text) && passwordBoxOne.Password.Length != 0 
+                && passwordBoxTwo.Password.Length != 0 && ComboBoxRoles.Text.Length != 0)
             {
                 ProcessEditUser();
             }
-            else if (IsPasswordOneMissingEditUser())
+            else if (FindUser(textBox.Text) && passwordBoxOne.Password.Length == 0
+                && passwordBoxTwo.Password.Length != 0 && ComboBoxRoles.Text.Length != 0)
             {
                 ShowPasswordOneErrorEditUser();
             }
-            else if (IsPasswordTwoMissingEditUser())
+            else if (FindUser(textBox.Text) && passwordBoxOne.Password.Length != 0
+                && passwordBoxTwo.Password.Length == 0 && ComboBoxRoles.Text.Length != 0)
             {
                 ShowPasswordTwoErrorEditUser();
             }
-            else if (IsRoleMissingEditUser())
+            else if (FindUser(textBox.Text) && passwordBoxOne.Password.Length != 0
+                && passwordBoxTwo.Password.Length != 0 && ComboBoxRoles.Text.Length == 0)
             {
                 ShowRoleErrorEditUser();
             }
-            else if (AreBothPasswordsMissingEditUser())
+            else if (FindUser(textBox.Text) && passwordBoxOne.Password.Length == 0
+                && passwordBoxTwo.Password.Length == 0 && ComboBoxRoles.Text.Length != 0)
             {
                 ShowBothPasswordsErrorEditUser();
             }
-            else if (ArePasswordTwoAndRoleMissingEditUser())
+            else if (FindUser(textBox.Text) && passwordBoxOne.Password.Length != 0
+                && passwordBoxTwo.Password.Length == 0 && ComboBoxRoles.Text.Length == 0)
             {
                 ShowPasswordTwoAndRoleErrorEditUser();
             }
-            else if (ArePasswordOneAndRoleMissingEditUser())
+            else if (FindUser(textBox.Text) && passwordBoxOne.Password.Length == 0
+                && passwordBoxTwo.Password.Length != 0 && ComboBoxRoles.Text.Length == 0)
             {
                 ShowPasswordOneAndRoleErrorEditUser();
             }
-            else if (AreAllFieldsMissingEditUser())
+            else if (FindUser(textBox.Text) && passwordBoxOne.Password.Length == 0
+                && passwordBoxTwo.Password.Length == 0 && ComboBoxRoles.Text.Length == 0
+                && BorderPasswordBoxOne.Visibility == Visibility.Visible && BorderPasswordBoxTwo.Visibility == Visibility.Visible
+                && BorderComboBoxRoles.Visibility == Visibility.Visible)
             {
                 ShowAllFieldsErrorEditUser();
             }
-            else if (IsUserFoundEditUser())
+            else if (FindUser(textBox.Text))
             {
                 PrepareEditFormEditUser();
             }
@@ -502,16 +479,7 @@ namespace AppEnteringTrackingAndOrders
                 HandleInvalidUserEditUser();
             }
         }
-
-        // Проверка валидности данных для редактирования
-        private bool IsInputValidForEditUser()
-        {
-            return FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length != 0
-                && passwordBoxTwo.Password.Length != 0
-                && ComboBoxRoles.Text.Length != 0;
-        }
-
+        
         // Обработка изменения пользователя
         private void ProcessEditUser()
         {
@@ -519,172 +487,84 @@ namespace AppEnteringTrackingAndOrders
             {
                 EditUserWithRoles(textBox.Text, passwordBoxTwo.Password, ComboBoxRoles.Text);
 
-                MessageBox.Show("EDIT USER");
-                ResetFormEditUser();
+                MessageBox.Show("EDIT USER"); // ----
+                ResetForm();
                 UpdateHintsEditUser("Изменения приняты", Brushes.Green);
             }
             else
             {
                 UpdateRolesBasedOnUserEditUser();
-                passwordBoxOne.Foreground = Brushes.Red;
-                HintAssist.SetHint(passwordBoxOne, "Неправильный пароль!");
+                ShowError(passwordBoxOne, "Неправильный пароль!");
+                ShowError(passwordBoxTwo, "Неправильный пароль!");
             }
-        }
-
-        // Проверка на отсутствие первого пароля
-        private bool IsPasswordOneMissingEditUser()
-        {
-            return FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length == 0
-                && passwordBoxTwo.Password.Length != 0
-                && ComboBoxRoles.Text.Length != 0;
-        }
-
-        // Проверка на отсутствие второго пароля
-        private bool IsPasswordTwoMissingEditUser()
-        {
-            return FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length != 0
-                && passwordBoxTwo.Password.Length == 0
-                && ComboBoxRoles.Text.Length != 0;
-        }
-
-        // Проверка на отсутствие роли
-        private bool IsRoleMissingEditUser()
-        {
-            return FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length != 0
-                && passwordBoxTwo.Password.Length != 0
-                && ComboBoxRoles.Text.Length == 0;
-        }
-
-        // Проверка на отсутствие обоих паролей
-        private bool AreBothPasswordsMissingEditUser()
-        {
-            return FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length == 0
-                && passwordBoxTwo.Password.Length == 0
-                && ComboBoxRoles.Text.Length != 0;
-        }
-
-        // Проверка на отсутствие второго пароля и роли
-        private bool ArePasswordTwoAndRoleMissingEditUser()
-        {
-            return FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length != 0
-                && passwordBoxTwo.Password.Length == 0
-                && ComboBoxRoles.Text.Length == 0;
-        }
-
-        // Проверка на отсутствие первого пароля и роли
-        private bool ArePasswordOneAndRoleMissingEditUser()
-        {
-            return FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length == 0
-                && passwordBoxTwo.Password.Length != 0
-                && ComboBoxRoles.Text.Length == 0;
-        }
-
-        // Проверка на отсутствие всех полей
-        private bool AreAllFieldsMissingEditUser()
-        {
-            return FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length == 0
-                && passwordBoxTwo.Password.Length == 0
-                && ComboBoxRoles.Text.Length == 0
-                && BorderPasswordBoxOne.Visibility == Visibility.Visible
-                && BorderPasswordBoxTwo.Visibility == Visibility.Visible
-                && BorderComboBoxRoles.Visibility == Visibility.Visible;
-        }
-
-        // Проверка, найден ли пользователь
-        private bool IsUserFoundEditUser()
-        {
-            return FindUser(textBox.Text);
         }
 
         // Отображение ошибки первого пароля
         private void ShowPasswordOneErrorEditUser()
         {
             UpdateRolesBasedOnUserEditUser();
-            passwordBoxOne.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxOne, "Не введен пароль!");
-            MessageBox.Show("ERROR EDIT USER NO passwordBoxOne");
+            ShowError(passwordBoxOne, "Не введен пароль!");
+            MessageBox.Show("ERROR EDIT USER NO passwordBoxOne"); // ----
         }
 
         // Отображение ошибки второго пароля
         private void ShowPasswordTwoErrorEditUser()
         {
             UpdateRolesBasedOnUserEditUser();
-            passwordBoxTwo.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxTwo, "Не введен пароль!");
-            MessageBox.Show("ERROR EDIT USER NO passwordBoxTwo");
+            ShowError(passwordBoxTwo, "Не введен пароль!");
+            MessageBox.Show("ERROR EDIT USER NO passwordBoxTwo"); // ----
         }
 
         // Отображение ошибки роли
         private void ShowRoleErrorEditUser()
         {
             UpdateRolesBasedOnUserEditUser();
-            ComboBoxRoles.Foreground = Brushes.Red;
-            HintAssist.SetHint(ComboBoxRoles, "Не выбрана роль!");
-            MessageBox.Show("ERROR EDIT USER NO ComboBoxRoles");
+            ShowError(ComboBoxRoles, "Не выбрана роль!");
+            MessageBox.Show("ERROR EDIT USER NO ComboBoxRoles"); // ----
         }
 
         // Отображение ошибки обоих паролей
         private void ShowBothPasswordsErrorEditUser()
         {
             UpdateRolesBasedOnUserEditUser();
-            passwordBoxOne.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxOne, "Не введен пароль!");
-            passwordBoxTwo.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxTwo, "Не введен пароль!");
-            MessageBox.Show("ERROR EDIT USER NO passwordBoxOne AND passwordBoxTwo");
+            ShowError(passwordBoxOne, "Не введен пароль!");
+            ShowError(passwordBoxTwo, "Не введен пароль!");
+            MessageBox.Show("ERROR EDIT USER NO passwordBoxOne AND passwordBoxTwo"); // ----
         }
 
         // Отображение ошибки второго пароля и роли
         private void ShowPasswordTwoAndRoleErrorEditUser()
         {
             UpdateRolesBasedOnUserEditUser();
-            passwordBoxTwo.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxTwo, "Не введен пароль!");
-            ComboBoxRoles.Foreground = Brushes.Red;
-            HintAssist.SetHint(ComboBoxRoles, "Не выбрана роль!");
-            MessageBox.Show("ERROR EDIT USER NO ComboBoxRoles AND passwordBoxTwo");
+            ShowError(passwordBoxTwo, "Не введен пароль!");
+            ShowError(ComboBoxRoles, "Не выбрана роль!");
+            MessageBox.Show("ERROR EDIT USER NO ComboBoxRoles AND passwordBoxTwo"); // ----
         }
 
         // Отображение ошибки первого пароля и роли
         private void ShowPasswordOneAndRoleErrorEditUser()
         {
             UpdateRolesBasedOnUserEditUser();
-            passwordBoxOne.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxOne, "Не введен пароль!");
-            ComboBoxRoles.Foreground = Brushes.Red;
-            HintAssist.SetHint(ComboBoxRoles, "Не выбрана роль!");
-            MessageBox.Show("ERROR EDIT USER NO ComboBoxRoles AND passwordBoxOne");
+            ShowError(passwordBoxOne, "Не введен пароль!");
+            ShowError(ComboBoxRoles, "Не выбрана роль!");
+            MessageBox.Show("ERROR EDIT USER NO ComboBoxRoles AND passwordBoxOne"); // ----
         }
 
         // Отображение ошибки всех полей
         private void ShowAllFieldsErrorEditUser()
         {
             UpdateRolesBasedOnUserEditUser();
-            passwordBoxOne.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxOne, "Не введен пароль!");
-            passwordBoxTwo.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxTwo, "Не введен пароль!");
-            ComboBoxRoles.Foreground = Brushes.Red;
-            HintAssist.SetHint(ComboBoxRoles, "Не выбрана роль!");
-            MessageBox.Show("ERROR EDIT USER NO ComboBoxRoles AND passwordBoxOne AND passwordBoxTwo");
+            ShowError(passwordBoxOne, "Не введен пароль!");
+            ShowError(passwordBoxTwo, "Не введен пароль!");
+            ShowError(ComboBoxRoles, "Не выбрана роль!");
+            MessageBox.Show("ERROR EDIT USER NO ComboBoxRoles AND passwordBoxOne AND passwordBoxTwo"); // ----
         }
 
         // Подготовка формы для редактирования
         private void PrepareEditFormEditUser()
         {
-            ResetFormEditUser();
-
-            if (textBox.Text == "1")
-                ComboBoxRoles.ItemsSource = _rolesbuttonchangeadmin;
-            else
-                ComboBoxRoles.ItemsSource = _rolesbuttonadd;
+            ResetForm();
+            UpdateRolesBasedOnUser(textBox.Text);
 
             BorderPasswordBoxTwo.Visibility = Visibility.Visible;
             BorderPasswordBoxOne.Visibility = Visibility.Visible;
@@ -703,36 +583,15 @@ namespace AppEnteringTrackingAndOrders
         // Обработка ошибки при отсутствии пользователя
         private void HandleInvalidUserEditUser()
         {
-            ResetFormEditUser();
+            ResetForm();
             UpdateHintsEditUser("Не найден логин для изменения", Brushes.Red);
         }
 
         // Обновление списка ролей в зависимости от пользователя
         private void UpdateRolesBasedOnUserEditUser()
         {
-            if (textBox.Text == "1")
-                ComboBoxRoles.ItemsSource = _rolesbuttonchangeadmin;
-            else
-                ComboBoxRoles.ItemsSource = _rolesbuttonadd;
-
+            UpdateRolesBasedOnUser(textBox.Text);
             UpdateHintsEditUser("Введите логин", Brushes.Black);
-        }
-
-        // Сброс формы
-        private void ResetFormEditUser()
-        {
-            passwordBoxOne.Password = "";
-            passwordBoxTwo.Password = "";
-            ComboBoxRoles.Text = "";
-
-            BorderPasswordBoxTwo.Visibility = Visibility.Hidden;
-            BorderPasswordBoxOne.Visibility = Visibility.Hidden;
-            BorderComboBoxRoles.Visibility = Visibility.Hidden;
-
-            textBox.Foreground = Brushes.Black;
-            passwordBoxOne.Foreground = Brushes.Black;
-            passwordBoxTwo.Foreground = Brushes.Black;
-            ComboBoxRoles.Foreground = Brushes.Black;
         }
 
         // Обновление подсказок
@@ -751,27 +610,29 @@ namespace AppEnteringTrackingAndOrders
         // ---------------------------------------
         private void ButtonDeleteUser_Click(object sender, RoutedEventArgs e)
         {
-            if (IsInputValidForDeletion())
+            if (FindUser(textBox.Text) && passwordBoxOne.Password.Length != 0 && passwordBoxTwo.Password.Length != 0)
             {
                 ProcessDeleteUser();
             }
-            else if (IsPasswordOneMissingForDeletion())
+            else if (FindUser(textBox.Text) && passwordBoxOne.Password.Length == 0 && passwordBoxTwo.Password.Length != 0)
             {
                 ShowPasswordOneMissingError();
             }
-            else if (IsPasswordTwoMissingForDeletion())
+            else if (FindUser(textBox.Text) && passwordBoxOne.Password.Length != 0 && passwordBoxTwo.Password.Length == 0)
             {
                 ShowPasswordTwoMissingError();
             }
-            else if (AreBothPasswordsMissingForDeletion())
+            else if (FindUser(textBox.Text) && passwordBoxOne.Password.Length == 0
+                && passwordBoxTwo.Password.Length == 0 && BorderPasswordBoxOne.Visibility == Visibility.Visible
+                && BorderPasswordBoxTwo.Visibility == Visibility.Visible && BorderComboBoxRoles.Visibility != Visibility.Visible)
             {
                 ShowBothPasswordsMissingError();
             }
-            else if (IsDeletionRestricted())
+            else if (FindUser(textBox.Text) && textBox.Text == "1")
             {
                 ShowDeletionRestrictedError();
             }
-            else if (IsUserFoundForDeletion())
+            else if (FindUser(textBox.Text))
             {
                 PrepareDeletionForm();
             }
@@ -779,14 +640,6 @@ namespace AppEnteringTrackingAndOrders
             {
                 HandleInvalidUserForDeletion();
             }
-        }
-
-        // Проверка валидности ввода для удаления
-        private bool IsInputValidForDeletion()
-        {
-            return FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length != 0
-                && passwordBoxTwo.Password.Length != 0;
         }
 
         // Обработка удаления пользователя
@@ -801,8 +654,8 @@ namespace AppEnteringTrackingAndOrders
                 {
                     DeleteUserWithRoles(textBox.Text);
 
-                    MessageBox.Show("DELETE USER");
-                    ResetDeletionForm();
+                    MessageBox.Show("DELETE USER"); // ----
+                    ResetForm();
                     UpdateDeletionHints("Пользователь удален", Brushes.Green);
                 }
                 else
@@ -816,54 +669,14 @@ namespace AppEnteringTrackingAndOrders
             }
         }
 
-        // Проверка на отсутствие первого пароля
-        private bool IsPasswordOneMissingForDeletion()
-        {
-            return FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length == 0
-                && passwordBoxTwo.Password.Length != 0;
-        }
-
-        // Проверка на отсутствие второго пароля
-        private bool IsPasswordTwoMissingForDeletion()
-        {
-            return FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length != 0
-                && passwordBoxTwo.Password.Length == 0;
-        }
-
-        // Проверка на отсутствие обоих паролей
-        private bool AreBothPasswordsMissingForDeletion()
-        {
-            return FindUser(textBox.Text)
-                && passwordBoxOne.Password.Length == 0
-                && passwordBoxTwo.Password.Length == 0
-                && BorderPasswordBoxOne.Visibility == Visibility.Visible
-                && BorderPasswordBoxTwo.Visibility == Visibility.Visible
-                && BorderComboBoxRoles.Visibility != Visibility.Visible;
-        }
-
-        // Проверка на ограничения удаления
-        private bool IsDeletionRestricted()
-        {
-            return FindUser(textBox.Text) && textBox.Text == "1";
-        }
-
-        // Проверка, найден ли пользователь
-        private bool IsUserFoundForDeletion()
-        {
-            return FindUser(textBox.Text);
-        }
-
         // Отображение ошибки: отсутствует первый пароль
         private void ShowPasswordOneMissingError()
         {
             passwordBoxTwo.Foreground = Brushes.Black;
             HintAssist.SetHint(passwordBoxTwo, "Повторите старый пароль пользователя");
 
-            passwordBoxOne.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxOne, "Не введен пароль!");
-            MessageBox.Show("ERROR DELETE USER NO passwordBoxOne");
+            ShowError(passwordBoxOne, "Не введен пароль!");
+            MessageBox.Show("ERROR DELETE USER NO passwordBoxOne"); // ----
         }
 
         // Отображение ошибки: отсутствует второй пароль
@@ -872,35 +685,29 @@ namespace AppEnteringTrackingAndOrders
             passwordBoxOne.Foreground = Brushes.Black;
             HintAssist.SetHint(passwordBoxOne, "Введите старый пароль пользователя");
 
-            passwordBoxTwo.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxTwo, "Не введен пароль!");
-            MessageBox.Show("ERROR DELETE USER NO passwordBoxTwo");
+            ShowError(passwordBoxTwo, "Не введен пароль!");
+            MessageBox.Show("ERROR DELETE USER NO passwordBoxTwo"); // ----
         }
 
         // Отображение ошибки: отсутствуют оба пароля
         private void ShowBothPasswordsMissingError()
         {
-            passwordBoxOne.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxOne, "Не введен пароль!");
-            passwordBoxTwo.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxTwo, "Не введен пароль!");
-            MessageBox.Show("ERROR DELETE USER NO passwordBoxOne AND passwordBoxTwo");
+            ShowError(passwordBoxOne, "Не введен пароль!");
+            ShowError(passwordBoxTwo, "Не введен пароль!");
+            MessageBox.Show("ERROR DELETE USER NO passwordBoxOne AND passwordBoxTwo"); // ----
         }
 
         // Отображение ошибки: удаление недоступно
         private void ShowDeletionRestrictedError()
         {
-            ResetDeletionForm();
-            textBox.Foreground = Brushes.Red;
-            HintAssist.SetHint(textBox, "Данный логин недоступен к удалению!");
+            ResetForm();
+            ShowError(textBox, "Данный логин недоступен к удалению!");
         }
 
         // Подготовка формы для удаления
         private void PrepareDeletionForm()
         {
-            ResetDeletionForm();
-
-            ComboBoxRoles.ItemsSource = _rolesbuttonadd;
+            ResetForm();
 
             BorderPasswordBoxTwo.Visibility = Visibility.Visible;
             BorderPasswordBoxOne.Visibility = Visibility.Visible;
@@ -916,34 +723,15 @@ namespace AppEnteringTrackingAndOrders
         // Обработка случая, когда пользователь не найден
         private void HandleInvalidUserForDeletion()
         {
-            ResetDeletionForm();
-            textBox.Foreground = Brushes.Red;
-            HintAssist.SetHint(textBox, "Не найден логин для удаления!");
+            ResetForm();
+            ShowError(textBox, "Не найден логин для удаления!");
         }
 
         // Отображение ошибки: неправильный первый пароль
         private void ShowPasswordInvalidError()
         {
-            passwordBoxOne.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxOne, "Неверный пароль!");
-            passwordBoxTwo.Foreground = Brushes.Red;
-            HintAssist.SetHint(passwordBoxTwo, "Неверный пароль!");
-        }
-
-        // Сброс формы
-        private void ResetDeletionForm()
-        {
-            passwordBoxOne.Password = "";
-            passwordBoxTwo.Password = "";
-            ComboBoxRoles.Text = "";
-
-            BorderPasswordBoxTwo.Visibility = Visibility.Hidden;
-            BorderPasswordBoxOne.Visibility = Visibility.Hidden;
-            BorderComboBoxRoles.Visibility = Visibility.Hidden;
-
-            textBox.Foreground = Brushes.Black;
-            passwordBoxOne.Foreground = Brushes.Black;
-            passwordBoxTwo.Foreground = Brushes.Black;
+            ShowError(passwordBoxOne, "Неверный пароль!");
+            ShowError(passwordBoxTwo, "Неверный пароль!");
         }
 
         // Обновление подсказок для удаления
