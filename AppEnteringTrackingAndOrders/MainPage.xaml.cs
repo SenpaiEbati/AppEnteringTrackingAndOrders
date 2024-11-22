@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -223,20 +224,104 @@ namespace AppEnteringTrackingAndOrders
 
         private void ButtonEnter_Click(object sender, RoutedEventArgs e)
         {
-            var user = AuthenticateUser(textBox.Text, passwordBox.Password);
-            if (user != null)
+            if (FindUser(textBox.Text) && textBox.Text.Length != 0 && passwordBox.Password.Length != 0)
             {
-                NavigationService.Navigate(new ListTableWaiters());
+                var user = AuthenticateUser(textBox.Text, passwordBox.Password);
+                if (user != null)
+                {
+                    NavigationService.Navigate(new ListTableWaiters());
+                }
+                else
+                {
+                    textBox.Foreground = Brushes.Black;
+                    HintAssist.SetHint(textBox, "Введите логин");
+                    ShowError(passwordBox, "Неверный пароль!");
+                }
+            }
+            else if (FindUser(textBox.Text) && textBox.Text.Length == 0 && passwordBox.Password.Length != 0)
+            {
+                passwordBox.Foreground = Brushes.Black;
+                HintAssist.SetHint(passwordBox, "Введите пароль");
+
+                ShowError(textBox, "Не введён пользователь!");
+            }
+            else if (FindUser(textBox.Text) && textBox.Text.Length != 0 && passwordBox.Password.Length == 0)
+            {
+                textBox.Foreground = Brushes.Black;
+                HintAssist.SetHint(textBox, "Введите логин");
+
+                ShowError(passwordBox, "Не введен пароль!");
+            }
+            else if (FindUser(textBox.Text) && textBox.Text.Length == 0 && passwordBox.Password.Length == 0)
+            {
+                ShowError(textBox, "Не введён пользователь!");
+                ShowError(passwordBox, "Не введен пароль!");
+            }
+            else
+            {
+                ShowError(textBox, "Не найден пользователь!");
+                ShowError(passwordBox, "Не найден пользователь!");
             }
         }
 
         private void ButtonSettingUser_Click(object sender, RoutedEventArgs e)
         {
-            var user = AuthenticateUser(textBox.Text, passwordBox.Password);
-            if (user != null && GetRoleIdForUser(user) == 1)
+            if (FindUser(textBox.Text) && textBox.Text.Length != 0 && passwordBox.Password.Length != 0)
             {
-                NavigationService.Navigate(new SettingUsers());
+                var user = AuthenticateUser(textBox.Text, passwordBox.Password);
+                if (user != null && GetRoleIdForUser(user) == 1)
+                {
+                    NavigationService.Navigate(new SettingUsers());
+                }
+                else
+                {
+                    textBox.Foreground = Brushes.Black;
+                    HintAssist.SetHint(textBox, "Введите логин");
+                    ShowError(passwordBox, "Неверный пароль!");
+                }
             }
+            else if (FindUser(textBox.Text) && textBox.Text.Length == 0 && passwordBox.Password.Length != 0)
+            {
+                passwordBox.Foreground = Brushes.Black;
+                HintAssist.SetHint(passwordBox, "Введите пароль");
+
+                ShowError(textBox, "Не введён пользователь!");
+            }
+            else if (FindUser(textBox.Text) && textBox.Text.Length != 0 && passwordBox.Password.Length == 0)
+            {
+                textBox.Foreground = Brushes.Black;
+                HintAssist.SetHint(textBox, "Введите логин");
+
+                ShowError(passwordBox, "Не введен пароль!");
+            }
+            else if (FindUser(textBox.Text) && textBox.Text.Length == 0 && passwordBox.Password.Length == 0)
+            {
+                ShowError(textBox, "Не введён пользователь!");
+                ShowError(passwordBox, "Не введен пароль!");
+            }
+            else
+            {
+                ShowError(textBox, "Не найден пользователь!");
+                ShowError(passwordBox, "Не найден пользователь!");
+            }
+        }
+
+        private void ShowError(Control control, string hintMessage)
+        {
+            if (control is System.Windows.Controls.TextBox textBox) textBox.Foreground = Brushes.Red;
+            if (control is System.Windows.Controls.PasswordBox passwordBox) passwordBox.Foreground = Brushes.Red;
+
+            HintAssist.SetHint(control, hintMessage);
+        }
+
+        private void textBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            textBox.Foreground = Brushes.Black;
+        }
+
+        private void passwordBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            passwordBox.Foreground = Brushes.Black;
         }
     }
 }
