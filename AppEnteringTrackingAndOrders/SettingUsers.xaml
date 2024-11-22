@@ -14,7 +14,7 @@
         <local:VisibilityToMarginConverter x:Key="VisibilityToMarginConverter"/>
         <local:ConditionalMarginConverter x:Key="ConditionalMarginConverter" />
     </Page.Resources>
-    
+
     <Grid x:Name="BackgroundGrid" Style="{DynamicResource BackgroundGridStyle}">
 
         <Grid.ColumnDefinitions>
@@ -27,8 +27,14 @@
             <RowDefinition Height="282*"/>
             <RowDefinition Height="125*"/>
         </Grid.RowDefinitions>
-        <Canvas Grid.Row="0" Grid.Column="0">
-            <Button x:Name="BackMainButton" Height="150" Width="150" Click="BackMainButton_Click"/>
+        <Canvas x:Name="Canvas00" Grid.Row="0" Grid.Column="0">
+            <Button x:Name="BackMainButton" 
+                    Style="{DynamicResource ButtonStyleFull}"
+                    Height="80" Width="150"
+                    Content="Назад"
+                    Click="BackMainButton_Click" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top" FontSize="24" Canvas.Left="15" Canvas.Top="15"/>
         </Canvas>
         <Canvas x:Name="Canvas10" Grid.Row="1" Grid.Column="0">
             <Border Height="72"
@@ -168,7 +174,6 @@
 
         </Canvas>
         <Canvas Grid.Row="2" Grid.Column="2"/>
-        <!--<Frame x:Name="SettingFrame" Grid.ColumnSpan="3" Grid.RowSpan="3" />-->
-        <!--Эту хуйню убираем когда редачим-->
+        <Frame x:Name="SettingFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="3" Grid.RowSpan="3" />
     </Grid>
 </Page>

@@ -104,7 +104,6 @@
 
         </Canvas>
         <Canvas Grid.Row="2" Grid.Column="2"/>
-        <Frame x:Name="MainPageFrame" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
-        <!--Эту хуйню убираем когда редачим-->
+        <Frame x:Name="MainPageFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
     </Grid>
 </Page>

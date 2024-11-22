@@ -552,7 +552,6 @@ namespace AppEnteringTrackingAndOrders
                         passwordBoxTwo.Foreground = Brushes.Red;
                         HintAssist.SetHint(passwordBoxTwo, "Неправильный пароль!");
                     }
-
                 }
                 else
                 {

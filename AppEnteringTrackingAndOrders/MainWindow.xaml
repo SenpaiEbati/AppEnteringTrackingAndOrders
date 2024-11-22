@@ -9,6 +9,6 @@
         Title="MainWindow" Height="1200" Width="1920">
 
     <Grid Style="{DynamicResource BackgroundGridStyle}">
-        <Frame x:Name="MainWindowFrame" Grid.ColumnSpan="3" Grid.RowSpan="3" />
+        <Frame x:Name="MainWindowFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="3" Grid.RowSpan="3" />
     </Grid>
 </Window>
