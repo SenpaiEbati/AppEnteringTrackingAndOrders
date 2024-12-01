@@ -12,8 +12,81 @@
     <Style x:Key="WindowStyle" TargetType="Window">
         <Setter Property="Background" Value="Black" />
     </Style>
-    
-    
+
+    <Style x:Key="ButtonStyleLeft" TargetType="Button">
+        <Setter Property="Background" Value="Gray" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="White" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="15,0,0,15"
+                        Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация для MouseOver -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="DarkGray"/>
+                            <Setter Property="BorderBrush" Value="LightGray"/>
+                        </Trigger>
+
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="DimGray"/>
+                            <Setter Property="BorderBrush" Value="Gray"/>
+                        </Trigger>
+
+                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="LightGray"/>
+                            <Setter Property="Foreground" Value="DarkGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ButtonStyleRight" TargetType="Button">
+        <Setter Property="Background" Value="Gray" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="White" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="0,15,15,0"
+                    Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация для MouseOver -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="DarkGray"/>
+                            <Setter Property="BorderBrush" Value="LightGray"/>
+                        </Trigger>
+
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="DimGray"/>
+                            <Setter Property="BorderBrush" Value="Gray"/>
+                        </Trigger>
+
+                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="LightGray"/>
+                            <Setter Property="Foreground" Value="DarkGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ButtonStyleNo" TargetType="Button">
         <Setter Property="Background" Value="Gray" />
         <Setter Property="Foreground" Value="White" />
@@ -59,7 +132,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="30"
+                    <Border CornerRadius="15"
                                 Background="{TemplateBinding Background}">
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -97,7 +170,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="30,0,0,0"
+                    <Border CornerRadius="15,0,0,0"
                             Background="{TemplateBinding Background}">
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -135,7 +208,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="0,30,0,0"
+                    <Border CornerRadius="0,15,0,0"
                         Background="{TemplateBinding Background}">
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -173,7 +246,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="0,0,30,0"
+                    <Border CornerRadius="0,0,15,0"
                     Background="{TemplateBinding Background}">
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -211,7 +284,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="0,0,0,30"
+                    <Border CornerRadius="0,0,0,15"
                 Background="{TemplateBinding Background}">
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -249,7 +322,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="20,20,20,20"
+                    <Border CornerRadius="15,15,15,15"
                     Background="{TemplateBinding Background}">
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -294,5 +367,9 @@
                                           ShadowDepth="0"/>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="BorderGray" TargetType="Border">
+        <Setter Property="Background" Value="Gray"/>
     </Style>
 </ResourceDictionary>

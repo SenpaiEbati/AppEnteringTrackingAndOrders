@@ -229,7 +229,7 @@ namespace AppEnteringTrackingAndOrders
                 var user = AuthenticateUser(textBox.Text, passwordBox.Password);
                 if (user != null)
                 {
-                    NavigationService.Navigate(new ListTableWaiters());
+                    NavigationService.Navigate(new ListTableWaiters(user));
                 }
                 else
                 {

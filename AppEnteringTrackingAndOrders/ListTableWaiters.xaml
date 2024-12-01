@@ -11,14 +11,91 @@
     <Grid x:Name="BackgroundGrid" Style="{DynamicResource BackgroundGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="150*"/>
-            <RowDefinition Height="1080*"/>
+            <RowDefinition Height="1200*"/>
             <RowDefinition Height="150*"/>
         </Grid.RowDefinitions>
         <Canvas Grid.Row="0">
+            <Border x:Name="BorderCenterTopMenu" Height="80" Width="475" HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" Canvas.Left="150" Canvas.Top="25"
+                    Style="{DynamicResource BorderGray}">
+                <TextBlock x:Name="TextBlockBorderCenterTopMenu" Text="Все официанты"  FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+            </Border>
 
+            <Border x:Name="BorderButtonLeftTopMenu" Height="80" Width="130" HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" Canvas.Left="15" Canvas.Top="25" CornerRadius="15,0,0,15"
+                    Style="{DynamicResource BorderGray}">
+                <Button x:Name="ButtonLeftTopMenu" Height="80" Width="130" Canvas.Left="10" 
+                    Canvas.Top="25" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="ButtonLeftTopMenu_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/buttonleft.png" Stretch="Uniform" Viewbox="0,-0.5,1,2"/>
+                    </Button.Background>
+                </Button>
+            </Border>
+
+            <Border x:Name="BorderButtonRightTopMenu" Height="80" HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" Canvas.Left="630" Canvas.Top="25" CornerRadius="0,15,15,0"
+                    Style="{DynamicResource BorderGray}">
+                <Button x:Name="ButtonRightTopMenu" Height="80" Width="130" Canvas.Left="550" 
+                            Canvas.Top="25" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="ButtonRightTopMenu_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/buttonleft.png" Stretch="Uniform" Viewbox="0,-0.5,1,2" Viewport="1,0,1,1" TileMode="FlipXY"/>
+                    </Button.Background>
+                </Button>
+            </Border>
         </Canvas>
-        <Canvas Margin="0,5,0,5" Grid.Row="1">
-
+        <Canvas Grid.Row="1">
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="396" Canvas.Top="10" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать1" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="776" Canvas.Top="10" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать2" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="1156" Canvas.Top="10" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать3" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="1536" Canvas.Top="10" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать4" Height="175" Width="175" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="15" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать5" Height="175" Width="175" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="205" Canvas.Top="10" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать6" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="396" Canvas.Top="200" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать7" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="396" Canvas.Top="390" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать8" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="396" Canvas.Top="580" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать9" Height="174" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="396" Canvas.Top="770" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать10" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="15" Canvas.Top="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать11" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="15" Canvas.Top="390" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать12" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="15" Canvas.Top="580" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать13" Height="174" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="15" Canvas.Top="770" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать14" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="776" Canvas.Top="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать15" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="776" Canvas.Top="390" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать16" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="776" Canvas.Top="580" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать17" Height="174" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="776" Canvas.Top="770" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать18" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="1156" Canvas.Top="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать19" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="1156" Canvas.Top="390" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать20" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="1156" Canvas.Top="580" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать21" Height="174" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="1156" Canvas.Top="770" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать22" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="1536" Canvas.Top="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать23" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="1536" Canvas.Top="390" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать24" Height="175" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="1536" Canvas.Top="580" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border x:Name="BorderButtonAddOrderCenterMenu_Копировать25" Height="174" Width="365" CornerRadius="15,15,15,15"
+                Style="{DynamicResource BorderGray}" Canvas.Left="1536" Canvas.Top="770" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </Canvas>
         <Canvas Grid.Row="2">
 

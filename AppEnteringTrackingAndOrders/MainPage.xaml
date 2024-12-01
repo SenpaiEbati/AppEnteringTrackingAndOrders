@@ -8,13 +8,13 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       d:DesignHeight="1200" d:DesignWidth="1920"
       Title="MainPage">
-    
+
     <Page.Resources>
         <local:HalfSizeConverter x:Key="HalfSizeConverter"/>
     </Page.Resources>
-    
+
     <Grid x:Name="BackgroundGrid" Style="{DynamicResource BackgroundGridStyle}">
-            
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="473*"/>
             <ColumnDefinition Width="14*"/>
@@ -85,7 +85,7 @@
         </Canvas>
         <Canvas Grid.Row="2" Grid.Column="1"/>
         <Canvas Grid.Row="0" Grid.Column="2">
-            <ComboBox x:Name="styleBox"  Width="155" HorizontalAlignment="Left" Canvas.Left="776" Canvas.Top="18" FontSize="36" Background="DarkGray"  Height="56"/>
+            <ComboBox x:Name="styleBox"  Width="97" HorizontalAlignment="Left" Canvas.Left="834" Canvas.Top="18" FontSize="36"  Height="99" VerticalAlignment="Top"/>
         </Canvas>
         <Canvas x:Name="Canvas12" Grid.Row="1" Grid.Column="2">
             <Grid Height="463" Width="626" 
