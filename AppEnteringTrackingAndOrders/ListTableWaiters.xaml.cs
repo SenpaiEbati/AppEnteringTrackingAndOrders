@@ -50,6 +50,7 @@ namespace AppEnteringTrackingAndOrders
 
         private void AddButtonsToWrapPanel(object sender, RoutedEventArgs e)
         {
+            NavigationService.Navigate(new Orders());
             Button button = new Button
             {
                 Width = 365,
