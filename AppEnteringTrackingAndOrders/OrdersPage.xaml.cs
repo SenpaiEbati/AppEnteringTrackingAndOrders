@@ -76,7 +76,7 @@ namespace AppEnteringTrackingAndOrders
             {
                 if (_IDYourUserRoles == 1)
                 {
-                    NavigationService.Navigate(new AddPositionMenuPage());
+                    NavigationService.Navigate(new AddGroupMenuPage());
                 }
             }
         }

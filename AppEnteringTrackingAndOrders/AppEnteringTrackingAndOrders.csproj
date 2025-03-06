@@ -15,7 +15,9 @@
     <None Remove="buttonleftright.png" />
     <None Remove="change.png" />
     <None Remove="delete.png" />
+    <None Remove="keyboard-512.png" />
     <None Remove="settinguser.png" />
+    <None Remove="shift-2.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,7 +41,9 @@
     <Resource Include="change.png" />
     <Resource Include="add.png" />
     <Resource Include="delete.png" />
+    <Resource Include="keyboard-512.png" />
     <Resource Include="settinguser.png" />
+    <Resource Include="shift-2.png" />
   </ItemGroup>
 
 </Project>
