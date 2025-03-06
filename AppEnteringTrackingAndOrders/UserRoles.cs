@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -10,6 +11,7 @@ namespace AppEnteringTrackingAndOrders
 {
     public class User
     {
+        [Key]
         public int UserId { get; set; }
         public string Username { get; set; }
         public string PasswordHash { get; set; }
@@ -18,6 +20,7 @@ namespace AppEnteringTrackingAndOrders
 
     public class Role
     {
+        [Key]
         public int RoleId { get; set; }
         public string RoleName { get; set; }
         public ICollection<User> Users { get; set; }

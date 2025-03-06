@@ -19,12 +19,14 @@ namespace AppEnteringTrackingAndOrders
     /// <summary>
     /// Логика взаимодействия для ListTableWaiters.xaml
     /// </summary>
-    public partial class ListTableWaiters : Page
+    public partial class ListTableWaitersPage : Page
     {
         private int? _IDYourUserRoles;
-        private int countbutton = 0;
-        public ListTableWaiters(User user)
+        private User _user;
+        public ListTableWaitersPage(User user)
         {
+            _user = user;
+            
             InitializeComponent();
             // Подписка на события
             myScrollViewer.PreviewMouseLeftButtonDown += ScrollViewer_PreviewMouseLeftButtonDown;
@@ -50,7 +52,9 @@ namespace AppEnteringTrackingAndOrders
 
         private void AddButtonsToWrapPanel(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Orders());
+            OrdersPage orders = new OrdersPage(_user);
+            NavigationService.Navigate(orders);
+
             Button button = new Button
             {
                 Width = 365,
@@ -59,6 +63,7 @@ namespace AppEnteringTrackingAndOrders
             };
             button.Style = (Style)FindResource("ButtonStyleFull");
             WrapPanelOrders.Children.Add(button);
+            
             
         }
 

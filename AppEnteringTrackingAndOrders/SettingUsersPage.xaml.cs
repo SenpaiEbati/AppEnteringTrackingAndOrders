@@ -23,12 +23,12 @@ namespace AppEnteringTrackingAndOrders
     /// <summary>
     /// Логика взаимодействия для SettingUsers.xaml
     /// </summary>
-    public partial class SettingUsers : Page
+    public partial class SettingUsersPage : Page
     {
         private List<string> _rolesbuttonchangeadmin;
         private List<string> _rolesbuttonadd;
 
-        public SettingUsers()
+        public SettingUsersPage()
         {
             InitializeComponent();
 
