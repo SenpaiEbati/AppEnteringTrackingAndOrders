@@ -63,8 +63,6 @@ namespace AppEnteringTrackingAndOrders
             };
             button.Style = (Style)FindResource("ButtonStyleFull");
             WrapPanelOrders.Children.Add(button);
-            
-            
         }
 
         private void ButtonLeftTopMenu_Click(object sender, RoutedEventArgs e)

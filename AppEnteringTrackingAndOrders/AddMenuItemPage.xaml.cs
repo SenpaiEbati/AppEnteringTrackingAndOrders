@@ -13,19 +13,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static MaterialDesignThemes.Wpf.Theme;
 
 namespace AppEnteringTrackingAndOrders
 {
     /// <summary>
-    /// Логика взаимодействия для AddPositionMenuPage.xaml
+    /// Логика взаимодействия для AddMenuItemPage.xaml
     /// </summary>
-    public partial class AddGroupMenuPage : Page
+    public partial class AddMenuItemPage : Page
     {
         private bool _langRuENKey = false;
         private bool _shiftKey = false;
-        public AddGroupMenuPage()
+
+        private Group _group;
+
+        public AddMenuItemPage(Group group)
         {
+            _group = group;
             InitializeComponent();
         }
 
@@ -38,104 +41,104 @@ namespace AppEnteringTrackingAndOrders
         // ---------------------------------------
         private void TopLeftButtonOne_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                textBox.Text += "1";
-                textBox.Focus();
+                TextBoxNameItem.Text += "1";
+                TextBoxNameItem.Focus();
             }
         }
 
         private void TopMiddleButtonTwo_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                textBox.Text += "2";
-                textBox.Focus();
+                TextBoxNameItem.Text += "2";
+                TextBoxNameItem.Focus();
             }
         }
 
         private void TopRightButtonThree_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                textBox.Text += "3";
-                textBox.Focus();
+                TextBoxNameItem.Text += "3";
+                TextBoxNameItem.Focus();
             }
         }
 
         private void CenterLeftButtonFour_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                textBox.Text += "4";
-                textBox.Focus();
+                TextBoxNameItem.Text += "4";
+                TextBoxNameItem.Focus();
             }
         }
 
         private void CenterMiddleButtonFive_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                textBox.Text += "5";
-                textBox.Focus();
+                TextBoxNameItem.Text += "5";
+                TextBoxNameItem.Focus();
             }
         }
 
         private void CenterRightButtonSix_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                textBox.Text += "6";
-                textBox.Focus();
+                TextBoxNameItem.Text += "6";
+                TextBoxNameItem.Focus();
             }
         }
 
         private void DownLeftButtonSeven_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                textBox.Text += "7";
-                textBox.Focus();
+                TextBoxNameItem.Text += "7";
+                TextBoxNameItem.Focus();
             }
         }
 
         private void DownMiddleButtonEight_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                textBox.Text += "8";
-                textBox.Focus();
+                TextBoxNameItem.Text += "8";
+                TextBoxNameItem.Focus();
             }
         }
 
         private void DownRightButtonNine_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                textBox.Text += "9";
-                textBox.Focus();
+                TextBoxNameItem.Text += "9";
+                TextBoxNameItem.Focus();
             }
         }
 
         private void TopButtonDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (textBox.Text.Length > 0)
-                    textBox.Text = textBox.Text.Substring(0, textBox.Text.Length - 1);
-                textBox.Focus();
+                if (TextBoxNameItem.Text.Length > 0)
+                    TextBoxNameItem.Text = TextBoxNameItem.Text.Substring(0, TextBoxNameItem.Text.Length - 1);
+                TextBoxNameItem.Focus();
             }
         }
 
         private void DownButtonZero_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                textBox.Text += "0";
-                textBox.Focus();
+                TextBoxNameItem.Text += "0";
+                TextBoxNameItem.Focus();
             }
         }
-        
+
         private void DownButtonKeyboard_Click(object sender, RoutedEventArgs e)
         {
             KeyboardNumber.Visibility = Visibility.Hidden;
@@ -144,7 +147,7 @@ namespace AppEnteringTrackingAndOrders
             GridCenter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(313, GridUnitType.Star) });
             GridCenter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(7, GridUnitType.Star) });
             GridCenter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(590, GridUnitType.Star) });
-            
+
             if (WindowHeight < 1080 || WindowWidth < 1920)
             {
                 SizeKeyboardButtonSmall();
@@ -171,369 +174,369 @@ namespace AppEnteringTrackingAndOrders
 
         private void ButtonQ_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "й" : "Й";
+                    TextBoxNameItem.Text += _shiftKey == false ? "й" : "Й";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "q" : "Q";
+                    TextBoxNameItem.Text += _shiftKey == false ? "q" : "Q";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonW_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "ц" : "Ц";
+                    TextBoxNameItem.Text += _shiftKey == false ? "ц" : "Ц";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "w" : "W";
+                    TextBoxNameItem.Text += _shiftKey == false ? "w" : "W";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonE_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "у" : "У";
+                    TextBoxNameItem.Text += _shiftKey == false ? "у" : "У";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "e" : "E";
+                    TextBoxNameItem.Text += _shiftKey == false ? "e" : "E";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonR_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "к" : "К";
+                    TextBoxNameItem.Text += _shiftKey == false ? "к" : "К";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "r" : "R";
+                    TextBoxNameItem.Text += _shiftKey == false ? "r" : "R";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonT_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "е" : "Е";
+                    TextBoxNameItem.Text += _shiftKey == false ? "е" : "Е";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "t" : "T";
+                    TextBoxNameItem.Text += _shiftKey == false ? "t" : "T";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonY_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "н" : "Н";
+                    TextBoxNameItem.Text += _shiftKey == false ? "н" : "Н";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "y" : "Y";
+                    TextBoxNameItem.Text += _shiftKey == false ? "y" : "Y";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonU_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "г" : "Г";
+                    TextBoxNameItem.Text += _shiftKey == false ? "г" : "Г";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "u" : "U";
+                    TextBoxNameItem.Text += _shiftKey == false ? "u" : "U";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonI_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "ш" : "Ш";
+                    TextBoxNameItem.Text += _shiftKey == false ? "ш" : "Ш";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "i" : "I";
+                    TextBoxNameItem.Text += _shiftKey == false ? "i" : "I";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonO_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "щ" : "Щ";
+                    TextBoxNameItem.Text += _shiftKey == false ? "щ" : "Щ";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "o" : "O";
+                    TextBoxNameItem.Text += _shiftKey == false ? "o" : "O";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonP_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "з" : "З";
+                    TextBoxNameItem.Text += _shiftKey == false ? "з" : "З";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "p" : "P";
+                    TextBoxNameItem.Text += _shiftKey == false ? "p" : "P";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void Button11_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "х" : "Х";
+                    TextBoxNameItem.Text += _shiftKey == false ? "х" : "Х";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "[" : "{";
+                    TextBoxNameItem.Text += _shiftKey == false ? "[" : "{";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void Button12_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "ъ" : "Ъ";
+                    TextBoxNameItem.Text += _shiftKey == false ? "ъ" : "Ъ";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "]" : "}";
+                    TextBoxNameItem.Text += _shiftKey == false ? "]" : "}";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonA_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "ф" : "Ф";
+                    TextBoxNameItem.Text += _shiftKey == false ? "ф" : "Ф";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "a" : "A";
+                    TextBoxNameItem.Text += _shiftKey == false ? "a" : "A";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonS_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "ы" : "Ы";
+                    TextBoxNameItem.Text += _shiftKey == false ? "ы" : "Ы";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "s" : "S";
+                    TextBoxNameItem.Text += _shiftKey == false ? "s" : "S";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonD_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "в" : "В";
+                    TextBoxNameItem.Text += _shiftKey == false ? "в" : "В";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "d" : "D";
+                    TextBoxNameItem.Text += _shiftKey == false ? "d" : "D";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonF_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "а" : "А";
+                    TextBoxNameItem.Text += _shiftKey == false ? "а" : "А";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "f" : "F";
+                    TextBoxNameItem.Text += _shiftKey == false ? "f" : "F";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonG_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "п" : "П";
+                    TextBoxNameItem.Text += _shiftKey == false ? "п" : "П";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "g" : "G";
+                    TextBoxNameItem.Text += _shiftKey == false ? "g" : "G";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonH_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "р" : "Р";
+                    TextBoxNameItem.Text += _shiftKey == false ? "р" : "Р";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "h" : "H";
+                    TextBoxNameItem.Text += _shiftKey == false ? "h" : "H";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonJ_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "о" : "О";
+                    TextBoxNameItem.Text += _shiftKey == false ? "о" : "О";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "j" : "J";
+                    TextBoxNameItem.Text += _shiftKey == false ? "j" : "J";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonK_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "л" : "Л";
+                    TextBoxNameItem.Text += _shiftKey == false ? "л" : "Л";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "k" : "K";
+                    TextBoxNameItem.Text += _shiftKey == false ? "k" : "K";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonL_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "д" : "Д";
+                    TextBoxNameItem.Text += _shiftKey == false ? "д" : "Д";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "l" : "L";
+                    TextBoxNameItem.Text += _shiftKey == false ? "l" : "L";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void Button22_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "ж" : "Ж";
+                    TextBoxNameItem.Text += _shiftKey == false ? "ж" : "Ж";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? ";" : ":";
+                    TextBoxNameItem.Text += _shiftKey == false ? ";" : ":";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void Button23_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "э" : "Э";
+                    TextBoxNameItem.Text += _shiftKey == false ? "э" : "Э";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "'" : "\"";
+                    TextBoxNameItem.Text += _shiftKey == false ? "'" : "\"";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
@@ -621,145 +624,145 @@ namespace AppEnteringTrackingAndOrders
 
         private void ButtonZ_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "я" : "Я";
+                    TextBoxNameItem.Text += _shiftKey == false ? "я" : "Я";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "z" : "Z";
+                    TextBoxNameItem.Text += _shiftKey == false ? "z" : "Z";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonX_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "ч" : "Ч";
+                    TextBoxNameItem.Text += _shiftKey == false ? "ч" : "Ч";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "x" : "X";
+                    TextBoxNameItem.Text += _shiftKey == false ? "x" : "X";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonC_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "с" : "С";
+                    TextBoxNameItem.Text += _shiftKey == false ? "с" : "С";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "c" : "C";
+                    TextBoxNameItem.Text += _shiftKey == false ? "c" : "C";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonV_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "м" : "М";
+                    TextBoxNameItem.Text += _shiftKey == false ? "м" : "М";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "v" : "V";
+                    TextBoxNameItem.Text += _shiftKey == false ? "v" : "V";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonB_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "и" : "И";
+                    TextBoxNameItem.Text += _shiftKey == false ? "и" : "И";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "b" : "B";
+                    TextBoxNameItem.Text += _shiftKey == false ? "b" : "B";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonN_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "т" : "Т";
+                    TextBoxNameItem.Text += _shiftKey == false ? "т" : "Т";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "n" : "N";
+                    TextBoxNameItem.Text += _shiftKey == false ? "n" : "N";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonM_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "ь" : "Ь";
+                    TextBoxNameItem.Text += _shiftKey == false ? "ь" : "Ь";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "m" : "M";
+                    TextBoxNameItem.Text += _shiftKey == false ? "m" : "M";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void Button32_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "б" : "Б";
+                    TextBoxNameItem.Text += _shiftKey == false ? "б" : "Б";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? "<" : "<";
+                    TextBoxNameItem.Text += _shiftKey == false ? "<" : "<";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
         private void Button33_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
                 if (_langRuENKey == false)
                 {
-                    textBox.Text += _shiftKey == false ? "ю" : "Ю";
+                    TextBoxNameItem.Text += _shiftKey == false ? "ю" : "Ю";
                 }
                 else
                 {
-                    textBox.Text += _shiftKey == false ? ">" : ">";
+                    TextBoxNameItem.Text += _shiftKey == false ? ">" : ">";
                 }
-                textBox.Focus();
+                TextBoxNameItem.Focus();
             }
         }
 
@@ -841,33 +844,33 @@ namespace AppEnteringTrackingAndOrders
                 Button32.Content = _shiftKey == false ? "б" : "Б";
                 Button33.Content = _shiftKey == false ? "ю" : "Ю";
             }
-                
+
         }
 
         private void ButtonSpace_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                textBox.Text += " ";
-                textBox.Focus();
+                TextBoxNameItem.Text += " ";
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonComma_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                textBox.Text += ",";
-                textBox.Focus();
+                TextBoxNameItem.Text += ",";
+                TextBoxNameItem.Focus();
             }
         }
 
         private void ButtonPoint_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.IsKeyboardFocused)
+            if (TextBoxNameItem.IsKeyboardFocused)
             {
-                textBox.Text += ".";
-                textBox.Focus();
+                TextBoxNameItem.Text += ".";
+                TextBoxNameItem.Focus();
             }
         }
 
@@ -924,7 +927,7 @@ namespace AppEnteringTrackingAndOrders
             ButtonPoint.Width = ButtonPoint.Height = sizebutton; ButtonPoint.Margin = new Thickness(1045, (sizebutton + 5) * 3, 0, 0);
 
             KeyboardAbc.Width = 1140; KeyboardAbc.Height = 378;
-            BorderTextBox.Width = 600; textBox.Margin = new Thickness(39, 3, 39, 3);
+            BorderTextBoxNameItem.Width = 598; TextBoxNameItem.Margin = new Thickness(39, 3, 39, 3);
         }
 
         private void SizeKeyboardButtonSmall()
@@ -978,7 +981,7 @@ namespace AppEnteringTrackingAndOrders
             ButtonPoint.Width = ButtonPoint.Height = sizebutton; ButtonPoint.Margin = new Thickness(825, 225, 0, 0);
 
             KeyboardAbc.Width = 900; KeyboardAbc.Height = 296;
-            BorderTextBox.Width = 448; textBox.Margin = new Thickness(10, 3, 10, 3);
+            BorderTextBoxNameItem.Width = 448; TextBoxNameItem.Margin = new Thickness(10, 3, 10, 3);
         }
 
         private void SaveGroupButton_Click(object sender, RoutedEventArgs e)
@@ -988,31 +991,21 @@ namespace AppEnteringTrackingAndOrders
                 var menu = context.Menus.FirstOrDefault();
                 if (menu != null)
                 {
-                    if (!string.IsNullOrWhiteSpace(textBox.Text))
-                    {
-                        var group = new Group { Name = textBox.Text, Menu = menu };
-                        context.Groups.Add(group);
-                        context.SaveChanges();
-                        NavigationService.GoBack();
-                    }
-                    else
-                    {
-                        ShowError(textBox, "Некорректное название группы");
-                    }
+                   
                 }
             }
         }
 
         private void ShowError(Control control, string hintMessage)
         {
-            if (control is System.Windows.Controls.TextBox textBox) textBox.Foreground = Brushes.Red;
+            if (control is System.Windows.Controls.TextBox textBox) TextBoxNameItem.Foreground = Brushes.Red;
 
             HintAssist.SetHint(control, hintMessage);
         }
 
-        private void textBox_GotFocus(object sender, RoutedEventArgs e)
+        private void TextBoxNameItem_GotFocus(object sender, RoutedEventArgs e)
         {
-            textBox.Foreground = Brushes.Black;
+            TextBoxNameItem.Foreground = Brushes.Black;
         }
     }
 }

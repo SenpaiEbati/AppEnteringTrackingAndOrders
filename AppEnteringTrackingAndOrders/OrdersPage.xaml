@@ -95,20 +95,29 @@
                     </Image>
                 </Button>
             </Grid>
-            <Grid x:Name="MenuButtonsGrid" Grid.Column="1">
-                <Border x:Name="MenuBorder" Style="{DynamicResource BorderGray}" Height="80" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,0,15,0">
+            <Grid x:Name="GroupMenuButtonsGrid" Grid.Column="1">
+                <Border x:Name="GroupMenuBorder" Style="{DynamicResource BorderGray}" Height="80" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,0,14,0">
                     <TextBlock FontSize="24" Foreground="White" Text="Меню" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
-                <ScrollViewer x:Name="MenuButtonsScrollViewer" 
+                <ScrollViewer x:Name="GroupMenuButtonsScrollViewer" 
                               VerticalScrollBarVisibility="Hidden" 
-                              HorizontalScrollBarVisibility="Disabled" Margin="0,85,15,0">
-                    <WrapPanel x:Name="MenuButtonsWrapPanel">
-                        <Button x:Name="MenuButtonsWrapPanelAddPositionButton" Height="175" Width="175" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="MenuButtonsWrapPanelAddPositionButton_Click"/>
+                              HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0">
+                    <WrapPanel x:Name="GroupMenuButtonsWrapPanel">
+                        <Button x:Name="GroupMenuButtonsWrapPanelAddPositionButton" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="GroupMenuButtonsWrapPanelAddPositionButton_Click"/>
                     </WrapPanel>
                 </ScrollViewer>
             </Grid>
-            <Grid Grid.Column="2">
-                <Border x:Name="MenuModifierBorder" Style="{DynamicResource BorderGray}" Height="80" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,0,15,0"/>
+            <Grid x:Name="ItemMenuButtonsGrid" Grid.Column="2">
+                <Border x:Name="ItemMenuBorder" Style="{DynamicResource BorderGray}" Height="80" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,0,20,0">
+                    <TextBlock x:Name="ItemMenuBorderTextBlock" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                </Border>
+                <ScrollViewer x:Name="ItemMenuButtonsScrollViewer" 
+                              VerticalScrollBarVisibility="Hidden" 
+                              HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0">
+                    <WrapPanel x:Name="ItemMenuButtonsWrapPanel">
+                        <Button x:Name="ItemMenuButtonsWrapPanelAddPositionButton" Visibility="Hidden" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ItemMenuButtonsWrapPanelAddPositionButton_Click"/>
+                    </WrapPanel>
+                </ScrollViewer>
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
