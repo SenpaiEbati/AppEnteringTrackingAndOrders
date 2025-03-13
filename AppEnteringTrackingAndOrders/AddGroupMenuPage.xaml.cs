@@ -978,7 +978,7 @@ namespace AppEnteringTrackingAndOrders
             ButtonPoint.Width = ButtonPoint.Height = sizebutton; ButtonPoint.Margin = new Thickness(825, 225, 0, 0);
 
             KeyboardAbc.Width = 900; KeyboardAbc.Height = 296;
-            BorderTextBox.Width = 448; textBox.Margin = new Thickness(10, 3, 10, 3);
+            BorderTextBox.Width = 448; textBox.Margin = new Thickness(39, 3, 39, 3);
         }
 
         private void SaveGroupButton_Click(object sender, RoutedEventArgs e)

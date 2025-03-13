@@ -578,6 +578,7 @@ namespace AppEnteringTrackingAndOrders
             HintAssist.SetHint(textBox, "Введите логин");
             HintAssist.SetHint(passwordBoxOne, "Введите старый пароль пользователя");
             HintAssist.SetHint(passwordBoxTwo, "Введите новый пароль");
+            HintAssist.SetHint(ComboBoxRoles, "Выберите роль");
         }
 
         // Обработка ошибки при отсутствии пользователя

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +14,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 using static AppEnteringTrackingAndOrders.ConstantsInitialValuesMethodsDb;
+using static MaterialDesignThemes.Wpf.Theme.ToolBar;
 
 namespace AppEnteringTrackingAndOrders
 {
@@ -23,6 +27,7 @@ namespace AppEnteringTrackingAndOrders
     {
         private Menu _menu = new Menu();
         private Group _nowgroup;
+        private Order _noworder;
         private int? _IDYourUserRoles;
 
         public OrdersPage(User user)
@@ -35,6 +40,7 @@ namespace AppEnteringTrackingAndOrders
                 if (_IDYourUserRoles != 1)
                 {
                     GroupMenuButtonsWrapPanelAddPositionButton.Visibility = Visibility.Collapsed;
+                    ItemMenuButtonsWrapPanelAddPositionButton.Visibility = Visibility.Collapsed;
                 }
             }
             using (var context = new RestaurantContext())
@@ -44,12 +50,19 @@ namespace AppEnteringTrackingAndOrders
                 {
                     _menu.Name = "Main Menu";
                     context.Menus.Add(_menu);
-                    context.SaveChanges();
-                }
+                } 
                 else
                     _menu = menu;
 
-                List<Group> groups = context.Groups.ToList();
+                var order = new Order
+                {
+                    OrderDate = DateTime.UtcNow
+                };
+                _noworder = order;
+                context.Orders.Add(order);
+                context.SaveChanges();
+
+                List<Group> groups = context.Groups.AsNoTracking().ToList();
                 foreach (var group in groups)
                 {
                     Button button = new Button()
@@ -68,11 +81,7 @@ namespace AppEnteringTrackingAndOrders
             }
 
             TopBorderText.Text = $"Создать заказ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀{DateTime.Now.ToString("HH:mm")}\nСтол:1 Гостей:2";
-            OrderPanelInfoAddGuestButton.Content = "➕ Гость";
             ButtonOrdersSumWrapPanel.Content = $"Заказ {OrderSum()}₽";
-            GroupMenuButtonsWrapPanelAddPositionButton.Content = "➕ Добавить\nгруппу позиций";
-            ItemMenuButtonsWrapPanelAddPositionButton.Content = "➕ Добавить\nпозицию";
-
         }
 
         private void MenuGroupButton_Click(object sender, RoutedEventArgs e)
@@ -81,32 +90,115 @@ namespace AppEnteringTrackingAndOrders
 
             if (clickedButton != null)
             {
+                ItemMenuButtonsWrapPanel.Children.Clear();
+                ItemMenuButtonsWrapPanel.Children.Add(ItemMenuButtonsWrapPanelAddPositionButton);
                 Group group = (Group)clickedButton.Tag;
                 if (group != null) 
                 {
                     _nowgroup = group;
                     ItemMenuButtonsWrapPanelAddPositionButton.Visibility = Visibility.Visible;
                     ItemMenuBorderTextBlock.Text = group.Name;
-                    List<MenuItem> listgroupitem = group.MenuItems.ToList();
-                    foreach (MenuItem item in listgroupitem) 
+                    using (var context = new RestaurantContext())
                     {
-                        Button button = new Button()
+                        List<MenuItem> listgroupitem = context.MenuItems.Where(l => l.GroupId == group.Id).AsNoTracking().ToList();
+                        foreach (MenuItem item in listgroupitem)
                         {
-                            Width = 200,
-                            Height = 175,
-                            Margin = new Thickness(0, 0, 10, 10),
-                            Content = item.Name,
-                            FontSize = 24
-                        };
-                        button.Style = (Style)FindResource("ButtonStyleNo");
-                        button.Tag = item;
-                        //button.Click += MenuGroupButton_Click;
-                        ItemMenuButtonsWrapPanel.Children.Add(button);
+                            Button button = new Button()
+                            {
+                                Width = 200,
+                                Height = 175,
+                                Margin = new Thickness(0, 0, 10, 10),
+                                Content = item.Name,
+                                FontSize = 24
+                            };
+                            button.Style = (Style)FindResource("ButtonStyleNo");
+                            button.Tag = item;
+                            button.Click += MenuItemButton_Click;
+                            ItemMenuButtonsWrapPanel.Children.Add(button);
+                        }
                     }
                 }
             }
         }
 
+        private void MenuItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = sender as Button;
+
+            if (clickedButton != null)
+            {
+                MenuItem item = (MenuItem)clickedButton.Tag;
+                if (item != null) 
+                {
+                    using (var context = new RestaurantContext())
+                    {
+                        var OrderItem = new OrderItem()
+                        {
+                            MenuItemId = item.Id,
+                            Quantity = 1,
+                            OrderId = _noworder.Id,
+                        };
+                        context.OrderItems.Add(OrderItem);
+                        context.SaveChanges();
+                    }
+                    Button button = new Button()
+                    {
+                        Width = 605,
+                        Height = 80,
+                        Margin = new Thickness(0, 5, 0, 0),
+                        Content = Convert.ToString($"⠀{item.Name}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀1⠀⠀⠀⠀{item.Price}₽"),
+                        FontSize = 24
+                    };
+                    button.Style = (Style)FindResource("ButtonOrderItem");
+                    button.Tag = item;
+                    button.GotFocus += ItemOrder_GotFocus;
+                    button.LostFocus += ItemOrder_LostFocus;
+                    OrderPanelInfoWrapPanel.Children.Add(button);
+                }
+            }
+        }
+
+        private void ItemOrder_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Button clickedItemOrder = sender as Button;
+            if (clickedItemOrder != null) 
+            {
+                MenuItem item = (MenuItem)clickedItemOrder.Tag;
+                if (item != null)
+                {
+                    GroupMenuBorderText.Text = item.Name;
+                    GroupMenuButtonsScrollViewer.Visibility = Visibility.Collapsed;
+                    ModifierMenuButtonsScrollViewer.Visibility = Visibility.Visible;
+
+                }
+            }
+        }
+
+        private void ItemOrder_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Button clickedItemOrder = sender as Button;
+            if (clickedItemOrder != null)
+            {
+                GroupMenuBorderText.Text = "Меню";
+                GroupMenuButtonsScrollViewer.Visibility = Visibility.Visible;
+                ModifierMenuButtonsScrollViewer.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void ModifierMenuButtonsWrapPanel_ModifierButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ModifierMenuButtonsWrapPanel_QuantityButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ModifierMenuButtonsWrapPanel_DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void BackListTableWaitersButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
@@ -145,5 +237,7 @@ namespace AppEnteringTrackingAndOrders
                 }
             }
         }
+
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -56,7 +57,7 @@ namespace AppEnteringTrackingAndOrders
     {
         [Key]
         public int Id { get; set; }
-        public DateTime OrderDate { get; set; }
+        public DateTimeOffset OrderDate { get; set; }
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
     }
 
@@ -145,8 +146,8 @@ namespace AppEnteringTrackingAndOrders
 
                 if (order != null)
                 {
-                    var kitchenItems = order.Items.Where(oi => oi.MenuItem.Destination == "Kitchen").ToList();
-                    var barItems = order.Items.Where(oi => oi.MenuItem.Destination == "Bar").ToList();
+                    var kitchenItems = order.Items.Where(oi => oi.MenuItem.Destination == "Кухня").ToList();
+                    var barItems = order.Items.Where(oi => oi.MenuItem.Destination == "Бар").ToList();
 
                     Console.WriteLine("Sending to kitchen:");
                     foreach (var item in kitchenItems)

@@ -9,12 +9,6 @@
       d:DesignHeight="1200" d:DesignWidth="1980"
       Title="AddMenuItemPage">
 
-    <Page.Resources>
-        <local:HalfSizeConverter x:Key="HalfSizeConverter"/>
-        <local:VisibilityToMarginConverter x:Key="VisibilityToMarginConverter"/>
-        <local:ConditionalMarginConverter x:Key="ConditionalMarginConverter" />
-    </Page.Resources>
-
     <Grid x:Name="BackgroundGrid" Style="{DynamicResource BackgroundGridStyle}">
 
         <Grid.RowDefinitions>
@@ -36,18 +30,34 @@
                 <ColumnDefinition Width="237*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Border x:Name="BorderTextBoxNameItem" Height="72"
-                        Width="598"
-                        Background="#FFEAEAEA" 
-                        CornerRadius="20" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
-                    </Border.Effect>
-                    <TextBox x:Name="TextBoxNameItem" materialDesign:HintAssist.Hint="Введите название для позиции" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                             FontSize="24" Height="66" Margin="39,3,39,3" Foreground="Black" GotFocus="TextBoxNameItem_GotFocus"/>
-                </Border>
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <Border x:Name="BorderTextBoxNameItem" Height="72" Width="598" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
+                        </Border.Effect>
+                        <TextBox x:Name="TextBoxNameItem" materialDesign:HintAssist.Hint="Введите название" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 FontSize="24" Height="66" Margin="39,3,39,3" Foreground="Black" GotFocus="TextBoxNameItem_GotFocus"/>
+                    </Border>
+                    <Border x:Name="BorderTextBoxDescItem" Height="72" Width="598" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,83,0,0">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
+                        </Border.Effect>
+                        <TextBox x:Name="TextBoxDescItem" materialDesign:HintAssist.Hint="Введите описание" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 FontSize="24" Height="66" Margin="39,3,39,3" Foreground="Black" GotFocus="TextBoxDescItem_GotFocus"/>
+                    </Border>
+                    <Border x:Name="BorderDecimalPriceItem" Height="72" Width="598" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,166,0,0">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
+                        </Border.Effect>
+                        <materialDesign:DecimalUpDown x:Name="DecimalPriceItem" GotFocus="TextBoxDescItem_GotFocus"  Value="1.00" ValueStep="0.01" materialDesign:HintAssist.Hint="Введите цену" FontSize="24" Minimum="0" Style="{StaticResource MaterialDesignFloatingHintDecimalUpDown}" Margin="38,10,38,10" Maximum="1000000000"/>
+                    </Border>
+                    <Border x:Name="BorderComboBoxItem" Height="72" Width="598" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,249,0,0">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
+                        </Border.Effect>
+                        <ComboBox x:Name="ComboBoxItemKitchOrBar" materialDesign:HintAssist.Hint="Выберите место приготовления" FontSize="24" DropDownOpened="ComboBoxItemKitchOrBar_DropDownOpened" SelectionChanged="ComboBoxItemKitchOrBar_SelectionChanged" DropDownClosed="ComboBoxItemKitchOrBar_DropDownClosed" Height="52" Margin="38,0,38,0"/>
+                    </Border>
+                </Grid>
             </Grid>
             <Grid Grid.Column="1">
                 <Border Style="{DynamicResource BorderCenterLine}" 
@@ -133,7 +143,7 @@
 
         <Grid Grid.Row="2">
             <Button Style="{DynamicResource ButtonStyleFull}"
-                    Height="80" Width="600" FontSize="24" Margin="10" Content="Сохранить название" HorizontalAlignment="Left" Foreground="#FF47E86F" Click="SaveGroupButton_Click">
+                    Height="80" Width="600" FontSize="24" Margin="10" Content="Сохранить название" HorizontalAlignment="Left" Foreground="#FF47E86F" Click="SaveItemButton_Click">
             </Button>
         </Grid>
     </Grid>

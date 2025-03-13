@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static MaterialDesignThemes.Wpf.Theme;
 
 namespace AppEnteringTrackingAndOrders
 {
@@ -30,6 +31,8 @@ namespace AppEnteringTrackingAndOrders
         {
             _group = group;
             InitializeComponent();
+            List<string> location = new List<string> { "Кухня", "Бар" };
+            ComboBoxItemKitchOrBar.ItemsSource = location;
         }
 
         private void BackOrdersButton_Click(object sender, RoutedEventArgs e)
@@ -981,24 +984,59 @@ namespace AppEnteringTrackingAndOrders
             ButtonPoint.Width = ButtonPoint.Height = sizebutton; ButtonPoint.Margin = new Thickness(825, 225, 0, 0);
 
             KeyboardAbc.Width = 900; KeyboardAbc.Height = 296;
-            BorderTextBoxNameItem.Width = 448; TextBoxNameItem.Margin = new Thickness(10, 3, 10, 3);
+            BorderTextBoxNameItem.Width = 448; TextBoxNameItem.Margin = new Thickness(39, 3, 39, 3);
         }
 
-        private void SaveGroupButton_Click(object sender, RoutedEventArgs e)
+        private void SaveItemButton_Click(object sender, RoutedEventArgs e)
         {
             using (var context = new RestaurantContext())
             {
                 var menu = context.Menus.FirstOrDefault();
                 if (menu != null)
                 {
-                   
+                    if (string.IsNullOrWhiteSpace(TextBoxNameItem.Text))
+                    {
+                        ShowError(TextBoxNameItem, "Некорректное название");
+                    }
+                    else if (string.IsNullOrWhiteSpace(TextBoxDescItem.Text))
+                    {
+                        ShowError(TextBoxDescItem, "Некорректное описание");
+                    }
+                    else if (DecimalPriceItem.Value != Math.Round(DecimalPriceItem.Value,2))
+                    {
+                        ShowError(DecimalPriceItem, "Уменьшете разрядность цены до 0.00");
+                    }
+                    else if (string.IsNullOrWhiteSpace(ComboBoxItemKitchOrBar.Text))
+                    {
+                        ShowError(ComboBoxItemKitchOrBar, "Выберите место приготовления");
+                    }
+                    else 
+                    {
+                        // Присоединяем Group к контексту
+                        context.Attach(_group);
+
+                        var item = new MenuItem
+                        {
+                            Name = Convert.ToString(TextBoxNameItem.Text),
+                            Description = Convert.ToString(TextBoxDescItem.Text),
+                            Price = Convert.ToDecimal(Math.Round(DecimalPriceItem.Value,2)),
+                            Destination = Convert.ToString(ComboBoxItemKitchOrBar.Text),
+                            Group = _group,
+                        };
+                        context.MenuItems.Add(item);
+                        context.SaveChanges();
+                        NavigationService.GoBack();
+                    }
                 }
             }
         }
 
         private void ShowError(Control control, string hintMessage)
         {
-            if (control is System.Windows.Controls.TextBox textBox) TextBoxNameItem.Foreground = Brushes.Red;
+            if (control == TextBoxNameItem) TextBoxNameItem.Foreground = Brushes.Red;
+            if (control == TextBoxDescItem) TextBoxDescItem.Foreground = Brushes.Red;
+            if (control == DecimalPriceItem) DecimalPriceItem.Foreground = Brushes.Red;
+            if (control == ComboBoxItemKitchOrBar) ComboBoxItemKitchOrBar.Foreground = Brushes.Red;
 
             HintAssist.SetHint(control, hintMessage);
         }
@@ -1006,6 +1044,36 @@ namespace AppEnteringTrackingAndOrders
         private void TextBoxNameItem_GotFocus(object sender, RoutedEventArgs e)
         {
             TextBoxNameItem.Foreground = Brushes.Black;
+        }
+
+        private void TextBoxPriceItem_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DecimalPriceItem.Foreground = Brushes.Black;
+        }
+
+        private void TextBoxDescItem_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBoxDescItem.Foreground = Brushes.Black; 
+        }
+
+        private void ComboBoxItemKitchOrBar_DropDownOpened(object sender, EventArgs e)
+        {
+            ComboBoxItemKitchOrBar.Foreground = Brushes.White;
+        }
+
+        private void ComboBoxItemKitchOrBar_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItemKitchOrBar.Foreground = Brushes.Black;
+        }
+
+        private void ComboBoxItemKitchOrBar_DropDownClosed(object sender, EventArgs e)
+        {
+            ComboBoxItemKitchOrBar.Foreground = Brushes.Black;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

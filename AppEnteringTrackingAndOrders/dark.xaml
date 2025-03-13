@@ -313,8 +313,8 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
-    
+
+
     <Style x:Key="ButtonEnterLogin" TargetType="Button">
         <Setter Property="Background" Value="#FFC58A33" />
         <Setter Property="Foreground" Value="White" />
@@ -351,12 +351,10 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
-    
+
     <Style x:Key="BackgroundGridStyle" TargetType="Grid">
         <Setter Property="Background" Value="#2f3240" />
     </Style>
-
 
     <Style x:Key="BorderCenterLine" TargetType="Border">
         <Setter Property="Background" Value="White"/>
@@ -371,5 +369,99 @@
 
     <Style x:Key="BorderGray" TargetType="Border">
         <Setter Property="Background" Value="Gray"/>
+    </Style>
+
+    <Style x:Key="ButtonOrderItem" TargetType="Button">
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <!-- <Setter Property="Padding" Value="10"/> Добавьте отступы, если нужно -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    
+    <Style x:Key="ButtonOrderItemModifier" TargetType="Button">
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <!-- <Setter Property="Padding" Value="10"/> Добавьте отступы, если нужно -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                        <Grid>
+                            <!-- Черточка слева -->
+                            <Rectangle Width="2" 
+                                   Height="80" 
+                                   Fill="White" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" 
+                                   Margin="10,0,0,0"/>
+                            <!-- Текст кнопки -->
+                            <ContentPresenter HorizontalAlignment="Stretch" 
+                                          VerticalAlignment="Stretch" 
+                                          Margin="30,0,0,0"
+                                          TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}">
+                                <Grid>
+                                    <!-- Черточка слева -->
+                                    <Rectangle Width="2" 
+                                               Height="80" 
+                                               Fill="#2f3240" 
+                                               HorizontalAlignment="Left" 
+                                               VerticalAlignment="Center" 
+                                               Margin="10,0,0,0"/>
+                                    <!-- Текст кнопки -->
+                                    <ContentPresenter HorizontalAlignment="Stretch" 
+                                                      VerticalAlignment="Stretch" 
+                                                      Margin="30,0,0,0"
+                                                      TextElement.Foreground="{TemplateBinding Foreground}"/>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

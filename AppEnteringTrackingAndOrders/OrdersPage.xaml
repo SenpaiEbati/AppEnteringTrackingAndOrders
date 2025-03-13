@@ -36,9 +36,9 @@
             <Grid x:Name="OrderPanelInfoGrid" Grid.Column="0">
                 <ScrollViewer x:Name="OrderPanelInfoScrollViewer" 
                               VerticalScrollBarVisibility="Hidden" 
-                              HorizontalScrollBarVisibility="Disabled" Margin="15,85,15,85">
-                    <WrapPanel x:Name="OrderPanelInfoWrapPanel" Width="600">
-                        <Button x:Name="ButtonOrdersSumWrapPanel" Style="{DynamicResource ButtonStyleNo}" Height="80" VerticalAlignment="Center" Width="600"/>
+                              HorizontalScrollBarVisibility="Disabled" Margin="15,80,0,85">
+                    <WrapPanel x:Name="OrderPanelInfoWrapPanel" Width="625">
+                        <Button x:Name="ButtonOrdersSumWrapPanel" Style="{DynamicResource ButtonStyleNo}" Height="80" VerticalAlignment="Center" Width="605" Margin="0,5,0,0"/>
                     </WrapPanel>
                 </ScrollViewer>
                 <Button
@@ -71,7 +71,7 @@
                 </Button>
                 <Button x:Name="OrderPanelInfoAddGuestButton"
                     Style="{DynamicResource ButtonStyleFull}"
-                    Height="80" Width="200" FontSize="24" Margin="0,0,15,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                    Height="80" Width="200" FontSize="24" Margin="0,0,15,0" Content="➕ Гость" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
                 <Button
                     Style="{DynamicResource ButtonStyleTopLeft}" FontSize="24" Margin="15,0,0,0" 
                     HorizontalAlignment="Left" Width="200" Height="80" VerticalAlignment="Top">
@@ -97,13 +97,22 @@
             </Grid>
             <Grid x:Name="GroupMenuButtonsGrid" Grid.Column="1">
                 <Border x:Name="GroupMenuBorder" Style="{DynamicResource BorderGray}" Height="80" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,0,14,0">
-                    <TextBlock FontSize="24" Foreground="White" Text="Меню" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="GroupMenuBorderText" FontSize="24" Foreground="White" Text="Меню" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
                 <ScrollViewer x:Name="GroupMenuButtonsScrollViewer" 
                               VerticalScrollBarVisibility="Hidden" 
-                              HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0">
+                              HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0" Visibility="Visible">
                     <WrapPanel x:Name="GroupMenuButtonsWrapPanel">
-                        <Button x:Name="GroupMenuButtonsWrapPanelAddPositionButton" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="GroupMenuButtonsWrapPanelAddPositionButton_Click"/>
+                        <Button x:Name="GroupMenuButtonsWrapPanelAddPositionButton" Content="➕ Добавить&#x0a;     группу&#x0a;    позиций" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="GroupMenuButtonsWrapPanelAddPositionButton_Click"/>
+                    </WrapPanel>
+                </ScrollViewer>
+                <ScrollViewer x:Name="ModifierMenuButtonsScrollViewer" 
+                              VerticalScrollBarVisibility="Hidden" 
+                              HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0" Visibility="Hidden">
+                    <WrapPanel x:Name="ModifierMenuButtonsWrapPanel">
+                        <Button x:Name="ModifierMenuButtonsWrapPanel_ModifierButton" Content="Модификатор" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ModifierMenuButtonsWrapPanel_ModifierButton_Click" Focusable="False"/>
+                        <Button x:Name="ModifierMenuButtonsWrapPanel_QuantityButton" Content="Количество" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ModifierMenuButtonsWrapPanel_QuantityButton_Click" Focusable="False"/>
+                        <Button x:Name="ModifierMenuButtonsWrapPanel_DeleteButton" Content="Удалить" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ModifierMenuButtonsWrapPanel_DeleteButton_Click" Focusable="False"/>
                     </WrapPanel>
                 </ScrollViewer>
             </Grid>
@@ -115,7 +124,7 @@
                               VerticalScrollBarVisibility="Hidden" 
                               HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0">
                     <WrapPanel x:Name="ItemMenuButtonsWrapPanel">
-                        <Button x:Name="ItemMenuButtonsWrapPanelAddPositionButton" Visibility="Hidden" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ItemMenuButtonsWrapPanelAddPositionButton_Click"/>
+                        <Button x:Name="ItemMenuButtonsWrapPanelAddPositionButton" Content="➕ Добавить&#x0a;    позицию" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ItemMenuButtonsWrapPanelAddPositionButton_Click"/>
                     </WrapPanel>
                 </ScrollViewer>
             </Grid>
