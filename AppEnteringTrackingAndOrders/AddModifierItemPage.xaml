@@ -1,13 +1,13 @@
-﻿<Page x:Class="AppEnteringTrackingAndOrders.AddMenuItemPage"
+﻿<Page x:Class="AppEnteringTrackingAndOrders.AddModifierItemPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AppEnteringTrackingAndOrders"
-      mc:Ignorable="d"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      d:DesignHeight="1200" d:DesignWidth="1980"
-      Title="AddMenuItemPage">
+      mc:Ignorable="d" 
+      d:DesignHeight="1200" d:DesignWidth="1920"
+      Title="AddModifierItemPage">
 
     <Grid x:Name="BackgroundGrid" Style="{DynamicResource BackgroundGridStyle}">
 
@@ -31,31 +31,18 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
-                    <Border x:Name="BorderTextBoxNameItem" Height="72" Width="598" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Border x:Name="BorderTextBoxNameItem" Height="72" Width="600" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
                         </Border.Effect>
                         <TextBox x:Name="TextBoxNameItem" materialDesign:HintAssist.Hint="Введите название" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                  FontSize="24" Height="66" Margin="39,3,39,3" Foreground="Black" GotFocus="TextBoxNameItem_GotFocus"/>
                     </Border>
-                    <Border x:Name="BorderTextBoxDescItem" Height="72" Width="598" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,83,0,0">
-                        <Border.Effect>
-                            <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
-                        </Border.Effect>
-                        <TextBox x:Name="TextBoxDescItem" materialDesign:HintAssist.Hint="Введите описание" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                 FontSize="24" Height="66" Margin="39,3,39,3" Foreground="Black" GotFocus="TextBoxDescItem_GotFocus"/>
-                    </Border>
-                    <Border x:Name="BorderDecimalPriceItem" Height="72" Width="598" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,166,0,0">
+                    <Border x:Name="BorderDecimalPriceItem" Height="72" Width="600" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,80,0,0">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
                         </Border.Effect>
                         <materialDesign:DecimalUpDown x:Name="DecimalPriceItem" GotFocus="TextBoxPriceItem_GotFocus"  Value="1.00" ValueStep="0.01" materialDesign:HintAssist.Hint="Введите цену" FontSize="24" Minimum="0" Style="{StaticResource MaterialDesignFloatingHintDecimalUpDown}" Margin="38,10,38,10" Maximum="1000000000"/>
-                    </Border>
-                    <Border x:Name="BorderComboBoxItem" Height="72" Width="598" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,249,0,0">
-                        <Border.Effect>
-                            <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
-                        </Border.Effect>
-                        <ComboBox x:Name="ComboBoxItemKitchOrBar" materialDesign:HintAssist.Hint="Выберите место приготовления" FontSize="24" DropDownOpened="ComboBoxItemKitchOrBar_DropDownOpened" SelectionChanged="ComboBoxItemKitchOrBar_SelectionChanged" DropDownClosed="ComboBoxItemKitchOrBar_DropDownClosed" Height="52" Margin="38,0,38,0"/>
                     </Border>
                 </Grid>
             </Grid>

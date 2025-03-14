@@ -1,6 +1,7 @@
 ﻿using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,25 +15,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static MaterialDesignThemes.Wpf.Theme;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AppEnteringTrackingAndOrders
 {
     /// <summary>
-    /// Логика взаимодействия для AddMenuItemPage.xaml
+    /// Логика взаимодействия для AddModifierItemPage.xaml
     /// </summary>
-    public partial class AddMenuItemPage : Page
+    public partial class AddModifierItemPage : Page
     {
         private bool _langRuENKey = false;
         private bool _shiftKey = false;
 
-        private Group _group;
-
-        public AddMenuItemPage(Group group)
+        public AddModifierItemPage()
         {
-            _group = group;
             InitializeComponent();
-            List<string> location = new List<string> { "Кухня", "Бар" };
-            ComboBoxItemKitchOrBar.ItemsSource = location;
         }
 
         private void BackOrdersButton_Click(object sender, RoutedEventArgs e)
@@ -49,6 +46,14 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "1";
                 TextBoxNameItem.Focus();
             }
+            else if (DecimalPriceItem.IsKeyboardFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "1";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+                
+                DecimalPriceItem.Focus();
+            }
         }
 
         private void TopMiddleButtonTwo_Click(object sender, RoutedEventArgs e)
@@ -57,6 +62,13 @@ namespace AppEnteringTrackingAndOrders
             {
                 TextBoxNameItem.Text += "2";
                 TextBoxNameItem.Focus();
+            }
+            else if (DecimalPriceItem.IsKeyboardFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "2";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+                DecimalPriceItem.Focus();
             }
         }
 
@@ -67,6 +79,13 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "3";
                 TextBoxNameItem.Focus();
             }
+            else if (DecimalPriceItem.IsKeyboardFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "3";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+                DecimalPriceItem.Focus();
+            }
         }
 
         private void CenterLeftButtonFour_Click(object sender, RoutedEventArgs e)
@@ -75,6 +94,13 @@ namespace AppEnteringTrackingAndOrders
             {
                 TextBoxNameItem.Text += "4";
                 TextBoxNameItem.Focus();
+            }
+            else if (DecimalPriceItem.IsKeyboardFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "4";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+                DecimalPriceItem.Focus();
             }
         }
 
@@ -85,6 +111,13 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "5";
                 TextBoxNameItem.Focus();
             }
+            else if (DecimalPriceItem.IsKeyboardFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "5";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+                DecimalPriceItem.Focus();
+            }
         }
 
         private void CenterRightButtonSix_Click(object sender, RoutedEventArgs e)
@@ -93,6 +126,13 @@ namespace AppEnteringTrackingAndOrders
             {
                 TextBoxNameItem.Text += "6";
                 TextBoxNameItem.Focus();
+            }
+            else if (DecimalPriceItem.IsKeyboardFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "6";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+                DecimalPriceItem.Focus();
             }
         }
 
@@ -103,6 +143,13 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "7";
                 TextBoxNameItem.Focus();
             }
+            else if (DecimalPriceItem.IsKeyboardFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "7";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+                DecimalPriceItem.Focus();
+            }
         }
 
         private void DownMiddleButtonEight_Click(object sender, RoutedEventArgs e)
@@ -112,6 +159,13 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "8";
                 TextBoxNameItem.Focus();
             }
+            else if (DecimalPriceItem.IsKeyboardFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "8";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+                DecimalPriceItem.Focus();
+            }
         }
 
         private void DownRightButtonNine_Click(object sender, RoutedEventArgs e)
@@ -120,6 +174,13 @@ namespace AppEnteringTrackingAndOrders
             {
                 TextBoxNameItem.Text += "9";
                 TextBoxNameItem.Focus();
+            }
+            else if (DecimalPriceItem.IsKeyboardFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "9";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+                DecimalPriceItem.Focus();
             }
         }
 
@@ -131,6 +192,19 @@ namespace AppEnteringTrackingAndOrders
                     TextBoxNameItem.Text = TextBoxNameItem.Text.Substring(0, TextBoxNameItem.Text.Length - 1);
                 TextBoxNameItem.Focus();
             }
+            else if (DecimalPriceItem.IsKeyboardFocused)
+            {
+                string currentValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture);
+                if (currentValue.Length > 0)
+                {
+                    string newValue = currentValue.Substring(0, currentValue.Length - 1);
+                    if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                        DecimalPriceItem.Value = result;
+                    else
+                        DecimalPriceItem.Value = 0; // Если строка пустая, сбрасываем на 0
+                }
+                DecimalPriceItem.Focus();
+            }
         }
 
         private void DownButtonZero_Click(object sender, RoutedEventArgs e)
@@ -139,6 +213,13 @@ namespace AppEnteringTrackingAndOrders
             {
                 TextBoxNameItem.Text += "0";
                 TextBoxNameItem.Focus();
+            }
+            else if (DecimalPriceItem.IsKeyboardFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "0";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+                DecimalPriceItem.Focus();
             }
         }
 
@@ -160,7 +241,6 @@ namespace AppEnteringTrackingAndOrders
                 SizeKeyboardButtonBig();
             }
         }
-        // ---------------------------------------
 
         // Клавиатура с буквами
         // ---------------------------------------
@@ -866,6 +946,11 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += ",";
                 TextBoxNameItem.Focus();
             }
+            else if (DecimalPriceItem.IsKeyboardFocused)
+            {
+                DecimalPriceItem.Value += 0.00M;
+                DecimalPriceItem.Focus();
+            }
         }
 
         private void ButtonPoint_Click(object sender, RoutedEventArgs e)
@@ -874,6 +959,11 @@ namespace AppEnteringTrackingAndOrders
             {
                 TextBoxNameItem.Text += ".";
                 TextBoxNameItem.Focus();
+            }
+            else if (DecimalPriceItem.IsKeyboardFocused)
+            {
+                DecimalPriceItem.Value += 0.00M;
+                DecimalPriceItem.Focus();
             }
         }
 
@@ -930,7 +1020,8 @@ namespace AppEnteringTrackingAndOrders
             ButtonPoint.Width = ButtonPoint.Height = sizebutton; ButtonPoint.Margin = new Thickness(1045, (sizebutton + 5) * 3, 0, 0);
 
             KeyboardAbc.Width = 1140; KeyboardAbc.Height = 378;
-            BorderTextBoxNameItem.Width = 598; TextBoxNameItem.Margin = new Thickness(39, 3, 39, 3);
+            BorderTextBoxNameItem.Width = 600;
+            BorderDecimalPriceItem.Width = 600;
         }
 
         private void SizeKeyboardButtonSmall()
@@ -984,7 +1075,8 @@ namespace AppEnteringTrackingAndOrders
             ButtonPoint.Width = ButtonPoint.Height = sizebutton; ButtonPoint.Margin = new Thickness(825, 225, 0, 0);
 
             KeyboardAbc.Width = 900; KeyboardAbc.Height = 296;
-            BorderTextBoxNameItem.Width = 448; TextBoxNameItem.Margin = new Thickness(39, 3, 39, 3);
+            BorderTextBoxNameItem.Width = 448;
+            BorderDecimalPriceItem.Width = 448;
         }
 
         private void SaveItemButton_Click(object sender, RoutedEventArgs e)
@@ -998,33 +1090,25 @@ namespace AppEnteringTrackingAndOrders
                     {
                         ShowError(TextBoxNameItem, "Некорректное название");
                     }
-                    else if (string.IsNullOrWhiteSpace(TextBoxDescItem.Text))
-                    {
-                        ShowError(TextBoxDescItem, "Некорректное описание");
-                    }
-                    else if (DecimalPriceItem.Value != Math.Round(DecimalPriceItem.Value,2))
+                    else if (DecimalPriceItem.Value != Math.Round(DecimalPriceItem.Value, 2))
                     {
                         ShowError(DecimalPriceItem, "Уменьшете разрядность цены до 0.00");
                     }
-                    else if (string.IsNullOrWhiteSpace(ComboBoxItemKitchOrBar.Text))
-                    {
-                        ShowError(ComboBoxItemKitchOrBar, "Выберите место приготовления");
-                    }
-                    else 
+                    else
                     {
                         // Присоединяем Group к контексту
-                        context.Attach(_group);
+                        //context.Attach(_group);
 
-                        var item = new MenuItem
+                       /* var item = new MenuItem
                         {
-                            Name = Convert.ToString(TextBoxNameItem.Text),
-                            Description = Convert.ToString(TextBoxDescItem.Text),
-                            Price = Convert.ToDecimal(Math.Round(DecimalPriceItem.Value,2)),
+                            Name = Convert.ToString(TextBoxNameItemNameItem.Text),
+                            Description = Convert.ToString(TextBoxNameItemDescItem.Text),
+                            Price = Convert.ToDecimal(Math.Round(DecimalPriceItem.Value, 2)),
                             Destination = Convert.ToString(ComboBoxItemKitchOrBar.Text),
-                            Group = _group,
+                            //Group = _group,
                         };
                         context.MenuItems.Add(item);
-                        context.SaveChanges();
+                        context.SaveChanges();*/
                         NavigationService.GoBack();
                     }
                 }
@@ -1034,9 +1118,7 @@ namespace AppEnteringTrackingAndOrders
         private void ShowError(Control control, string hintMessage)
         {
             if (control == TextBoxNameItem) TextBoxNameItem.Foreground = Brushes.Red;
-            if (control == TextBoxDescItem) TextBoxDescItem.Foreground = Brushes.Red;
             if (control == DecimalPriceItem) DecimalPriceItem.Foreground = Brushes.Red;
-            if (control == ComboBoxItemKitchOrBar) ComboBoxItemKitchOrBar.Foreground = Brushes.Red;
 
             HintAssist.SetHint(control, hintMessage);
         }
@@ -1050,25 +1132,6 @@ namespace AppEnteringTrackingAndOrders
         {
             DecimalPriceItem.Foreground = Brushes.Black;
         }
-
-        private void TextBoxDescItem_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TextBoxDescItem.Foreground = Brushes.Black; 
-        }
-
-        private void ComboBoxItemKitchOrBar_DropDownOpened(object sender, EventArgs e)
-        {
-            ComboBoxItemKitchOrBar.Foreground = Brushes.White;
-        }
-
-        private void ComboBoxItemKitchOrBar_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComboBoxItemKitchOrBar.Foreground = Brushes.Black;
-        }
-
-        private void ComboBoxItemKitchOrBar_DropDownClosed(object sender, EventArgs e)
-        {
-            ComboBoxItemKitchOrBar.Foreground = Brushes.Black;
-        }
     }
 }
+

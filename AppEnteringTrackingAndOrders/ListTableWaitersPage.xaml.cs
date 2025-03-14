@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace AppEnteringTrackingAndOrders
     {
         private int? _IDYourUserRoles;
         private User _user;
+        private int _IDOrders = 0;
+
         public ListTableWaitersPage(User user)
         {
             _user = user;
@@ -48,21 +51,64 @@ namespace AppEnteringTrackingAndOrders
                     TextBlockBorderCenterTopMenu.Text = "Все заказы";
                 }
             }
+
+            using (var context = new RestaurantContext())
+            {
+                List<Order> orders = context.Orders.AsNoTracking().ToList();
+                foreach (var order in orders)
+                {
+                    OrdersPage orderpage = new OrdersPage(_user, order.Id);
+                    if (orders[orders.Count-1] == order)
+                    {
+                        _IDOrders = order.Id;
+                    }
+                    Button button = new Button()
+                    {
+                        Width = 365,
+                        Height = 175,
+                        Margin = new Thickness(0, 0, 10, 10),
+                        Content = order.Id,
+                        FontSize = 24
+                    };
+                    button.Style = (Style)FindResource("ButtonStyleNo");
+                    button.Tag = orderpage;
+                    button.Click += EditButtonsToWrapPanel;
+                    WrapPanelOrders.Children.Add(button);
+                }
+            }
         }
 
         private void AddButtonsToWrapPanel(object sender, RoutedEventArgs e)
         {
-            OrdersPage orders = new OrdersPage(_user);
-            NavigationService.Navigate(orders);
+            _IDOrders += 1;
+            OrdersPage orderpage = new OrdersPage(_user,_IDOrders);
+            NavigationService.Navigate(orderpage);
 
             Button button = new Button
             {
                 Width = 365,
                 Height = 175,
-                Margin = new Thickness(0,0,10,10)
+                Margin = new Thickness(0, 0, 10, 10),
+                Content = _IDOrders,
             };
             button.Style = (Style)FindResource("ButtonStyleFull");
+            button.Tag = orderpage;
+            button.Click += EditButtonsToWrapPanel;
             WrapPanelOrders.Children.Add(button);
+        }
+
+        private void EditButtonsToWrapPanel(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = sender as Button;
+
+            if (clickedButton != null)
+            {
+                OrdersPage order = (OrdersPage)clickedButton.Tag;
+                if (order != null) 
+                {
+                    NavigationService.Navigate(order);
+                }
+            }
         }
 
         private void ButtonLeftTopMenu_Click(object sender, RoutedEventArgs e)

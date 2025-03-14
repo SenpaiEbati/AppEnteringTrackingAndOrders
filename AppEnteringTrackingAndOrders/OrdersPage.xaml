@@ -122,9 +122,16 @@
                 </Border>
                 <ScrollViewer x:Name="ItemMenuButtonsScrollViewer" 
                               VerticalScrollBarVisibility="Hidden" 
-                              HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0">
+                              HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0" Visibility="Visible">
                     <WrapPanel x:Name="ItemMenuButtonsWrapPanel">
                         <Button x:Name="ItemMenuButtonsWrapPanelAddPositionButton" Content="➕ Добавить&#x0a;    позицию" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ItemMenuButtonsWrapPanelAddPositionButton_Click"/>
+                    </WrapPanel>
+                </ScrollViewer>
+                <ScrollViewer x:Name="ItemModifierButtonsScrollViewer" 
+                              VerticalScrollBarVisibility="Hidden" 
+                              HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0" Visibility="Hidden">
+                    <WrapPanel x:Name="ItemModifierButtonsWrapPanel">
+                        <Button x:Name="ItemModifierButtonsWrapPanelAddPositionButton" Content="➕ Добавить&#x0a;модификатор" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ItemModifierButtonsWrapPanelAddPositionButton_Click" Focusable="False"/>
                     </WrapPanel>
                 </ScrollViewer>
             </Grid>
