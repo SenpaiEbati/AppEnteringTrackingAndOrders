@@ -161,6 +161,44 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    
+    <Style x:Key="ButtonStyleFullGreen" TargetType="Button">
+        <Setter Property="Background" Value="#FF70AB64" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="White" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="15"
+                            Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация для MouseOver -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="DarkGray"/>
+                            <Setter Property="BorderBrush" Value="LightGray"/>
+                        </Trigger>
+
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="DimGray"/>
+                            <Setter Property="BorderBrush" Value="Gray"/>
+                        </Trigger>
+
+                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="LightGray"/>
+                            <Setter Property="Foreground" Value="DarkGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     
     
     <Style x:Key="ButtonStyleTopLeft" TargetType="Button">

@@ -42,7 +42,7 @@
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
                         </Border.Effect>
-                        <materialDesign:DecimalUpDown x:Name="DecimalPriceItem" GotFocus="TextBoxPriceItem_GotFocus"  Value="1.00" ValueStep="0.01" materialDesign:HintAssist.Hint="Введите цену" FontSize="24" Minimum="0" Style="{StaticResource MaterialDesignFloatingHintDecimalUpDown}" Margin="38,10,38,10" Maximum="1000000000"/>
+                        <materialDesign:DecimalUpDown x:Name="DecimalPriceItem" GotFocus="TextBoxPriceItem_GotFocus"  Value="1.00" ValueStep="0.01" materialDesign:HintAssist.Hint="Введите цену" FontSize="24" Minimum="0" Style="{StaticResource MaterialDesignFloatingHintDecimalUpDown}" Margin="38,10,38,10" Maximum="1000000000" Focusable="True"/>
                     </Border>
                 </Grid>
             </Grid>

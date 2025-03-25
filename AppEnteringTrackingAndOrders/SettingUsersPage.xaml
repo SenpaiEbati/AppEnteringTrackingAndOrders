@@ -168,10 +168,11 @@
                 <Button x:Name="DownLeftButtonSeven" Content="7" Style="{DynamicResource ButtonStyleDownLeft}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Focusable="False" Click="DownLeftButtonSeven_Click"/>
                 <Button x:Name="DownRightButtonNine" Content="9" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Focusable="False" Click="DownRightButtonNine_Click" Margin="0,0,163,0"/>
                 <Button x:Name="TopButtonDelete" Content="Del" Style="{DynamicResource ButtonStyleTopRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="36" Focusable="False" Click="TopButtonDelete_Click" Margin="468,0,0,0"/>
-                <Button x:Name="CenterButtonPoint" Content="." Style="{DynamicResource ButtonStyleNo}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="72"  Focusable="False" Click="CenterButtonPoint_Click" Margin="468,0,0,0"/>
-                <Button x:Name="DownButtonZero" Content="0" Style="{DynamicResource ButtonStyleDownRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="36" Focusable="False" Click="DownButtonZero_Click" Margin="468,0,0,0"/>
+                <Button x:Name="CenterButtonPoint" Content="0" Style="{DynamicResource ButtonStyleNo}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36"  Focusable="False" Click="CenterButtonPoint_Click" Margin="468,0,0,0"/>
+                <Button x:Name="DownButtonKeyboard" Style="{DynamicResource ButtonStyleDownRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="36" Focusable="False"  Margin="468,0,0,0">
+                    <Image Source="/keyboard-512.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50"/>
+                </Button>
             </Grid>
-
         </Canvas>
         <Canvas Grid.Row="2" Grid.Column="2"/>
         <Frame x:Name="SettingFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="3" Grid.RowSpan="3" />

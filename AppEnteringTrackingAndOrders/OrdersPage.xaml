@@ -23,8 +23,17 @@
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" FontSize="24" Margin="15"/>
 
-            <Border Height="80" Width="650" Style="{DynamicResource BorderGray}" CornerRadius="15">
+            <Border Height="80" Width="650" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="0,5,5,5">
                 <TextBlock x:Name="TopBorderText" FontSize="24" Margin="10,5,10,5" Foreground="White"/>
+            </Border>
+            <Border Height="80" Width="783" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="10,5,5,5">
+                <TextBlock Text="По официантам"  FontSize="24" Margin="10,5,10,5" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border Height="80" Width="117" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="10,5,5,5">
+                <Image Source="/search.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+            </Border>
+            <Border Height="80" Width="117" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="10,5,5,5">
+                <Image Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/icons8.png"/>
             </Border>
         </StackPanel>
         <Grid Grid.Row="1">
@@ -38,13 +47,23 @@
                               VerticalScrollBarVisibility="Hidden" 
                               HorizontalScrollBarVisibility="Disabled" Margin="15,80,0,85">
                     <WrapPanel x:Name="OrderPanelInfoWrapPanel" Width="625">
-                        <Button x:Name="ButtonOrdersSumWrapPanel" Style="{DynamicResource ButtonStyleNo}" Height="80" VerticalAlignment="Center" Width="605" Margin="0,5,0,0"/>
+                        <!--<Border Width="605" Height="80" Margin="0, 5, 0, 0" Style="{DynamicResource BorderGray}">
+                            <TextBlock Text=" Гость 1                                                          276,99₽" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Width="582" Margin="10,0,0,0" />
+                        </Border>
+                        <Button Width="605" Height="80" Margin="0, 5, 0, 0" Content="⠀Сырная⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀1⠀⠀⠀⠀256,99₽" Style="{DynamicResource ButtonOrderItem}" FontSize = "24"/>
+                        <Button Width="605" Height="80" Margin="0, 5, 0, 0" Content="Помидоры⠀⠀⠀⠀⠀⠀⠀              ⠀⠀⠀1⠀⠀⠀⠀20₽" Style="{DynamicResource ButtonOrderItemModifier}" FontSize = "24"/>
+                        <Border Width="605" Height="80" Margin="0, 5, 0, 0" Style="{DynamicResource BorderGray}">
+                            <TextBlock Text=" Гость 2                                                          271,99₽" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Width="582" Margin="10,0,0,0" />
+                        </Border>
+                        <Button Width="605" Height="80" Margin="0, 5, 0, 0" Content="⠀Пепперони⠀⠀⠀⠀⠀   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀1⠀⠀⠀⠀256,99₽" Style="{DynamicResource ButtonOrderItem}" FontSize = "24"/>
+                        <Button Width="605" Height="80" Margin="0, 5, 0, 0" Content="Лук            ⠀⠀⠀⠀⠀⠀⠀              ⠀⠀⠀1⠀⠀⠀⠀15₽" Style="{DynamicResource ButtonOrderItemModifier}" FontSize = "24"/>
+                        -->
                     </WrapPanel>
                 </ScrollViewer>
                 <Button
                     Style="{DynamicResource ButtonStyleFull}"
                     Height="80" Width="200" FontSize="24" Margin="15,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-                    <Image Source="./buttonleft.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50">
+                    <Image Source="./buttonleftwhite.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50">
                         <Image.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -58,7 +77,7 @@
                 <Button
                     Style="{DynamicResource ButtonStyleFull}"
                     Height="80" Width="200" FontSize="24" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                    <Image Source="./buttonleft.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50">
+                    <Image Source="./buttonleftwhite.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50">
                         <Image.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -75,7 +94,7 @@
                 <Button
                     Style="{DynamicResource ButtonStyleTopLeft}" FontSize="24" Margin="15,0,0,0" 
                     HorizontalAlignment="Left" Width="200" Height="80" VerticalAlignment="Top">
-                    <Image Source="./buttonleft.png" Height="50" Width="50"></Image>
+                    <Image Source="./buttonleftwhite.png" Height="50" Width="50"></Image>
                 </Button>
                 <Button
                     Style="{DynamicResource ButtonStyleNo}" FontSize="24" 
@@ -83,7 +102,7 @@
                 <Button
                     Style="{DynamicResource ButtonStyleTopRight}" FontSize="24" Margin="0,0,15,0"
                     HorizontalAlignment="Right" Width="200" Height="80" VerticalAlignment="Top">
-                    <Image Source="./buttonleft.png" Height="50" Width="50" RenderTransformOrigin="0.5,0.5">
+                    <Image Source="./buttonleftwhite.png" Height="50" Width="50" RenderTransformOrigin="0.5,0.5">
                         <Image.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -117,7 +136,7 @@
                 </ScrollViewer>
             </Grid>
             <Grid x:Name="ItemMenuButtonsGrid" Grid.Column="2">
-                <Border x:Name="ItemMenuBorder" Style="{DynamicResource BorderGray}" Height="80" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,0,20,0">
+                <Border x:Name="ItemMenuBorder" Style="{DynamicResource BorderGray}" Height="82" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,-1,15,0">
                     <TextBlock x:Name="ItemMenuBorderTextBlock" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                 </Border>
                 <ScrollViewer x:Name="ItemMenuButtonsScrollViewer" 
@@ -132,6 +151,8 @@
                               HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0" Visibility="Hidden">
                     <WrapPanel x:Name="ItemModifierButtonsWrapPanel">
                         <Button x:Name="ItemModifierButtonsWrapPanelAddPositionButton" Content="➕ Добавить&#x0a;модификатор" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ItemModifierButtonsWrapPanelAddPositionButton_Click" Focusable="False"/>
+                        <!--<Button Content="Помидоры" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Focusable="False"/>
+                        <Button Content="Лук" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Focusable="False"/>-->
                     </WrapPanel>
                 </ScrollViewer>
             </Grid>
@@ -139,10 +160,10 @@
         <Grid Grid.Row="2">
             <Button
                 Style="{DynamicResource ButtonStyleFull}"
-                Height="80" Width="600" FontSize="24" Margin="15" Background="#FF3FBB5E" HorizontalAlignment="Left"/>
+                Height="80" Width="600" FontSize="24" Margin="15" Background="#FF3FBB5E" HorizontalAlignment="Left" Content="Оплата                                                             553,98₽"/>
             <Button
                 Style="{DynamicResource ButtonStyleFull}"
-                Height="80" Width="600" FontSize="24" Margin="15" Content="Сохранить заказ" HorizontalAlignment="Right" Foreground="#FF47E86F"/>
+                Height="80" Width="600" FontSize="24" Margin="15" Content="Сохранить заказ" HorizontalAlignment="Right" Foreground="#FF47E86F" Click="SaveOrder_Click"/>
         </Grid>
     </Grid>
 </Page>

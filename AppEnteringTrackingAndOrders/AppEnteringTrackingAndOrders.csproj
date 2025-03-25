@@ -13,9 +13,12 @@
     <None Remove="backbutton.png" />
     <None Remove="buttonleft.png" />
     <None Remove="buttonleftright.png" />
+    <None Remove="buttonleftwhite.png" />
     <None Remove="change.png" />
     <None Remove="delete.png" />
+    <None Remove="icons8.png" />
     <None Remove="keyboard-512.png" />
+    <None Remove="search.png" />
     <None Remove="settinguser.png" />
     <None Remove="shift-2.png" />
   </ItemGroup>
@@ -38,10 +41,13 @@
   <ItemGroup>
     <Resource Include="backbutton.png" />
     <Resource Include="buttonleft.png" />
+    <Resource Include="buttonleftwhite.png" />
     <Resource Include="change.png" />
     <Resource Include="add.png" />
     <Resource Include="delete.png" />
+    <Resource Include="icons8.png" />
     <Resource Include="keyboard-512.png" />
+    <Resource Include="search.png" />
     <Resource Include="settinguser.png" />
     <Resource Include="shift-2.png" />
   </ItemGroup>

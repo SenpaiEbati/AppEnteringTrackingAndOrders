@@ -7,39 +7,50 @@
       mc:Ignorable="d" 
       d:DesignHeight="1200" d:DesignWidth="1920"
       Title="ListTableWaitersPage">
-    
+
     <Grid x:Name="BackgroundGrid" Style="{DynamicResource BackgroundGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
-            <Border x:Name="BorderButtonLeftTopMenu" Height="80" Width="130" HorizontalAlignment="Left" 
-                    VerticalAlignment="Center" CornerRadius="15,0,0,15" Margin="10,10,10,10"
-                    Style="{DynamicResource BorderGray}">
-                <Button x:Name="ButtonLeftTopMenu" Height="80" Width="130" Canvas.Left="10" 
-                    Canvas.Top="25" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="ButtonLeftTopMenu_Click">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/buttonleft.png" Stretch="Uniform" Viewbox="0,-0.5,1,2"/>
-                    </Button.Background>
-                </Button>
-            </Border>
-            <Border x:Name="BorderCenterTopMenu" Height="80" Width="475" HorizontalAlignment="Left" 
-                    VerticalAlignment="Center" Margin="0,10,10,10"
-                    Style="{DynamicResource BorderGray}">
+        <StackPanel Grid.Row="0" Orientation="Horizontal"  >
+
+            <Button x:Name="ButtonLeftTopMenu" Height="80" Width="130" Margin="10" Style="{DynamicResource ButtonStyleLeft}" Click="ButtonLeftTopMenu_Click">
+                <Image Source="/buttonleftwhite.png" Height="42" Width="42" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+            </Button>
+
+            <Border x:Name="BorderCenterTopMenu" Height="80" Width="695"
+                    Style="{DynamicResource BorderGray}" Margin="0,10,10,10">
                 <TextBlock x:Name="TextBlockBorderCenterTopMenu" Text="Все официанты"  FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
             </Border>
-            <Border x:Name="BorderButtonRightTopMenu" Height="80" HorizontalAlignment="Left" 
-                    VerticalAlignment="Center" Margin="0,10,10,10" CornerRadius="0,15,15,0"
+
+            <Button x:Name="ButtonRightTopMenu" Height="80" Width="130" Style="{DynamicResource ButtonStyleRight}" Margin="0,10,10,10" Click="ButtonRightTopMenu_Click">
+                <Image Source="/buttonleftwhite.png" RenderTransformOrigin="0.5,0.5" Height="42" Width="42" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+            </Button>
+
+            <Border  Height="80" Width="624" 
+                    VerticalAlignment="Center" Margin="0,10,10,10" CornerRadius="15,15,15,15"
+                    Style="{DynamicResource BorderGray}" >
+                <TextBlock Text="По официантам" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"></TextBlock>
+            </Border>
+            <Border  Height="80" Width="117" 
+                    VerticalAlignment="Center" Margin="0,10,10,10" CornerRadius="15,15,15,15"
                     Style="{DynamicResource BorderGray}">
-                <Button x:Name="ButtonRightTopMenu" Height="80" Width="130"
-                        HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" Foreground="{x:Null}" 
-                        Click="ButtonRightTopMenu_Click">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/buttonleft.png" Stretch="Uniform" Viewbox="0,-0.5,1,2" Viewport="1,0,1,1" TileMode="FlipXY"/>
-                    </Button.Background>
-                </Button>
+                <Image Source="/search.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+            </Border>
+            <Border  Height="80" Width="117" CornerRadius="15,15,15,15"  
+                     Style="{DynamicResource BorderGray}">
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Height="52" Width="51" Source="/icons8.png" Stretch="Fill"/>
             </Border>
         </StackPanel>
         <StackPanel Grid.Row="1">
@@ -48,13 +59,158 @@
                       HorizontalScrollBarVisibility="Disabled" PanningMode="Both" Margin="10" Height="1000">
                 <WrapPanel Grid.Row="1" x:Name="WrapPanelOrders" 
                        Orientation="Horizontal" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollViewer}}">
-                    <Button Height="175" Width="175" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel"/>
-                    <Button Height="175" Width="175" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel"/>
+                    <Button Height="175" Width="175" Content="        ➕&#x0a;Новый заказ" Style="{DynamicResource ButtonStyleFullGreen}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel" FontSize="24"/>
+                    <Button Height="175" Width="175" Content="        ➕&#x0a;Быстрый чек" Style="{DynamicResource ButtonStyleFullGreen}" Margin="0,0,15,10" Click="AddButtonsToWrapPanel" FontSize="24"/>
+                    <!--<Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="1" FontSize="36"/>
+                            <Run Text="                                   562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="2" FontSize="36"/>
+                            <Run Text="                                   562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="3" FontSize="36"/>
+                            <Run Text="                                   562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="4" FontSize="36"/>
+                            <Run Text="                                   562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="5" FontSize="36"/>
+                            <Run Text="                                   562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="6" FontSize="36"/>
+                            <Run Text="                                   562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="7" FontSize="36"/>
+                            <Run Text="                                   562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="8" FontSize="36"/>
+                            <Run Text="                                   562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="9" FontSize="36"/>
+                            <Run Text="                                   562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="10" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="11" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="12" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="13" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="14" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="15" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="16" FontSize="36"/>
+                            <Run Text="                                   562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="17" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="18" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="19" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="20" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="21" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="22" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="23" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
+                        <TextBlock FontSize="24" Width="345" Height="156">
+                            <Run Text="24" FontSize="36"/>
+                            <Run Text="                                562,99₽&#x0a;&#x0a;Иванов&#x0a;16:30 • Зал • Общий&#x0a;"/>
+                        </TextBlock>
+                    </Button>-->
+
                 </WrapPanel>
             </ScrollViewer>
         </StackPanel>
         <StackPanel Grid.Row="2">
-            <TextBox Margin="10" Grid.Row="1" AcceptsReturn="True" Text="Пример текста" Background="Azure"/>
+
         </StackPanel>
     </Grid>
 </Page>

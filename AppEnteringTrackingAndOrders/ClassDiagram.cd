@@ -1,105 +1,171 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="AppEnteringTrackingAndOrders.Migrations.InitialCreate">
-    <Position X="0.5" Y="4" Width="1.5" />
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="AppEnteringTrackingAndOrders.AddGroupMenuPage">
+    <Position X="8.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
-      <FileName>Migrations\20241103081713_InitialCreate.cs</FileName>
+      <HashCode>AAgBAAwgBAAQgAAEIAbwf+/wDxIACRgABoAAAYEJAEA=</HashCode>
+      <FileName>AddGroupMenuPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AppEnteringTrackingAndOrders.Migrations.ApplicationDbContextModelSnapshot">
-    <Position X="2.25" Y="4.25" Width="1.5" />
+  <Class Name="AppEnteringTrackingAndOrders.AddMenuItemPage">
+    <Position X="10" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
-      <FileName>Migrations\ApplicationDbContextModelSnapshot.cs</FileName>
+      <HashCode>AAwBAAwgBBAQgAAkIAbwf+/wDxIACRgBFoAAAYAJAEA=</HashCode>
+      <FileName>AddMenuItemPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AppEnteringTrackingAndOrders.HalfSizeConverter" BaseTypeListCollapsed="true">
-    <Position X="2.25" Y="0.5" Width="1.5" />
+  <Class Name="AppEnteringTrackingAndOrders.AddModifierItemPage">
+    <Position X="11.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>HalfSizeConverter.cs</FileName>
+      <HashCode>AAgBAAwgBBAQgAAkIAbwf+/wDxIACRgAFoAAAIAJAEA=</HashCode>
+      <FileName>AddModifierItemPage.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="AppEnteringTrackingAndOrders.ListTableWaiters" BaseTypeListCollapsed="true">
-    <Position X="7.5" Y="2.25" Width="1.5" />
+  <Class Name="AppEnteringTrackingAndOrders.ListTableWaitersPage">
+    <Position X="13.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAIA=</HashCode>
-      <FileName>ListTableWaiters.xaml.cs</FileName>
+      <HashCode>AFABAAAAAQAAAAgAAAAAAACAQEgCAJAAIAAIAAAAAIA=</HashCode>
+      <FileName>ListTableWaitersPage.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.1" />
   </Class>
-  <Class Name="AppEnteringTrackingAndOrders.MainPage" BaseTypeListCollapsed="true">
-    <Position X="9.25" Y="0.5" Width="1.5" />
+  <Class Name="AppEnteringTrackingAndOrders.MainPage">
+    <Position X="17" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAwgAAAAAKAAIAQQAACAAAIACQAAAIAAAKEAAEA=</HashCode>
+      <HashCode>AAgBAAwgBAAQgCAEIAbwf+/wDxIACRgABoAAAKEJAEA=</HashCode>
       <FileName>MainPage.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.1" />
   </Class>
-  <Class Name="AppEnteringTrackingAndOrders.MainWindow" BaseTypeListCollapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+  <Class Name="AppEnteringTrackingAndOrders.MainWindow">
+    <Position X="13.5" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AppEnteringTrackingAndOrders.OrdersPage">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAgAAAAAYQAgQAAIAAAgAYIAAAAAQAAAAIAICAEBAI=</HashCode>
+      <FileName>OrdersPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AppEnteringTrackingAndOrders.SettingUsersPage">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>iwBAAAwhABCEQIQBKQQTAEgGAgIQCQAAIIEIggkDoEA=</HashCode>
+      <FileName>SettingUsersPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AppEnteringTrackingAndOrders.HalfSizeConverter" BaseTypeListCollapsed="true">
+    <Position X="1.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HalfSizeConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="AppEnteringTrackingAndOrders.VisibilityToMarginConverter" BaseTypeListCollapsed="true">
-    <Position X="4" Y="0.5" Width="1.5" />
+    <Position X="4" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MarginConverter.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="AppEnteringTrackingAndOrders.ConditionalMarginConverter" BaseTypeListCollapsed="true">
-    <Position X="5.75" Y="0.5" Width="1.5" />
+    <Position X="3.5" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MarginConverter.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AppEnteringTrackingAndOrders.Menu">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AppEnteringTrackingAndOrders.Group">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAABAAAAAAAAQAAAAIBAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AppEnteringTrackingAndOrders.MenuItem">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACBEAEAQAgAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AppEnteringTrackingAndOrders.MenuItemModifier">
+    <Position X="0.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAABAAgAAAAAQAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AppEnteringTrackingAndOrders.Order">
+    <Position X="2.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAACAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AppEnteringTrackingAndOrders.OrderItem">
+    <Position X="2.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAECBAAAAAAAABAAAAAAAAAAAQAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AppEnteringTrackingAndOrders.OrderItemModifier">
+    <Position X="2.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAEIAAAAIAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AppEnteringTrackingAndOrders.RestaurantContext">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAEAAAREAABAAAAAAAAAAEAAAAAAAAAAAiCAAAAA=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Class Name="AppEnteringTrackingAndOrders.PasswordHasher">
-    <Position X="7.5" Y="0.5" Width="1.5" />
+    <Position X="2.5" Y="10.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAEAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>PasswordHasher.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AppEnteringTrackingAndOrders.SettingUsers" BaseTypeListCollapsed="true">
-    <Position X="11" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>iwBAAAwhABCEQIQBKQQTAEgGAgIQCQAAIIEIggkDoEA=</HashCode>
-      <FileName>SettingUsers.xaml.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.1" />
-  </Class>
   <Class Name="AppEnteringTrackingAndOrders.User">
-    <Position X="2.25" Y="2.25" Width="1.5" />
+    <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAAAAAAQAAAAgAAgAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UserRoles.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AppEnteringTrackingAndOrders.Role">
-    <Position X="0.5" Y="2.25" Width="1.5" />
+    <Position X="4.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>UserRoles.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AppEnteringTrackingAndOrders.ApplicationDbContext">
-    <Position X="5.75" Y="2.25" Width="1.5" />
+    <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAACAAAQAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UserRoles.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AppEnteringTrackingAndOrders.ConstantsInitialValuesMethodsDb">
-    <Position X="4" Y="2.25" Width="1.5" />
+    <Position X="4.25" Y="3.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>gIAgCAAAAAAAAAAAAAAAAAAAAAAAAAEAAADBAAAAIAA=</HashCode>
       <FileName>UserRoles.cs</FileName>

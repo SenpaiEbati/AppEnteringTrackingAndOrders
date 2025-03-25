@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AppEnteringTrackingAndOrders.Migrations
+namespace AppEnteringTrackingAndOrders.Migrations.Restaurant
 {
     [DbContext(typeof(RestaurantContext))]
-    [Migration("20250313133750_Initial2")]
-    partial class Initial2
+    [Migration("20250325195058_MenuContext")]
+    partial class MenuContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -130,7 +130,7 @@ namespace AppEnteringTrackingAndOrders.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("OrderDate")
+                    b.Property<DateTimeOffset>("OrderDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");

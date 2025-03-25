@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static AppEnteringTrackingAndOrders.ConstantsInitialValuesMethodsDb;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AppEnteringTrackingAndOrders
 {
@@ -45,7 +46,6 @@ namespace AppEnteringTrackingAndOrders
                 if (_IDYourUserRoles == 3)
                 {
                     BorderCenterTopMenu.Width += 5;
-                    BorderButtonLeftTopMenu.Width += 5;
                     ButtonLeftTopMenu.Visibility = Visibility.Hidden;
                     ButtonRightTopMenu.Visibility = Visibility.Hidden;
                     TextBlockBorderCenterTopMenu.Text = "Все заказы";
@@ -67,10 +67,15 @@ namespace AppEnteringTrackingAndOrders
                         Width = 365,
                         Height = 175,
                         Margin = new Thickness(0, 0, 10, 10),
-                        Content = order.Id,
                         FontSize = 24
                     };
-                    button.Style = (Style)FindResource("ButtonStyleNo");
+                    decimal orderprise = 0.00M;
+                    for (int i = 0; i < order.Items.Count; i++)
+                    {
+                        orderprise += order.Items[i].MenuItem.Price;
+                    }
+                    button.Content = $"{order.Id}".ToUpper() + $"                                  {orderprise}₽\n\nИванов\n16:30 • Зал • Общий";
+                    button.Style = (Style)FindResource("ButtonStyleFull");
                     button.Tag = orderpage;
                     button.Click += EditButtonsToWrapPanel;
                     WrapPanelOrders.Children.Add(button);
@@ -84,17 +89,18 @@ namespace AppEnteringTrackingAndOrders
             OrdersPage orderpage = new OrdersPage(_user,_IDOrders);
             NavigationService.Navigate(orderpage);
 
-            Button button = new Button
+            /*Button button = new Button
             {
                 Width = 365,
                 Height = 175,
                 Margin = new Thickness(0, 0, 10, 10),
                 Content = _IDOrders,
             };
+
             button.Style = (Style)FindResource("ButtonStyleFull");
             button.Tag = orderpage;
             button.Click += EditButtonsToWrapPanel;
-            WrapPanelOrders.Children.Add(button);
+            WrapPanelOrders.Children.Add(button);*/
         }
 
         private void EditButtonsToWrapPanel(object sender, RoutedEventArgs e)

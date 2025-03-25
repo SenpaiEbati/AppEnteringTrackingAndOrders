@@ -26,9 +26,11 @@ namespace AppEnteringTrackingAndOrders
     {
         private bool _langRuENKey = false;
         private bool _shiftKey = false;
+        private MenuItem _MenuItem;
 
-        public AddModifierItemPage()
+        public AddModifierItemPage(MenuItem menuItem)
         {
+            _MenuItem = menuItem;
             InitializeComponent();
         }
 
@@ -46,7 +48,7 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "1";
                 TextBoxNameItem.Focus();
             }
-            else if (DecimalPriceItem.IsKeyboardFocused)
+            else if (DecimalPriceItem.IsFocused)
             {
                 string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "1";
                 if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
@@ -1097,18 +1099,16 @@ namespace AppEnteringTrackingAndOrders
                     else
                     {
                         // Присоединяем Group к контексту
-                        //context.Attach(_group);
+                        context.Attach(_MenuItem);
 
-                       /* var item = new MenuItem
+                        var item = new MenuItemModifier()
                         {
-                            Name = Convert.ToString(TextBoxNameItemNameItem.Text),
-                            Description = Convert.ToString(TextBoxNameItemDescItem.Text),
-                            Price = Convert.ToDecimal(Math.Round(DecimalPriceItem.Value, 2)),
-                            Destination = Convert.ToString(ComboBoxItemKitchOrBar.Text),
-                            //Group = _group,
+                            Name = Convert.ToString(TextBoxNameItem.Text),
+                            AdditionalCost = Convert.ToDecimal(DecimalPriceItem.Value),
+                            MenuItem = _MenuItem
                         };
-                        context.MenuItems.Add(item);
-                        context.SaveChanges();*/
+                        context.MenuItemModifiers.Add(item);
+                        context.SaveChanges();
                         NavigationService.GoBack();
                     }
                 }
