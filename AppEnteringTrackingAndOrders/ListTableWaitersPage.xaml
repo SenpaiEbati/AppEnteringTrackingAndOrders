@@ -59,8 +59,8 @@
                       HorizontalScrollBarVisibility="Disabled" PanningMode="Both" Margin="10" Height="1000">
                 <WrapPanel Grid.Row="1" x:Name="WrapPanelOrders" 
                        Orientation="Horizontal" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollViewer}}">
-                    <Button Height="175" Width="175" Content="        ➕&#x0a;Новый заказ" Style="{DynamicResource ButtonStyleFullGreen}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel" FontSize="24"/>
-                    <Button Height="175" Width="175" Content="        ➕&#x0a;Быстрый чек" Style="{DynamicResource ButtonStyleFullGreen}" Margin="0,0,15,10" Click="AddButtonsToWrapPanel" FontSize="24"/>
+                    <Button x:Name="AddOrderButton" Height="175" Width="175" Content="        ➕&#x0a;Новый заказ" Style="{DynamicResource ButtonStyleFullGreen}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel" FontSize="24"/>
+                    <Button x:Name="FastAddOrderButton" Height="175" Width="175" Content="        ➕&#x0a;Быстрый чек" Style="{DynamicResource ButtonStyleFullGreen}" Margin="0,0,15,10" Click="AddButtonsToWrapPanel" FontSize="24"/>
                     <!--<Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
                         <TextBlock FontSize="24" Width="345" Height="156">
                             <Run Text="1" FontSize="36"/>

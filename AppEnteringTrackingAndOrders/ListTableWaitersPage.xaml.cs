@@ -52,42 +52,14 @@ namespace AppEnteringTrackingAndOrders
                 }
             }
 
-            using (var context = new RestaurantContext())
-            {
-                List<Order> orders = context.Orders.AsNoTracking().ToList();
-                foreach (var order in orders)
-                {
-                    OrdersPage orderpage = new OrdersPage(_user, order.Id);
-                    if (orders[orders.Count-1] == order)
-                    {
-                        _IDOrders = order.Id;
-                    }
-                    Button button = new Button()
-                    {
-                        Width = 365,
-                        Height = 175,
-                        Margin = new Thickness(0, 0, 10, 10),
-                        FontSize = 24
-                    };
-                    decimal orderprise = 0.00M;
-                    for (int i = 0; i < order.Items.Count; i++)
-                    {
-                        orderprise += order.Items[i].MenuItem.Price;
-                    }
-                    button.Content = $"{order.Id}".ToUpper() + $"                                  {orderprise}₽\n\nИванов\n{order.OrderDate.Minute}:{order.OrderDate.Second} • Зал • Общий";
-                    button.Style = (Style)FindResource("ButtonStyleFull");
-                    button.Tag = orderpage;
-                    button.Click += EditButtonsToWrapPanel;
-                    WrapPanelOrders.Children.Add(button);
-                }
-            }
+            RefreshMenuData();
         }
 
         private void AddButtonsToWrapPanel(object sender, RoutedEventArgs e)
         {
             _IDOrders += 1;
             OrdersPage orderpage = new OrdersPage(_user, _IDOrders);
-            
+            orderpage.Unloaded += (s, args) => RefreshMenuData();
             NavigationService.Navigate(orderpage);
 
             /*Button button = new Button
@@ -111,9 +83,45 @@ namespace AppEnteringTrackingAndOrders
             if (clickedButton != null)
             {
                 OrdersPage order = (OrdersPage)clickedButton.Tag;
-                if (order != null) 
+                if (order != null)
                 {
                     NavigationService.Navigate(order);
+                }
+            }
+        }
+
+        private void RefreshMenuData()
+        {
+            WrapPanelOrders.Children.Clear();
+            WrapPanelOrders.Children.Add(AddOrderButton);
+            WrapPanelOrders.Children.Add(FastAddOrderButton);
+            using (var context = new RestaurantContext())
+            {
+                List<Order> orders = context.Orders.AsNoTracking().ToList();
+                foreach (var order in orders)
+                {
+                    OrdersPage orderpage = new OrdersPage(_user, order.Id);
+                    if (orders[orders.Count - 1] == order)
+                    {
+                        _IDOrders = order.Id;
+                    }
+                    Button button = new Button()
+                    {
+                        Width = 365,
+                        Height = 175,
+                        Margin = new Thickness(0, 0, 10, 10),
+                        FontSize = 24
+                    };
+                    decimal orderprise = 0.00M;
+                    for (int i = 0; i < order.Items.Count; i++)
+                    {
+                        orderprise += order.Items[i].MenuItem.Price;
+                    }
+                    button.Content = $"{order.Id}".ToUpper() + $"                                  {orderprise}₽\n\nИванов\n{order.OrderDate.Minute}:{order.OrderDate.Second} • Зал • Общий";
+                    button.Style = (Style)FindResource("ButtonStyleFull");
+                    button.Tag = orderpage;
+                    button.Click += EditButtonsToWrapPanel;
+                    WrapPanelOrders.Children.Add(button);
                 }
             }
         }

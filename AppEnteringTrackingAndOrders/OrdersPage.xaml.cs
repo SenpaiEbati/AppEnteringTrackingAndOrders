@@ -34,13 +34,13 @@ namespace AppEnteringTrackingAndOrders
         private OrderItemModifier _now_order_item_modifier;
         private List<OrderItemModifier> _list_order_item_modifier = new List<OrderItemModifier>();
         private int? _IDYourUserRoles;
-        private int _ID = 0; 
+        private int _ID = 0;
 
         public OrdersPage(User user, int OrderID)
         {
             _ID = OrderID;
             InitializeComponent();
-            
+
             _IDYourUserRoles = GetRoleIdForUser(user);
             if (_IDYourUserRoles != null)
             {
@@ -59,7 +59,7 @@ namespace AppEnteringTrackingAndOrders
                 {
                     _menu.Name = "Main Menu";
                     context.Menus.Add(_menu);
-                } 
+                }
                 else
                     _menu = menu;
 
@@ -107,7 +107,7 @@ namespace AppEnteringTrackingAndOrders
                 ItemMenuButtonsWrapPanel.Children.Clear();
                 ItemMenuButtonsWrapPanel.Children.Add(ItemMenuButtonsWrapPanelAddPositionButton);
                 Group group = (Group)clickedButton.Tag;
-                if (group != null) 
+                if (group != null)
                 {
                     _now_group = group;
                     ItemMenuButtonsWrapPanelAddPositionButton.Visibility = Visibility.Visible;
@@ -142,7 +142,7 @@ namespace AppEnteringTrackingAndOrders
             if (clickedButton != null)
             {
                 MenuItem item = (MenuItem)clickedButton.Tag;
-                if (item != null) 
+                if (item != null)
                 {
                     using (var context = new RestaurantContext()) {
                         context.Attach(_now_order);
@@ -176,7 +176,7 @@ namespace AppEnteringTrackingAndOrders
                             _now_order_item = OrderItem;
                             _list_order_item.Add(OrderItem);
                         }
-                            
+
                     }
                     int targetPosition = 65;
                     int paddingLength = targetPosition - item.Name.Length - 1; // -1 учитывает "⠀" в начале
@@ -212,13 +212,13 @@ namespace AppEnteringTrackingAndOrders
                     ItemMenuButtonsScrollViewer.Visibility = Visibility.Collapsed;
                     ModifierMenuButtonsScrollViewer.Visibility = Visibility.Visible;
                     ItemModifierButtonsScrollViewer.Visibility = Visibility.Visible;
-                    return; 
+                    return;
                 }
 
                 var itemModifier = clickedItemOrder.Tag as MenuItemModifier;
                 if (itemModifier != null)
                 {
-                    GroupMenuBorderText.Text = itemModifier.Name; 
+                    GroupMenuBorderText.Text = itemModifier.Name;
                     GroupMenuButtonsScrollViewer.Visibility = Visibility.Collapsed;
                     ItemMenuButtonsScrollViewer.Visibility = Visibility.Collapsed;
                     ModifierMenuButtonsScrollViewer.Visibility = Visibility.Visible;
@@ -272,7 +272,7 @@ namespace AppEnteringTrackingAndOrders
                 }
             }
         }
-    
+
 
         private void AddModifierToOrder(object sender, RoutedEventArgs e)
         {
@@ -364,10 +364,17 @@ namespace AppEnteringTrackingAndOrders
             {
                 if (_IDYourUserRoles == 1)
                 {
-                    NavigationService.Navigate(new AddGroupMenuPage());
+                    AddGroupMenuPage AddGroupMenuPage = new AddGroupMenuPage();
+                    AddGroupMenuPage.Unloaded += (s, args) => RefreshGroupMenuData();
+                    NavigationService.Navigate(AddGroupMenuPage);
                 }
             }
+        }
 
+        private void RefreshGroupMenuData()
+        {
+            GroupMenuButtonsWrapPanel.Children.Clear();
+            GroupMenuButtonsWrapPanel.Children.Add(GroupMenuButtonsWrapPanelAddPositionButton);
             using (var context = new RestaurantContext())
             {
                 List<Group> groups = context.Groups.AsNoTracking().ToList();
@@ -388,7 +395,7 @@ namespace AppEnteringTrackingAndOrders
                 }
             }
         }
-        
+
         private void ItemMenuButtonsWrapPanelAddPositionButton_Click(object sender, RoutedEventArgs e)
         {
             if (_IDYourUserRoles != null)
@@ -396,7 +403,36 @@ namespace AppEnteringTrackingAndOrders
                 if (_IDYourUserRoles == 1)
                 {
                     if (_now_group != null)
-                        NavigationService.Navigate(new AddMenuItemPage(_now_group));
+                    {
+                        AddMenuItemPage AddMenuItemPage = new AddMenuItemPage(_now_group);
+                        AddMenuItemPage.Unloaded += (s, args) => RefreshMenuItemData();
+                        NavigationService.Navigate(AddMenuItemPage);
+                    }
+                }
+            }
+        }
+
+        private void RefreshMenuItemData()
+        {
+            ItemMenuButtonsWrapPanel.Children.Clear();
+            ItemMenuButtonsWrapPanel.Children.Add(ItemMenuButtonsWrapPanelAddPositionButton);
+            using (var context = new RestaurantContext())
+            {
+                List<MenuItem> listgroupitem = context.MenuItems.Where(l => l.GroupId == _now_group.Id).AsNoTracking().ToList();
+                foreach (MenuItem item in listgroupitem)
+                {
+                    Button button = new Button()
+                    {
+                        Width = 200,
+                        Height = 175,
+                        Margin = new Thickness(0, 0, 10, 10),
+                        Content = item.Name,
+                        FontSize = 24
+                    };
+                    button.Style = (Style)FindResource("ButtonStyleNo");
+                    button.Tag = item;
+                    button.Click += MenuItemButton_Click;
+                    ItemMenuButtonsWrapPanel.Children.Add(button);
                 }
             }
         }
@@ -408,11 +444,41 @@ namespace AppEnteringTrackingAndOrders
                 if (_IDYourUserRoles == 1)
                 {
                     if (_now_group != null)
-                        NavigationService.Navigate(new AddModifierItemPage(_now_menu_item));
+                    {
+                        AddModifierItemPage AddModifierItemPage = new AddModifierItemPage(_now_menu_item);
+                        AddModifierItemPage.Unloaded += (s, args) => RefreshModifierItemData();
+                        NavigationService.Navigate(AddModifierItemPage);
+                    }
                 }
             }
         }
-        
+
+        private void RefreshModifierItemData()
+        {
+            ItemModifierButtonsWrapPanel.Children.Clear();
+            ItemModifierButtonsWrapPanel.Children.Add(ItemModifierButtonsWrapPanelAddPositionButton);
+            using (var context = new RestaurantContext())
+            {
+                var itemModifier = context.MenuItemModifiers.Where(i => i.MenuItem.Id == _now_menu_item.Id).AsNoTracking().ToList();
+                foreach (var item in itemModifier)
+                {
+                    Button button = new Button()
+                    {
+                        Width = 200,
+                        Height = 175,
+                        Margin = new Thickness(0, 0, 10, 10),
+                        Content = item.Name,
+                        FontSize = 24
+                    };
+                    button.Style = (Style)FindResource("ButtonStyleNo");
+                    button.Tag = item;
+                    button.Click += AddModifierToOrder;
+                    button.Focusable = false;
+                    ItemModifierButtonsWrapPanel.Children.Add(button);
+                }
+            }
+        }
+
         private decimal OrderSum()
         {
             return 0;
