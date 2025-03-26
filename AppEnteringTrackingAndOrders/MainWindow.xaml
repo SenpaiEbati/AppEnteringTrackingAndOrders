@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AppEnteringTrackingAndOrders"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="MainWindow" Height="1200" Width="1920">
+        Title="MainWindow" Height="1200" Width="1800">
 
     <Grid Style="{DynamicResource BackgroundGridStyle}">
         <Frame x:Name="MainWindowFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="3" Grid.RowSpan="3" />

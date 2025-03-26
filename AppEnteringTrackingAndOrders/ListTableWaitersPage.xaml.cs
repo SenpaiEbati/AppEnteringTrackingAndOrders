@@ -74,7 +74,7 @@ namespace AppEnteringTrackingAndOrders
                     {
                         orderprise += order.Items[i].MenuItem.Price;
                     }
-                    button.Content = $"{order.Id}".ToUpper() + $"                                  {orderprise}₽\n\nИванов\n16:30 • Зал • Общий";
+                    button.Content = $"{order.Id}".ToUpper() + $"                                  {orderprise}₽\n\nИванов\n{order.OrderDate.Minute}:{order.OrderDate.Second} • Зал • Общий";
                     button.Style = (Style)FindResource("ButtonStyleFull");
                     button.Tag = orderpage;
                     button.Click += EditButtonsToWrapPanel;

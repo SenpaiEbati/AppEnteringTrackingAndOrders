@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AppEnteringTrackingAndOrders"
       mc:Ignorable="d" 
-      d:DesignHeight="1200" d:DesignWidth="1920"
+      d:DesignHeight="1200" d:DesignWidth="1800"
       Title="ListTableWaitersPage">
 
     <Grid x:Name="BackgroundGrid" Style="{DynamicResource BackgroundGridStyle}">
@@ -20,7 +20,7 @@
                 <Image Source="/buttonleftwhite.png" Height="42" Width="42" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
             </Button>
 
-            <Border x:Name="BorderCenterTopMenu" Height="80" Width="695"
+            <Border x:Name="BorderCenterTopMenu" Height="80" Width="610"
                     Style="{DynamicResource BorderGray}" Margin="0,10,10,10">
                 <TextBlock x:Name="TextBlockBorderCenterTopMenu" Text="Все официанты"  FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
             </Border>

@@ -14,28 +14,44 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
-            <Button x:Name="BackListTableWaitersButton"
-                Style="{DynamicResource ButtonStyleFull}"
-                Height="80" Width="150"
-                Content="Назад"
-                Click="BackListTableWaitersButton_Click"
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Top" FontSize="24" Margin="15"/>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="213*"/>
+                <ColumnDefinition Width="632*"/>
+                <ColumnDefinition Width="689*"/>
+                <ColumnDefinition Width="133*"/>
+                <ColumnDefinition Width="133*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Button x:Name="BackListTableWaitersButton"
+                    Style="{DynamicResource ButtonStyleFull}"
+                    Height="80"
+                    Content="Назад"
+                    Click="BackListTableWaitersButton_Click" 
+                    VerticalAlignment="Center" FontSize="24" Margin="15,0,15,0"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Border Height="80" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="0,5,10,5">
+                    <TextBlock x:Name="TopBorderText" FontSize="24" Margin="10,5,10,5" Foreground="White"/>
+                </Border>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Border Height="80" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="0,5,0,5">
+                    <TextBlock Text="По официантам"  FontSize="24" Margin="10,5,10,5" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </Grid>
+            <Grid Grid.Column="3">
+                <Border Height="80" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="10,5,5,5">
+                    <Image Source="/search.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+                </Border>
+            </Grid>
 
-            <Border Height="80" Width="614" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="0,5,5,5">
-                <TextBlock x:Name="TopBorderText" FontSize="24" Margin="10,5,10,5" Foreground="White"/>
-            </Border>
-            <Border Height="80" Width="707" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="10,5,5,5">
-                <TextBlock Text="По официантам"  FontSize="24" Margin="10,5,10,5" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <Border Height="80" Width="117" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="10,5,5,5">
-                <Image Source="/search.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
-            </Border>
-            <Border Height="80" Width="117" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="10,5,5,5">
-                <Image Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/icons8.png"/>
-            </Border>
-        </StackPanel>
+            <Grid Grid.Column="4">
+                <Border Height="80" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="5,5,10,5">
+                    <Image Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/icons8.png"/>
+                </Border>
+            </Grid>
+        </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -68,59 +84,73 @@
                     </ScrollViewer>
                 </Grid>
                 <Grid Grid.Row="2">
-                    <Button Style="{DynamicResource ButtonStyleFull}"
-                            Height="74" Width="185" FontSize="24" Margin="10,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-                        <Image Source="./buttonleftwhite.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50">
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform Angle="90"/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-                    </Button>
-                    <Button Style="{DynamicResource ButtonStyleFull}"
-                            Height="74" Width="185" FontSize="24" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,6,0,0">
-                        <Image Source="./buttonleftwhite.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50">
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform Angle="270"/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-                    </Button>
-                    <Button x:Name="OrderPanelInfoAddGuestButton"
-                            Style="{DynamicResource ButtonStyleFull}"
-                            Height="74" Width="185" FontSize="24" Margin="405,8,0,0" Content="➕ Гость" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Button Style="{DynamicResource ButtonStyleFull}" FontSize="24" Margin="10,6,5,0" Height="74" VerticalAlignment="Top">
+                            <Image Source="./buttonleftwhite.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="90"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Button Style="{DynamicResource ButtonStyleFull}"
+                            Height="74" FontSize="24" VerticalAlignment="Top" Margin="8,6,8,0">
+                            <Image Source="./buttonleftwhite.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="270"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <Button x:Name="OrderPanelInfoAddGuestButton" Style="{DynamicResource ButtonStyleFull}"
+                            Height="74" FontSize="24" Content="➕ Гость" VerticalAlignment="Top" Margin="5,6,10,0"/>
+                    </Grid>
                 </Grid>
                 <Grid Grid.Row="0">
-                    <Button
-                        Style="{DynamicResource ButtonStyleTopLeft}" FontSize="24" Margin="15,0,0,0" 
-                        HorizontalAlignment="Left" Width="185" Height="74" VerticalAlignment="Center">
-                        <Image Source="./buttonleftwhite.png" Height="50" Width="50"></Image>
-                    </Button>
-                    <Button
-                        Style="{DynamicResource ButtonStyleNo}" FontSize="24" 
-                        HorizontalAlignment="Center" Width="185" Height="74" VerticalAlignment="Center" Content="Все гости"/>
-                    <Button
-                        Style="{DynamicResource ButtonStyleTopRight}" FontSize="24" Margin="400,0,0,0"
-                        HorizontalAlignment="Left" Width="185" Height="74" VerticalAlignment="Center">
-                        <Image Source="./buttonleftwhite.png" Height="50" Width="50" RenderTransformOrigin="0.5,0.5">
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform Angle="180"/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-                    </Button>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Button Style="{DynamicResource ButtonStyleTopLeft}" FontSize="24" Margin="15,0,0,0" Height="74" VerticalAlignment="Center">
+                            <Image Source="./buttonleftwhite.png" Height="50" Width="50"></Image>
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Button Style="{DynamicResource ButtonStyleNo}" FontSize="24" Height="74" VerticalAlignment="Center" Content="Все гости" Margin="8,0,8,0"/>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <Button Style="{DynamicResource ButtonStyleTopRight}" FontSize="24" Height="74" VerticalAlignment="Center" Margin="0,0,15,0">
+                            <Image Source="./buttonleftwhite.png" Height="50" Width="50" RenderTransformOrigin="0.5,0.5">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="180"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid x:Name="GroupMenuButtonsGrid" Grid.Column="1">
@@ -175,12 +205,12 @@
             <Grid Grid.Column="0">
                 <Button
                     Style="{DynamicResource ButtonStyleFull}"
-                    Height="80" Width="578" FontSize="24" Margin="15,15,0,15" Background="#FF3FBB5E" HorizontalAlignment="Left" Content="Оплата                                                             553,98₽"/>
+                    Height="80" FontSize="24" Margin="15,15,7,15" Background="#FF3FBB5E" Content="Оплата 553,98₽"/>
             </Grid>
             <Grid Grid.Column="2">
                 <Button
                     Style="{DynamicResource ButtonStyleFull}"
-                    Height="80" Width="578" FontSize="24" Margin="7,15,0,15" Content="Сохранить заказ" HorizontalAlignment="Left" Foreground="#FF47E86F" Click="SaveOrder_Click"/>
+                    Height="80" FontSize="24" Margin="7,15,15,15" Content="Сохранить заказ" Foreground="#FF47E86F" Click="SaveOrder_Click"/>
             </Grid>
         </Grid>
     </Grid>
