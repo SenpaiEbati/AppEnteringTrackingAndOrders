@@ -247,11 +247,12 @@ namespace AppEnteringTrackingAndOrders
             ItemMenuBorderTextBlock.Text = "Начинка";
             ItemModifierButtonsWrapPanel.Children.Clear();
             ItemModifierButtonsWrapPanel.Children.Add(ItemModifierButtonsWrapPanelAddPositionButton);
-            using (var context = new RestaurantContext())
+
+            if (_now_menu_item != null)
             {
-                if (_now_menu_item != null)
+                using (var context = new RestaurantContext())
                 {
-                    var itemModifier = context.MenuItemModifiers.Where(i=>i.MenuItem.Id == _now_menu_item.Id).AsNoTracking().ToList();
+                    var itemModifier = context.MenuItemModifiers.Where(i => i.MenuItem.Id == _now_menu_item.Id).AsNoTracking().ToList();
                     foreach (var item in itemModifier)
                     {
                         Button button = new Button()
@@ -271,6 +272,7 @@ namespace AppEnteringTrackingAndOrders
                 }
             }
         }
+    
 
         private void AddModifierToOrder(object sender, RoutedEventArgs e)
         {
@@ -365,8 +367,28 @@ namespace AppEnteringTrackingAndOrders
                     NavigationService.Navigate(new AddGroupMenuPage());
                 }
             }
-        }
 
+            using (var context = new RestaurantContext())
+            {
+                List<Group> groups = context.Groups.AsNoTracking().ToList();
+                foreach (var group in groups)
+                {
+                    Button button = new Button()
+                    {
+                        Width = 200,
+                        Height = 175,
+                        Margin = new Thickness(0, 0, 10, 10),
+                        Content = group.Name,
+                        FontSize = 24
+                    };
+                    button.Style = (Style)FindResource("ButtonStyleNo");
+                    button.Tag = group;
+                    button.Click += MenuGroupButton_Click;
+                    GroupMenuButtonsWrapPanel.Children.Add(button);
+                }
+            }
+        }
+        
         private void ItemMenuButtonsWrapPanelAddPositionButton_Click(object sender, RoutedEventArgs e)
         {
             if (_IDYourUserRoles != null)

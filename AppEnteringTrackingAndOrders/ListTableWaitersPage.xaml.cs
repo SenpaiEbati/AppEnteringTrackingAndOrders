@@ -86,7 +86,8 @@ namespace AppEnteringTrackingAndOrders
         private void AddButtonsToWrapPanel(object sender, RoutedEventArgs e)
         {
             _IDOrders += 1;
-            OrdersPage orderpage = new OrdersPage(_user,_IDOrders);
+            OrdersPage orderpage = new OrdersPage(_user, _IDOrders);
+            
             NavigationService.Navigate(orderpage);
 
             /*Button button = new Button
