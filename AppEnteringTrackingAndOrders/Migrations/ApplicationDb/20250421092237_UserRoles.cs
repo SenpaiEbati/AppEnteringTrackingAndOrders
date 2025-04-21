@@ -3,10 +3,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AppEnteringTrackingAndOrders.Migrations
+namespace AppEnteringTrackingAndOrders.Migrations.ApplicationDb
 {
     /// <inheritdoc />
-    public partial class UserRolesContext : Migration
+    public partial class UserRoles : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

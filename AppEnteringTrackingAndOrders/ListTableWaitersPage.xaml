@@ -14,53 +14,60 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal"  >
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="81*" />
+                <ColumnDefinition Width="74*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Button x:Name="ButtonLeftTopMenu" Height="80" Margin="10,10,0,10" Style="{DynamicResource ButtonStyleLeft}" Click="ButtonLeftTopMenu_Click" HorizontalAlignment="Left" Width="130">
+                    <Image Source="/buttonleftwhite.png" Height="42" Width="42" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+                </Button>
 
-            <Button x:Name="ButtonLeftTopMenu" Height="80" Width="130" Margin="10" Style="{DynamicResource ButtonStyleLeft}" Click="ButtonLeftTopMenu_Click">
-                <Image Source="/buttonleftwhite.png" Height="42" Width="42" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
-            </Button>
+                <Border x:Name="BorderCenterTopMenu" Height="80"
+                        Style="{DynamicResource BorderGray}" Margin="145,10,135,10">
+                    <TextBlock x:Name="TextBlockBorderCenterTopMenu" Text="Все официанты"  FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                </Border>
 
-            <Border x:Name="BorderCenterTopMenu" Height="80" Width="610"
-                    Style="{DynamicResource BorderGray}" Margin="0,10,10,10">
-                <TextBlock x:Name="TextBlockBorderCenterTopMenu" Text="Все официанты"  FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
-            </Border>
-
-            <Button x:Name="ButtonRightTopMenu" Height="80" Width="130" Style="{DynamicResource ButtonStyleRight}" Margin="0,10,10,10" Click="ButtonRightTopMenu_Click">
-                <Image Source="/buttonleftwhite.png" RenderTransformOrigin="0.5,0.5" Height="42" Width="42" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="180"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-            </Button>
-
-            <Border  Height="80" Width="624" 
-                    VerticalAlignment="Center" Margin="0,10,10,10" CornerRadius="15,15,15,15"
-                    Style="{DynamicResource BorderGray}" >
-                <TextBlock Text="По официантам" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"></TextBlock>
-            </Border>
-            <Border  Height="80" Width="117" 
-                    VerticalAlignment="Center" Margin="0,10,10,10" CornerRadius="15,15,15,15"
-                    Style="{DynamicResource BorderGray}">
-                <Image Source="/search.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
-            </Border>
-            <Border  Height="80" Width="117" CornerRadius="15,15,15,15"  
-                     Style="{DynamicResource BorderGray}">
-                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Height="52" Width="51" Source="/icons8.png" Stretch="Fill"/>
-            </Border>
-        </StackPanel>
+                <Button x:Name="ButtonRightTopMenu" Height="80" Style="{DynamicResource ButtonStyleRight}" Margin="0,10,1,10" Click="ButtonRightTopMenu_Click" HorizontalAlignment="Right" Width="130">
+                    <Image Source="/buttonleftwhite.png" RenderTransformOrigin="0.5,0.5" Height="42" Width="42" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="180"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                </Button>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Border Height="80" 
+                    VerticalAlignment="Center" CornerRadius="15,15,15,15"
+                    Style="{DynamicResource BorderGray}" Margin="10,0,0,0" >
+                    <TextBlock Text="По официантам" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"></TextBlock>
+                </Border>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Border  Height="80" Width="117" 
+                        VerticalAlignment="Center" CornerRadius="15,15,15,15"
+                        Style="{DynamicResource BorderGray}" HorizontalAlignment="Left" Margin="5,0,0,0">
+                    <Image Source="/search.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+                </Border>
+                <Border Height="80" Width="117" CornerRadius="15,15,15,15"  
+                         Style="{DynamicResource BorderGray}" HorizontalAlignment="Left" Margin="127,10,0,10">
+                    <Image HorizontalAlignment="Center" VerticalAlignment="Center" Height="52" Width="51" Source="/icons8.png" Stretch="Fill"/>
+                </Border>
+            </Grid>
+        </Grid>
         <StackPanel Grid.Row="1">
             <ScrollViewer Grid.Row="1" x:Name="myScrollViewer"
-                      VerticalScrollBarVisibility="Hidden" 
                       HorizontalScrollBarVisibility="Disabled" PanningMode="Both" Margin="10" Height="1000">
                 <WrapPanel Grid.Row="1" x:Name="WrapPanelOrders" 
                        Orientation="Horizontal" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollViewer}}">
-                    <Button x:Name="AddOrderButton" Height="175" Width="175" Content="        ➕&#x0a;Новый заказ" Style="{DynamicResource ButtonStyleFullGreen}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel" FontSize="24"/>
-                    <Button x:Name="FastAddOrderButton" Height="175" Width="175" Content="        ➕&#x0a;Быстрый чек" Style="{DynamicResource ButtonStyleFullGreen}" Margin="0,0,15,10" Click="AddButtonsToWrapPanel" FontSize="24"/>
+                    <Button x:Name="AddOrderButton" Height="175" Width="365" Content="➕ Новый заказ" Style="{DynamicResource ButtonStyleFullGreen}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel" FontSize="24"/>
                     <!--<Button Height="175" Width="365" Style="{DynamicResource ButtonStyleFull}" Margin="0,0,10,10" Click="AddButtonsToWrapPanel">
                         <TextBlock FontSize="24" Width="345" Height="156">
                             <Run Text="1" FontSize="36"/>

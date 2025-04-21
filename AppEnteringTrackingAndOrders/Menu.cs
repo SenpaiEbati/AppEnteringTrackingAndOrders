@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AppEnteringTrackingAndOrders
 {
@@ -33,6 +34,7 @@ namespace AppEnteringTrackingAndOrders
     public class MenuItem
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -95,7 +97,7 @@ namespace AppEnteringTrackingAndOrders
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=testAETAO;Username=postgres;Password=7796");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=testAETAO;Username=postgres;Password=7796;Include Error Detail = true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

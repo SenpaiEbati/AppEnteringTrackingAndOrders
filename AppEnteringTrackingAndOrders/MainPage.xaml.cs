@@ -221,7 +221,7 @@ namespace AppEnteringTrackingAndOrders
             GridCenter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(7, GridUnitType.Star) });
             GridCenter.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(590, GridUnitType.Star) });
 
-            if (WindowHeight < 1080 || WindowWidth < 1920)
+            if (WindowWidth < 1900)
             {
                 SizeKeyboardButtonSmall();
             }

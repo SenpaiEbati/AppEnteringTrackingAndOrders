@@ -3,20 +3,17 @@ using System;
 using AppEnteringTrackingAndOrders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AppEnteringTrackingAndOrders.Migrations.Restaurant
+namespace AppEnteringTrackingAndOrders.Migrations
 {
     [DbContext(typeof(RestaurantContext))]
-    [Migration("20250325195058_MenuContext")]
-    partial class MenuContext
+    partial class RestaurantContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

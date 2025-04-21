@@ -61,19 +61,6 @@ namespace AppEnteringTrackingAndOrders
             OrdersPage orderpage = new OrdersPage(_user, _IDOrders);
             orderpage.Unloaded += (s, args) => RefreshMenuData();
             NavigationService.Navigate(orderpage);
-
-            /*Button button = new Button
-            {
-                Width = 365,
-                Height = 175,
-                Margin = new Thickness(0, 0, 10, 10),
-                Content = _IDOrders,
-            };
-
-            button.Style = (Style)FindResource("ButtonStyleFull");
-            button.Tag = orderpage;
-            button.Click += EditButtonsToWrapPanel;
-            WrapPanelOrders.Children.Add(button);*/
         }
 
         private void EditButtonsToWrapPanel(object sender, RoutedEventArgs e)
@@ -82,10 +69,10 @@ namespace AppEnteringTrackingAndOrders
 
             if (clickedButton != null)
             {
-                OrdersPage order = (OrdersPage)clickedButton.Tag;
-                if (order != null)
+                OrdersPage orderPage = (OrdersPage)clickedButton.Tag;
+                if (orderPage != null)
                 {
-                    NavigationService.Navigate(order);
+                    NavigationService.Navigate(orderPage);
                 }
             }
         }
@@ -94,7 +81,6 @@ namespace AppEnteringTrackingAndOrders
         {
             WrapPanelOrders.Children.Clear();
             WrapPanelOrders.Children.Add(AddOrderButton);
-            WrapPanelOrders.Children.Add(FastAddOrderButton);
             using (var context = new RestaurantContext())
             {
                 List<Order> orders = context.Orders.AsNoTracking().ToList();
@@ -117,7 +103,7 @@ namespace AppEnteringTrackingAndOrders
                     {
                         orderprise += order.Items[i].MenuItem.Price;
                     }
-                    button.Content = $"{order.Id}".ToUpper() + $"                                  {orderprise}₽\n\nИванов\n{order.OrderDate.Minute}:{order.OrderDate.Second} • Зал • Общий";
+                    button.Content = $"{order.Id}".ToUpper() + $"                                  {orderprise}₽\n\nИванов\n{order.OrderDate.Hour}:{order.OrderDate.Minute} • Зал • Общий";
                     button.Style = (Style)FindResource("ButtonStyleFull");
                     button.Tag = orderpage;
                     button.Click += EditButtonsToWrapPanel;
