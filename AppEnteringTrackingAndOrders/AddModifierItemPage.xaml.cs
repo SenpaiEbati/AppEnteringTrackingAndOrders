@@ -1105,7 +1105,7 @@ namespace AppEnteringTrackingAndOrders
                         {
                             Name = Convert.ToString(TextBoxNameItem.Text),
                             AdditionalCost = Convert.ToDecimal(DecimalPriceItem.Value),
-                            MenuItem = _MenuItem
+                            MenuItemId = _MenuItem.Id
                         };
                         context.MenuItemModifiers.Add(item);
                         context.SaveChanges();

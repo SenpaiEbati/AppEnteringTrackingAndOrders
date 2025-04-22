@@ -174,18 +174,18 @@
             </Grid>
             <Grid x:Name="ItemMenuButtonsGrid" Grid.Column="2">
                 <Border x:Name="ItemMenuBorder" Style="{DynamicResource BorderGray}" Height="82" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,-1,15,0">
-                    <TextBlock x:Name="ItemMenuBorderTextBlock" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                    <TextBlock x:Name="ItemMenuBorderTextBlock" Text="Выберите группу меню" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                 </Border>
                 <ScrollViewer x:Name="ItemMenuButtonsScrollViewer" 
-                              HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0" Visibility="Visible">
+                              HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0" Visibility="Hidden">
                     <WrapPanel x:Name="ItemMenuButtonsWrapPanel">
                         <Button x:Name="ItemMenuButtonsWrapPanelAddPositionButton" Content="➕ Добавить&#x0a;    позицию" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ItemMenuButtonsWrapPanelAddPositionButton_Click"/>
                     </WrapPanel>
                 </ScrollViewer>
                 <ScrollViewer x:Name="ItemModifierButtonsScrollViewer" 
                               VerticalScrollBarVisibility="Hidden" 
-                              HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0" Visibility="Hidden">
-                    <WrapPanel x:Name="ItemModifierButtonsWrapPanel">
+                              HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0" Visibility="Hidden" Focusable="False">
+                    <WrapPanel x:Name="ItemModifierButtonsWrapPanel" Focusable="False">
                         <Button x:Name="ItemModifierButtonsWrapPanelAddPositionButton" Content="➕ Добавить&#x0a;модификатор" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ItemModifierButtonsWrapPanelAddPositionButton_Click" Focusable="False"/>
                         <!--<Button Content="Помидоры" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Focusable="False"/>
                         <Button Content="Лук" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Focusable="False"/>-->

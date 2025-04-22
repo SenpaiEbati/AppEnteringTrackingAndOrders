@@ -4,10 +4,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AppEnteringTrackingAndOrders.Migrations
+namespace AppEnteringTrackingAndOrders.Migrations.Restaurant
 {
     /// <inheritdoc />
-    public partial class Menu : Migration
+    public partial class MenusAndOrders : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -1021,7 +1021,7 @@ namespace AppEnteringTrackingAndOrders
                             Description = Convert.ToString(TextBoxDescItem.Text),
                             Price = Convert.ToDecimal(Math.Round(DecimalPriceItem.Value,2)),
                             Destination = Convert.ToString(ComboBoxItemKitchOrBar.Text),
-                            Group = _group,
+                            GroupId = _group.Id,
                         };
                         context.MenuItems.Add(item);
                         context.SaveChanges();

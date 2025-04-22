@@ -8,10 +8,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AppEnteringTrackingAndOrders.Migrations.ApplicationDb
+namespace AppEnteringTrackingAndOrders.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250421092237_UserRoles")]
+    [Migration("20250422075630_UserRoles")]
     partial class UserRoles
     {
         /// <inheritdoc />

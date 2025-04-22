@@ -27,12 +27,15 @@ namespace AppEnteringTrackingAndOrders
     {
         private Menu _menu = new Menu();
         private Group _now_group;
-        private Order _now_order;
-        private OrderItem _now_order_item;
-        private List<OrderItem> _list_order_item = new List<OrderItem>();
+        private Order _old_order;
+        private Order _list_order = new Order();
+        private bool _is_new_order;
+        //private OrderItem _now_order_item;
+        //private List<OrderItem> _list_order_item = new List<OrderItem>();
         private MenuItem _now_menu_item;
-        private OrderItemModifier _now_order_item_modifier;
-        private List<OrderItemModifier> _list_order_item_modifier = new List<OrderItemModifier>();
+        private MenuItem _old_menu_item;
+        //private OrderItemModifier _now_order_item_modifier;
+        //private List<OrderItemModifier> _list_order_item_modifier = new List<OrderItemModifier>();
         private int? _IDYourUserRoles;
         private int _ID = 0;
 
@@ -46,9 +49,9 @@ namespace AppEnteringTrackingAndOrders
             {
                 if (_IDYourUserRoles != 1)
                 {
-                    GroupMenuButtonsWrapPanelAddPositionButton.Visibility = Visibility.Collapsed;
-                    ItemMenuButtonsWrapPanelAddPositionButton.Visibility = Visibility.Collapsed;
-                    ItemModifierButtonsWrapPanelAddPositionButton.Visibility = Visibility.Collapsed;
+                    GroupMenuButtonsWrapPanelAddPositionButton.Visibility = Visibility.Hidden;
+                    ItemMenuButtonsWrapPanelAddPositionButton.Visibility = Visibility.Hidden;
+                    ItemModifierButtonsWrapPanelAddPositionButton.Visibility = Visibility.Hidden;
                 }
             }
 
@@ -68,12 +71,14 @@ namespace AppEnteringTrackingAndOrders
                 var order = context.Orders.FirstOrDefault(i => i.Id == _ID);
                 if (order != null)
                 {
-                    _now_order = order;
+                    _is_new_order = false;
+                    _old_order = order;
                 }
                 else
                 {
-                    var neworder = new Order { Id = _ID, OrderDate = DateTime.UtcNow };
-                    _now_order = neworder;
+                    _is_new_order = true;
+                    var oldorder = new Order { Id = _ID, OrderDate = DateTime.UtcNow };
+                    _old_order = oldorder;
                 }
 
                 List<Group> groups = context.Groups.AsNoTracking().ToList();
@@ -92,9 +97,61 @@ namespace AppEnteringTrackingAndOrders
                     button.Click += MenuGroupButton_Click;
                     GroupMenuButtonsWrapPanel.Children.Add(button);
                 }
-            }
 
+                List<OrderItem> OrderItem = context.OrderItems.Where(i => i.OrderId == _ID).ToList();
+                foreach (OrderItem item in OrderItem)
+                {
+                    var menuitem = context.MenuItems.Where(i => i.Id == item.MenuItemId).First();
+                    if (menuitem != null)
+                    {
+                        int targetPosition = 52;
+                        int paddingLength = targetPosition - menuitem.Name.Length - 1; // -1 учитывает "⠀" в начале
+                        string paddedName = $"⠀{menuitem.Name}".PadRight(paddingLength, ' ');
+
+                        Button button = new Button()
+                        {
+                            Width = 605,
+                            Height = 80,
+                            Margin = new Thickness(0, 5, 0, 0),
+                            Content = Convert.ToString($"{paddedName}1⠀⠀⠀⠀{menuitem.Price}₽"),
+                            FontSize = 24
+                        };
+                        button.Style = (Style)FindResource("ButtonOrderItem");
+                        button.Tag = menuitem;
+                        button.GotFocus += ItemOrder_GotFocus;
+                        button.LostFocus += ItemOrder_LostFocus;
+                        OrderPanelInfoWrapPanel.Children.Add(button);
+
+                        List<OrderItemModifier> OrderItemModifier = context.OrderItemModifiers.Where(i => i.OrderItemId == item.Id).ToList();
+                        foreach (OrderItemModifier itemmod in OrderItemModifier)
+                        {
+                            var menuitemmod = context.MenuItemModifiers.Where(i => i.Id == itemmod.MenuItemModifierId).First();
+                            if (menuitemmod != null)
+                            {
+                                int targetPositionmod = 50;
+                                int paddingLengthmod = targetPositionmod - menuitemmod.Name.Length - 1; // -1 учитывает "⠀" в начале
+                                string paddedNamemod = $"⠀{menuitemmod.Name}".PadRight(paddingLengthmod, ' ');
+
+                                Button buttonmod = new Button()
+                                {
+                                    Width = 605,
+                                    Height = 80,
+                                    Margin = new Thickness(0, 5, 0, 0),
+                                    Content = Convert.ToString($"{paddedNamemod}1⠀⠀⠀⠀{menuitemmod.AdditionalCost}₽"),
+                                    FontSize = 24
+                                };
+                                buttonmod.Style = (Style)FindResource("ButtonOrderItemModifier");
+                                buttonmod.GotFocus += ItemOrder_GotFocus;
+                                buttonmod.LostFocus += ItemOrder_LostFocus;
+                                button.Tag = menuitemmod;
+                                OrderPanelInfoWrapPanel.Children.Add(buttonmod);
+                            }
+                        }
+                    }
+                }
+            }
             TopBorderText.Text = $"Создать заказ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀{DateTime.Now.ToString("HH:mm")}\nСтол:1 Гостей:2";
+
             //ButtonOrdersSumWrapPanel.Content = $"Заказ {OrderSum()}₽";
         }
 
@@ -110,7 +167,7 @@ namespace AppEnteringTrackingAndOrders
                 if (group != null)
                 {
                     _now_group = group;
-                    ItemMenuButtonsWrapPanelAddPositionButton.Visibility = Visibility.Visible;
+                    ItemMenuButtonsScrollViewer.Visibility = Visibility.Visible;
                     ItemMenuBorderTextBlock.Text = group.Name;
                     using (var context = new RestaurantContext())
                     {
@@ -145,40 +202,20 @@ namespace AppEnteringTrackingAndOrders
                 if (item != null)
                 {
                     using (var context = new RestaurantContext()) {
-                        context.Attach(_now_order);
-                        context.Attach(item);
-                        int count = context.OrderItems.Count();
-                        if (count > 0)
-                        {
-                            //var maxId = context.OrderItems.OrderBy(x => x.Id).LastOrDefault()?.Id ?? 0;
-                            var OrderItem = new OrderItem()
-                            {
-                                //Id = maxId + 1,
-                                MenuItemId = item.Id,
-                                Quantity = 1,
-                                OrderId = _now_order.Id
-                            };
-
-                            _now_order_item = OrderItem;
-                            _list_order_item.Add(OrderItem);
-                        }
-                        else
+                        context.Attach(_old_order);
+                        var menuitem = context.MenuItems.FirstOrDefault(i => i.Id == item.Id);
+                        if (menuitem != null)
                         {
                             var OrderItem = new OrderItem()
                             {
-                                Id = 1,
-                                MenuItemId = item.Id,
+                                MenuItemId = menuitem.Id,
                                 Quantity = 1,
-                                OrderId = _now_order.Id,
-                                MenuItem = item,
+                                OrderId = _old_order.Id
                             };
-
-                            _now_order_item = OrderItem;
-                            _list_order_item.Add(OrderItem);
+                            _list_order.Items.Add(OrderItem);
                         }
-
                     }
-                    int targetPosition = 65;
+                    int targetPosition = 52;
                     int paddingLength = targetPosition - item.Name.Length - 1; // -1 учитывает "⠀" в начале
                     string paddedName = $"⠀{item.Name}".PadRight(paddingLength, ' ');
 
@@ -208,10 +245,10 @@ namespace AppEnteringTrackingAndOrders
                 {
                     _now_menu_item = item;
                     GroupMenuBorderText.Text = item.Name;
-                    GroupMenuButtonsScrollViewer.Visibility = Visibility.Collapsed;
-                    ItemMenuButtonsScrollViewer.Visibility = Visibility.Collapsed;
+                    ItemMenuBorderTextBlock.Text = $"Выберите взаимодействие с {item.Name}";
+                    GroupMenuButtonsScrollViewer.Visibility = Visibility.Hidden;
+                    ItemMenuButtonsScrollViewer.Visibility = Visibility.Hidden;
                     ModifierMenuButtonsScrollViewer.Visibility = Visibility.Visible;
-                    ItemModifierButtonsScrollViewer.Visibility = Visibility.Visible;
                     return;
                 }
 
@@ -219,10 +256,10 @@ namespace AppEnteringTrackingAndOrders
                 if (itemModifier != null)
                 {
                     GroupMenuBorderText.Text = itemModifier.Name;
-                    GroupMenuButtonsScrollViewer.Visibility = Visibility.Collapsed;
-                    ItemMenuButtonsScrollViewer.Visibility = Visibility.Collapsed;
+                    ItemMenuBorderTextBlock.Text = $"Выберите взаимодействие с {item.Name}";
+                    GroupMenuButtonsScrollViewer.Visibility = Visibility.Hidden;
+                    ItemMenuButtonsScrollViewer.Visibility = Visibility.Hidden;
                     ModifierMenuButtonsScrollViewer.Visibility = Visibility.Visible;
-                    ItemModifierButtonsScrollViewer.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -232,12 +269,13 @@ namespace AppEnteringTrackingAndOrders
             Button clickedItemOrder = sender as Button;
             if (clickedItemOrder != null)
             {
+                _old_menu_item = _now_menu_item;
                 _now_menu_item = null;
                 GroupMenuBorderText.Text = "Меню";
+                ItemMenuBorderTextBlock.Text = "Выберите группу меню";
                 GroupMenuButtonsScrollViewer.Visibility = Visibility.Visible;
-                ItemMenuButtonsScrollViewer.Visibility = Visibility.Visible;
-                ModifierMenuButtonsScrollViewer.Visibility = Visibility.Collapsed;
-                ItemModifierButtonsScrollViewer.Visibility = Visibility.Collapsed;
+                ModifierMenuButtonsScrollViewer.Visibility = Visibility.Hidden;
+                ItemModifierButtonsScrollViewer.Visibility = Visibility.Hidden;
             }
         }
 
@@ -285,39 +323,19 @@ namespace AppEnteringTrackingAndOrders
                 {
                     using (var context = new RestaurantContext())
                     {
-                        context.Attach(_now_order_item);
                         context.Attach(itemModifier);
-                        int count = context.OrderItemModifiers.Count();
-                        if (count > 0)
-                        {
-                            //var maxId = context.OrderItems.LastOrDefault();
-
-                            var OrderItemModifier = new OrderItemModifier()
-                            {
-                                //Id = maxId.Id + 1,
-                                OrderItemId = _now_order_item.Id,
-                                OrderItem = _now_order_item,
-                                MenuItemModifierId = itemModifier.Id,
-                                MenuItemModifier = itemModifier
-                            };
-                            _now_order_item_modifier = OrderItemModifier;
-                            _list_order_item_modifier.Add(OrderItemModifier);
-                        }
-                        else
+                        var orderitem = _list_order.Items.FirstOrDefault(i => i.MenuItemId == _now_menu_item.Id);
+                        if (orderitem != null)
                         {
                             var OrderItemModifier = new OrderItemModifier()
                             {
-                                Id = 1,
-                                OrderItemId = _now_order_item.Id,
-                                OrderItem = _now_order_item,
+                                OrderItemId = orderitem.Id,
                                 MenuItemModifierId = itemModifier.Id,
-                                MenuItemModifier = itemModifier
                             };
-                            _now_order_item_modifier = OrderItemModifier;
-                            _list_order_item_modifier.Add(OrderItemModifier);
+                            _list_order.Items[orderitem.Id].Modifiers.Add(OrderItemModifier);
                         }
                     }
-                    int targetPosition = 65;
+                    int targetPosition = 50;
                     int paddingLength = targetPosition - itemModifier.Name.Length - 1; // -1 учитывает "⠀" в начале
                     string paddedName = $"⠀{itemModifier.Name}".PadRight(paddingLength, ' ');
 
@@ -443,7 +461,7 @@ namespace AppEnteringTrackingAndOrders
             {
                 if (_IDYourUserRoles == 1)
                 {
-                    if (_now_group != null)
+                    if (_now_menu_item != null)
                     {
                         AddModifierItemPage AddModifierItemPage = new AddModifierItemPage(_now_menu_item);
                         AddModifierItemPage.Unloaded += (s, args) => RefreshModifierItemData();
@@ -459,7 +477,7 @@ namespace AppEnteringTrackingAndOrders
             ItemModifierButtonsWrapPanel.Children.Add(ItemModifierButtonsWrapPanelAddPositionButton);
             using (var context = new RestaurantContext())
             {
-                var itemModifier = context.MenuItemModifiers.Where(i => i.MenuItem.Id == _now_menu_item.Id).AsNoTracking().ToList();
+                var itemModifier = context.MenuItemModifiers.Where(i => i.MenuItem.Id == _old_menu_item.Id).AsNoTracking().ToList();
                 foreach (var item in itemModifier)
                 {
                     Button button = new Button()
@@ -488,34 +506,27 @@ namespace AppEnteringTrackingAndOrders
         {
             using (var context = new RestaurantContext())
             {
-                if (_now_order != null)
+                if (_is_new_order == true)
                 {
-                    context.Orders.Add(_now_order);
-                    context.SaveChanges();
-                }
-                if (_list_order_item.Count > 0)
-                {
-                    foreach (var orderItem in _list_order_item)
+                    context.Orders.Add(_old_order);
+                    foreach (var item in _list_order.Items)
                     {
-                        if (orderItem != null && orderItem.MenuItem != null)
-                            context.Entry(orderItem.MenuItem).State = EntityState.Unchanged; // Указываем, что MenuItem не нужно сохранять
-
-                        context.OrderItems.Add(orderItem);
-                        context.SaveChanges();
+                        context.OrderItems.Add(item);
+                        foreach (var mod in item.Modifiers)
+                        {
+                            context.OrderItemModifiers.Add(mod);
+                        }
                     }
                 }
-                if (_list_order_item_modifier.Count > 0)
+                else
                 {
-                    foreach (var orderItemMod in _list_order_item_modifier)
+                    foreach (var item in _list_order.Items)
                     {
-                        if (orderItemMod != null && orderItemMod.MenuItemModifier != null && orderItemMod.OrderItem != null)
+                        context.OrderItems.Add(item);
+                        foreach (var mod in item.Modifiers)
                         {
-                            context.Entry(orderItemMod.MenuItemModifier).State = EntityState.Unchanged;
-                            context.Entry(orderItemMod.OrderItem).State = EntityState.Unchanged;
+                            context.OrderItemModifiers.Add(mod);
                         }
-                        
-                        context.OrderItemModifiers.Add(orderItemMod);
-                        context.SaveChanges();
                     }
                 }
                 context.SaveChanges();

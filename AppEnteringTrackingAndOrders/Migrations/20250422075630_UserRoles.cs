@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AppEnteringTrackingAndOrders.Migrations.ApplicationDb
+namespace AppEnteringTrackingAndOrders.Migrations
 {
     /// <inheritdoc />
     public partial class UserRoles : Migration
