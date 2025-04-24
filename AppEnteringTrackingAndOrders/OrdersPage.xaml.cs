@@ -101,7 +101,7 @@ namespace AppEnteringTrackingAndOrders
                 List<OrderItem> OrderItem = context.OrderItems.Where(i => i.OrderId == _ID).ToList();
                 foreach (OrderItem item in OrderItem)
                 {
-                    var menuitem = context.MenuItems.Where(i => i.Id == item.MenuItemId).First();
+                    var menuitem = context.MenuItems.Where(i => i.Id == item.MenuItemId).FirstOrDefault();
                     if (menuitem != null)
                     {
                         int targetPosition = 52;
@@ -256,7 +256,7 @@ namespace AppEnteringTrackingAndOrders
                 if (itemModifier != null)
                 {
                     GroupMenuBorderText.Text = itemModifier.Name;
-                    ItemMenuBorderTextBlock.Text = $"Выберите взаимодействие с {item.Name}";
+                    ItemMenuBorderTextBlock.Text = $"Выберите взаимодействие с {itemModifier.Name}";
                     GroupMenuButtonsScrollViewer.Visibility = Visibility.Hidden;
                     ItemMenuButtonsScrollViewer.Visibility = Visibility.Hidden;
                     ModifierMenuButtonsScrollViewer.Visibility = Visibility.Visible;

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using DotNetEnv;
+using DotNetEnv.Extensions;
 
 namespace AppEnteringTrackingAndOrders
 {
@@ -73,14 +75,19 @@ namespace AppEnteringTrackingAndOrders
             {
                 if (!context.Users.Any())
                 {
-                    var user = new User
+                    Env.Load();
+                    string name = Env.GetString("NAME_ADMIN_USER"), password = Env.GetString("PASSWORD_ADMIN_USER");
+                    if (name != null && password != null)
                     {
-                        Username = "1",
-                        PasswordHash = PasswordHasher.HashPassword("123456789"),
-                        Roles = context.Roles.Where(r => r.RoleId == 1).ToList()
-                    };
-                    context.Users.Add(user);
-                    context.SaveChanges();
+                        var user = new User
+                        {
+                            Username = name,
+                            PasswordHash = PasswordHasher.HashPassword(password),
+                            Roles = context.Roles.Where(r => r.RoleId == 1).ToList()
+                        };
+                        context.Users.Add(user);
+                        context.SaveChanges();
+                    }
                 }
             }
         }
