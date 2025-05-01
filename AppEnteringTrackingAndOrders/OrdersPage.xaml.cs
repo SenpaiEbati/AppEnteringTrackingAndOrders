@@ -478,7 +478,6 @@ namespace AppEnteringTrackingAndOrders
             }
         }
 
-
         private void UI_OrderItems(MenuItem menuitem, OrderItem item)
         {
             int targetPosition = 52;
@@ -675,6 +674,18 @@ namespace AppEnteringTrackingAndOrders
                     context.Update(item);
                     context.SaveChanges();
                     RefreshOrderPanelInfo();
+                }
+                else
+                {
+                    int index = _list_order.Items.IndexOf(_now_order_item);
+                    _list_order.Items[index].Quantity = ItemQuantityNumericUpDown.Value;
+
+                    int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
+                    if (a != -1)
+                    {
+                        UI_OrderItems(_now_menu_item, _list_order.Items[index]);
+                        OrderPanelInfoWrapPanel.Children.RemoveAt(a);
+                    }
                 }
             }
         }
