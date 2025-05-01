@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using System.Xml;
 using static AppEnteringTrackingAndOrders.ConstantsInitialValuesMethodsDb;
 using static MaterialDesignThemes.Wpf.Theme.ToolBar;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AppEnteringTrackingAndOrders
 {
@@ -30,9 +31,11 @@ namespace AppEnteringTrackingAndOrders
         private Order _old_order;
         private Order _list_order = new Order();
         private bool _is_new_order;
+        private UIElement _now_order_UI_item;
         //private OrderItem _now_order_item;
         //private List<OrderItem> _list_order_item = new List<OrderItem>();
         private MenuItem _now_menu_item;
+        private OrderItem _now_order_item;
         private MenuItem _old_menu_item;
         //private OrderItemModifier _now_order_item_modifier;
         //private List<OrderItemModifier> _list_order_item_modifier = new List<OrderItemModifier>();
@@ -113,7 +116,7 @@ namespace AppEnteringTrackingAndOrders
                             Width = 605,
                             Height = 80,
                             Margin = new Thickness(0, 5, 0, 0),
-                            Content = Convert.ToString($"{paddedName}1⠀⠀⠀⠀{menuitem.Price}₽"),
+                            Content = Convert.ToString($"{paddedName}{item.Quantity}⠀⠀⠀⠀{menuitem.Price}₽"),
                             FontSize = 24
                         };
                         button.Style = (Style)FindResource("ButtonOrderItem");
@@ -122,10 +125,11 @@ namespace AppEnteringTrackingAndOrders
                         button.LostFocus += ItemOrder_LostFocus;
                         OrderPanelInfoWrapPanel.Children.Add(button);
 
+                        
                         List<OrderItemModifier> OrderItemModifier = context.OrderItemModifiers.Where(i => i.OrderItemId == item.Id).ToList();
                         foreach (OrderItemModifier itemmod in OrderItemModifier)
                         {
-                            var menuitemmod = context.MenuItemModifiers.Where(i => i.Id == itemmod.MenuItemModifierId).First();
+                            var menuitemmod = context.MenuItemModifiers.Where(i => i.Id == itemmod.MenuItemModifierId).FirstOrDefault();
                             if (menuitemmod != null)
                             {
                                 int targetPositionmod = 50;
@@ -137,13 +141,13 @@ namespace AppEnteringTrackingAndOrders
                                     Width = 605,
                                     Height = 80,
                                     Margin = new Thickness(0, 5, 0, 0),
-                                    Content = Convert.ToString($"{paddedNamemod}1⠀⠀⠀⠀{menuitemmod.AdditionalCost}₽"),
+                                    Content = Convert.ToString($"{paddedNamemod}{item.Quantity}⠀⠀⠀⠀{menuitemmod.AdditionalCost}₽"),
                                     FontSize = 24
                                 };
                                 buttonmod.Style = (Style)FindResource("ButtonOrderItemModifier");
                                 buttonmod.GotFocus += ItemOrder_GotFocus;
                                 buttonmod.LostFocus += ItemOrder_LostFocus;
-                                button.Tag = menuitemmod;
+                                buttonmod.Tag = menuitemmod;
                                 OrderPanelInfoWrapPanel.Children.Add(buttonmod);
                             }
                         }
@@ -201,37 +205,43 @@ namespace AppEnteringTrackingAndOrders
                 MenuItem item = (MenuItem)clickedButton.Tag;
                 if (item != null)
                 {
+                    OrderItem orderitem = null;
                     using (var context = new RestaurantContext()) {
                         context.Attach(_old_order);
                         var menuitem = context.MenuItems.FirstOrDefault(i => i.Id == item.Id);
                         if (menuitem != null)
                         {
-                            var OrderItem = new OrderItem()
+                            orderitem = new OrderItem() 
                             {
                                 MenuItemId = menuitem.Id,
                                 Quantity = 1,
                                 OrderId = _old_order.Id
                             };
-                            _list_order.Items.Add(OrderItem);
+                            _list_order.Items.Add(orderitem);
                         }
                     }
-                    int targetPosition = 52;
-                    int paddingLength = targetPosition - item.Name.Length - 1; // -1 учитывает "⠀" в начале
-                    string paddedName = $"⠀{item.Name}".PadRight(paddingLength, ' ');
-
-                    Button button = new Button()
+                    if (orderitem != null)
                     {
-                        Width = 605,
-                        Height = 80,
-                        Margin = new Thickness(0, 5, 0, 0),
-                        Content = Convert.ToString($"{paddedName}1⠀⠀⠀⠀{item.Price}₽"),
-                        FontSize = 24
-                    };
-                    button.Style = (Style)FindResource("ButtonOrderItem");
-                    button.Tag = item;
-                    button.GotFocus += ItemOrder_GotFocus;
-                    button.LostFocus += ItemOrder_LostFocus;
-                    OrderPanelInfoWrapPanel.Children.Add(button);
+                        int targetPosition = 52;
+                        int paddingLength = targetPosition - item.Name.Length - 1; // -1 учитывает "⠀" в начале
+                        string paddedName = $"⠀{item.Name}".PadRight(paddingLength, ' ');
+
+                        Button button = new Button()
+                        {
+                            Width = 605,
+                            Height = 80,
+                            Margin = new Thickness(0, 5, 0, 0),
+                            Content = Convert.ToString($"{paddedName}1⠀⠀⠀⠀{item.Price}₽"),
+                            FontSize = 24
+                        };
+                        button.Style = (Style)FindResource("ButtonOrderItem");
+
+                        button.Tag = item;
+
+                        button.GotFocus += ItemOrder_GotFocus;
+                        button.LostFocus += ItemOrder_LostFocus;
+                        OrderPanelInfoWrapPanel.Children.Add(button);
+                    }
                 }
             }
         }
@@ -244,6 +254,7 @@ namespace AppEnteringTrackingAndOrders
                 if (item != null)
                 {
                     _now_menu_item = item;
+                    _now_order_UI_item = clickedItemOrder;
                     GroupMenuBorderText.Text = item.Name;
                     ItemMenuBorderTextBlock.Text = $"Выберите взаимодействие с {item.Name}";
                     GroupMenuButtonsScrollViewer.Visibility = Visibility.Hidden;
@@ -311,7 +322,6 @@ namespace AppEnteringTrackingAndOrders
             }
         }
 
-
         private void AddModifierToOrder(object sender, RoutedEventArgs e)
         {
             Button clickedButton = sender as Button;
@@ -324,15 +334,15 @@ namespace AppEnteringTrackingAndOrders
                     using (var context = new RestaurantContext())
                     {
                         context.Attach(itemModifier);
-                        var orderitem = _list_order.Items.FirstOrDefault(i => i.MenuItemId == _now_menu_item.Id);
-                        if (orderitem != null)
+                        var orderitem = _list_order.Items.Count - 1;
+                        if (orderitem != null && orderitem >= 0)
                         {
                             var OrderItemModifier = new OrderItemModifier()
                             {
-                                OrderItemId = orderitem.Id,
+                                OrderItemId = orderitem,
                                 MenuItemModifierId = itemModifier.Id,
                             };
-                            _list_order.Items[orderitem.Id].Modifiers.Add(OrderItemModifier);
+                            _list_order.Items[orderitem].Modifiers.Add(OrderItemModifier);
                         }
                     }
                     int targetPosition = 50;
@@ -351,7 +361,11 @@ namespace AppEnteringTrackingAndOrders
                     button.GotFocus += ItemOrder_GotFocus;
                     button.LostFocus += ItemOrder_LostFocus;
 
-                    OrderPanelInfoWrapPanel.Children.Add(button);
+                    int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
+                    if (a != -1)
+                        OrderPanelInfoWrapPanel.Children.Insert(a+1,button);
+                    else
+                        OrderPanelInfoWrapPanel.Children.Add(button);
                 }
             }
         }
