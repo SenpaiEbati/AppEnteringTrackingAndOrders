@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AppEnteringTrackingAndOrders"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="1200" d:DesignWidth="1800"
       Title="OrdersPage">
@@ -191,6 +192,61 @@
                         <Button Content="Лук" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Focusable="False"/>-->
                     </WrapPanel>
                 </ScrollViewer>
+                <Grid x:Name="ItemQuantityButton" Margin="0,85,0,0" Visibility="Hidden">
+                    <Border Style="{DynamicResource BorderGray}" Margin="0,0,16,0" Height="220" VerticalAlignment="Top">
+                        <materialDesign:NumericUpDown x:Name="ItemQuantityNumericUpDown" Padding="30" FontSize="72" Foreground="White" Minimum="0" Margin="0,0,0,30" Maximum="100" Focusable="False" ForceCursor="True" />
+                    </Border>
+                    <Grid x:Name="KeyboardNumber" Visibility="Visible" Margin="0,225,16,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" Grid.Column="1">
+                            <Button x:Name="ButtonTwo" Content="2" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Click="TopMiddleButtonTwo_Click" Focusable="False" Margin="2,2,2,2"/>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="2">
+                            <Button x:Name="ButtonThree" Content="3" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Click="TopRightButtonThree_Click" Focusable="False" Margin="2,2,2,2" />
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <Button x:Name="ButtonOne" Content="1" Style="{DynamicResource ButtonStyleNo}"  FontSize="36" Click="TopLeftButtonOne_Click" Focusable="False" Margin="2,2,2,2"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Button x:Name="ButtonFive" Content="5" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Click="CenterMiddleButtonFive_Click" Focusable="False" Margin="2,2,2,2"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <Button x:Name="ButtonFour" Content="4" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Click="CenterLeftButtonFour_Click" Focusable="False" Margin="2,2,2,2"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="2">
+                            <Button x:Name="ButtonSix" Content="6" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Click="CenterRightButtonSix_Click" Focusable="False" Margin="2,2,2,2"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="1">
+                            <Button x:Name="ButtonEight" Content="8" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Focusable="False" Click="DownMiddleButtonEight_Click" Margin="2,2,2,2"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="0">
+                            <Button x:Name="ButtonSeven" Content="7" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Focusable="False" Click="DownLeftButtonSeven_Click" Margin="2,2,2,2"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="2">
+                            <Button x:Name="ButtonNine" Content="9" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Focusable="False" Click="DownRightButtonNine_Click" Margin="2,2,2,2"/>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="1">
+                            <Button x:Name="ButtonDelete" Content="Del" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Focusable="False" Click="TopButtonDelete_Click" Background="#FFCE4848" Margin="2,2,2,2"/>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0">
+                            <Button x:Name="ButtonZero" Content="0" Style="{DynamicResource ButtonStyleNo}" FontSize="36"  Focusable="False" Click="DownButtonZero_Click" Margin="2,2,2,2"/>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="2" >
+                            <Button x:Name="ButtonEnter" Content="Enter" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Focusable="False" Click="ButtonEnter_Click" Background="#FF3FBB5E" Margin="2,2,2,2"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
