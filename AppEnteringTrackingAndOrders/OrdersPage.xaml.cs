@@ -19,7 +19,7 @@ using System.Xml;
 using static AppEnteringTrackingAndOrders.ConstantsInitialValuesMethodsDb;
 using static MaterialDesignThemes.Wpf.Theme;
 using static MaterialDesignThemes.Wpf.Theme.ToolBar;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+//using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AppEnteringTrackingAndOrders
 {
@@ -37,6 +37,8 @@ namespace AppEnteringTrackingAndOrders
         private MenuItem _now_menu_item;
         private OrderItem _now_order_item;
         private MenuItem _old_menu_item;
+        private MenuItemModifier _now_menu_item_modifier;
+        private UIElement _now_order_modifier_UI_item;
         private int? _IDYourUserRoles;
         private int _ID = 0;
 
@@ -182,6 +184,8 @@ namespace AppEnteringTrackingAndOrders
                 // Приводим Tag к ValueTuple<MenuItem, OrderItem>
                 if (clickedItemOrder.Tag is ValueTuple<MenuItem, OrderItem> tuple)
                 {
+                    _now_menu_item_modifier = null;
+                    _now_order_modifier_UI_item = null;
                     _now_menu_item = tuple.Item1;
                     _now_order_item = tuple.Item2;
                     _now_order_UI_item = clickedItemOrder;
@@ -191,18 +195,22 @@ namespace AppEnteringTrackingAndOrders
                     ItemMenuButtonsScrollViewer.Visibility = Visibility.Hidden;
                     ModifierMenuButtonsScrollViewer.Visibility = Visibility.Visible;
                     ModifierMenuButtonsWrapPanel_ModifierButton.Visibility = Visibility.Visible;
+                    ModifierMenuButtonsWrapPanel_QuantityButton.Visibility = Visibility.Visible;
                     return;
                 }
 
                 var itemModifier = clickedItemOrder.Tag as MenuItemModifier;
                 if (itemModifier != null)
                 {
+                    _now_menu_item_modifier = itemModifier;
+                    _now_order_modifier_UI_item = clickedItemOrder;
                     GroupMenuBorderText.Text = itemModifier.Name;
                     ItemMenuBorderTextBlock.Text = $"Выберите взаимодействие с {itemModifier.Name}";
                     GroupMenuButtonsScrollViewer.Visibility = Visibility.Hidden;
                     ItemMenuButtonsScrollViewer.Visibility = Visibility.Hidden;
                     ModifierMenuButtonsScrollViewer.Visibility = Visibility.Visible;
                     ModifierMenuButtonsWrapPanel_ModifierButton.Visibility = Visibility.Collapsed;
+                    ModifierMenuButtonsWrapPanel_QuantityButton.Visibility = Visibility.Collapsed;
                 }
             }
         }
@@ -212,6 +220,8 @@ namespace AppEnteringTrackingAndOrders
             System.Windows.Controls.Button clickedItemOrder = sender as System.Windows.Controls.Button;
             if (clickedItemOrder != null)
             {
+                _now_menu_item_modifier = null;
+                _now_order_modifier_UI_item = null;
                 _old_menu_item = _now_menu_item;
                 _now_menu_item = null;
                 _now_order_item = null;
@@ -318,7 +328,52 @@ namespace AppEnteringTrackingAndOrders
 
         private void ModifierMenuButtonsWrapPanel_DeleteButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_now_order_item != null)
+            {
+                using (var context = new RestaurantContext())
+                {
+                    var item = context.OrderItems.Where(i => i.Id == _now_order_item.Id).FirstOrDefault();
+                    if (item != null)
+                    {
+                        context.OrderItems.Remove(item);
+                        context.SaveChanges();
+                        RefreshOrderPanelInfo();
+                    }
+                    else
+                    {
+                        _list_order.Items.Remove(_now_order_item);
+                        int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
+                        if (a != -1)
+                            OrderPanelInfoWrapPanel.Children.RemoveAt(a);
+                    }
+                }
+            }
+            else if (_now_menu_item_modifier != null)
+            {
+                using (var context = new RestaurantContext())
+                {
+                    var itemMod = context.OrderItemModifiers.Where(i => i.MenuItemModifierId == _now_menu_item_modifier.Id).FirstOrDefault();
+                    if (itemMod != null)
+                    {
+                        context.OrderItemModifiers.Remove(itemMod);
+                        context.SaveChanges();
+                        RefreshOrderPanelInfo();
+                    }
+                    else
+                    {
+                        for (int i = 0; i < _list_order.Items.Count; i++)
+                        {
+                            for (int j = 0; j < _list_order.Items[i].Modifiers.Count; j++)
+                                if (_list_order.Items[i].Modifiers[j].OrderItemId == _now_menu_item_modifier.Id)
+                                    _list_order.Items[i].Modifiers.RemoveAt(j);
+                        }
 
+                        int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_modifier_UI_item);
+                        if (a != -1)
+                            OrderPanelInfoWrapPanel.Children.RemoveAt(a);
+                    }
+                }
+            }
         }
         private void BackListTableWaitersButton_Click(object sender, RoutedEventArgs e)
         {
@@ -671,7 +726,7 @@ namespace AppEnteringTrackingAndOrders
                 if (item != null)
                 {
                     item.Quantity = ItemQuantityNumericUpDown.Value;
-                    context.Update(item);
+                    context.OrderItems.Update(item);
                     context.SaveChanges();
                     RefreshOrderPanelInfo();
                 }
