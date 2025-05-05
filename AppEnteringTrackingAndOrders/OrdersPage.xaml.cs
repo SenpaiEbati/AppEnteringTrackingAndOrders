@@ -33,6 +33,7 @@ namespace AppEnteringTrackingAndOrders
         private Order _old_order;
         private Order _list_order = new Order();
         private bool _is_new_order;
+        private decimal _sumorder = 0.00M;
         private UIElement _now_order_UI_item;
         private MenuItem _now_menu_item;
         private OrderItem _now_order_item;
@@ -326,6 +327,33 @@ namespace AppEnteringTrackingAndOrders
             }
         }
 
+        private void ButtonEnter_Click(object sender, RoutedEventArgs e)
+        {
+            using (var context = new RestaurantContext())
+            {
+                var item = context.OrderItems.Where(i => i.Id == _now_order_item.Id).FirstOrDefault();
+                if (item != null)
+                {
+                    item.Quantity = ItemQuantityNumericUpDown.Value;
+                    context.OrderItems.Update(item);
+                    context.SaveChanges();
+                    RefreshOrderPanelInfo();
+                }
+                else
+                {
+                    int index = _list_order.Items.IndexOf(_now_order_item);
+                    _list_order.Items[index].Quantity = ItemQuantityNumericUpDown.Value;
+
+                    int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
+                    if (a != -1)
+                    {
+                        UI_OrderItems(_now_menu_item, _list_order.Items[index]);
+                        OrderPanelInfoWrapPanel.Children.RemoveAt(a);
+                    }
+                }
+            }
+        }
+
         private void ModifierMenuButtonsWrapPanel_DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if (_now_order_item != null)
@@ -346,6 +374,8 @@ namespace AppEnteringTrackingAndOrders
                         if (a != -1)
                             OrderPanelInfoWrapPanel.Children.RemoveAt(a);
                     }
+                    _sumorder -= _now_menu_item.Price * _now_order_item.Quantity;
+                    RefreshOrderSum();
                 }
             }
             else if (_now_menu_item_modifier != null)
@@ -372,6 +402,8 @@ namespace AppEnteringTrackingAndOrders
                         if (a != -1)
                             OrderPanelInfoWrapPanel.Children.RemoveAt(a);
                     }
+                    _sumorder -= _now_menu_item_modifier.AdditionalCost;
+                    RefreshOrderSum();
                 }
             }
         }
@@ -510,6 +542,7 @@ namespace AppEnteringTrackingAndOrders
         private void RefreshOrderPanelInfo()
         {
             OrderPanelInfoWrapPanel.Children.Clear();
+            OrderPanelInfoWrapPanel.Children.Add(OrderPanelInfoWrapPanelBorderSum);
             using (var context = new RestaurantContext())
             {
                 List<OrderItem> OrderItem = context.OrderItems.Where(i => i.OrderId == _ID).ToList();
@@ -535,18 +568,59 @@ namespace AppEnteringTrackingAndOrders
 
         private void UI_OrderItems(MenuItem menuitem, OrderItem item)
         {
-            int targetPosition = 52;
-            int paddingLength = targetPosition - menuitem.Name.Length - 1; // -1 учитывает "⠀" в начале
-            string paddedName = $"⠀{menuitem.Name}".PadRight(paddingLength, ' ');
-
-            System.Windows.Controls.Button button = new System.Windows.Controls.Button()
-            {
-                Width = 605,
+            // Создаем кнопку
+            System.Windows.Controls.Button button = new System.Windows.Controls.Button
+            { 
                 Height = 80,
-                Margin = new Thickness(0, 5, 0, 0),
-                Content = Convert.ToString($"{paddedName}{item.Quantity}⠀⠀⠀⠀{menuitem.Price}₽"),
-                FontSize = 24
+                FontSize = 24,
+                HorizontalAlignment = HorizontalAlignment.Stretch, // Растягивается по горизонтали
+                Width = double.NaN,
             };
+
+            // Создаем Grid
+            Grid grid = new Grid();
+
+            // Добавляем колонки с пропорциональной шириной (*)
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(193, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(83, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(122, GridUnitType.Star) });
+
+            // Создаем TextBlock для названия блюда (первая колонка)
+            TextBlock dishNameTextBlock = new TextBlock
+            {
+                Text = $" {menuitem.Name}",
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                TextTrimming = TextTrimming.CharacterEllipsis
+            };
+            Grid.SetColumn(dishNameTextBlock, 0);
+
+            // Создаем TextBlock для количества (вторая колонка)
+            TextBlock quantityTextBlock = new TextBlock
+            {
+                Text = $"{item.Quantity} шт.",
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Left
+            };
+            Grid.SetColumn(quantityTextBlock, 1);
+
+            // Создаем TextBlock для цены (третья колонка)
+            TextBlock priceTextBlock = new TextBlock
+            {
+                Text = $"{menuitem.Price} руб.",
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Right
+            };
+            Grid.SetColumn(priceTextBlock, 2);
+
+            // Добавляем TextBlock'и в Grid
+            grid.Children.Add(dishNameTextBlock);
+            grid.Children.Add(quantityTextBlock);
+            grid.Children.Add(priceTextBlock);
+
+            // Устанавливаем Grid в Content кнопки
+            button.Content = grid;
+
             button.Style = (Style)FindResource("ButtonOrderItem");
 
             ValueTuple<MenuItem, OrderItem> tuple = new ValueTuple<MenuItem, OrderItem>(menuitem, item);
@@ -560,23 +634,67 @@ namespace AppEnteringTrackingAndOrders
                 OrderPanelInfoWrapPanel.Children.Insert(a + 1, button);
             else
                 OrderPanelInfoWrapPanel.Children.Add(button);
+
+            _sumorder += menuitem.Price;
+            RefreshOrderSum();
         }
 
         private void UI_OrderItem_Modifiers(MenuItemModifier itemModifier)
         {
-            int targetPosition = 50;
-            int paddingLength = targetPosition - itemModifier.Name.Length - 1; // -1 учитывает "⠀" в начале
-            string paddedName = $"⠀{itemModifier.Name}".PadRight(paddingLength, ' ');
-
-            System.Windows.Controls.Button button = new System.Windows.Controls.Button()
+            // Создаем кнопку
+            System.Windows.Controls.Button button = new System.Windows.Controls.Button
             {
-                Width = 605,
                 Height = 80,
-                Margin = new Thickness(0, 5, 0, 0),
-                Content = Convert.ToString($"{paddedName}⠀⠀⠀⠀⠀{itemModifier.AdditionalCost}₽"),
-                FontSize = 24
+                FontSize = 24,
+                HorizontalAlignment = HorizontalAlignment.Stretch, // Растягивается по горизонтали
+                Width = double.NaN,
             };
+
+            // Создаем Grid
+            Grid grid = new Grid();
+
+            // Добавляем колонки с пропорциональной шириной (*)
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(193, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(83, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(122, GridUnitType.Star) });
+
+            // Создаем TextBlock для названия блюда (первая колонка)
+            TextBlock dishNameTextBlock = new TextBlock
+            {
+                Text = itemModifier.Name,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                TextTrimming = TextTrimming.CharacterEllipsis
+            };
+            Grid.SetColumn(dishNameTextBlock, 0);
+
+            // Создаем TextBlock для количества (вторая колонка)
+            TextBlock quantityTextBlock = new TextBlock
+            {
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Left
+            };
+            Grid.SetColumn(quantityTextBlock, 1);
+
+            // Создаем TextBlock для цены (третья колонка)
+            TextBlock priceTextBlock = new TextBlock
+            {
+                Text = $"{itemModifier.AdditionalCost} руб.",
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Right
+            };
+            Grid.SetColumn(priceTextBlock, 2);
+
+            // Добавляем TextBlock'и в Grid
+            grid.Children.Add(dishNameTextBlock);
+            grid.Children.Add(quantityTextBlock);
+            grid.Children.Add(priceTextBlock);
+
+            // Устанавливаем Grid в Content кнопки
+            button.Content = grid;
+
             button.Style = (Style)FindResource("ButtonOrderItemModifier");
+
             button.Tag = itemModifier;
             button.GotFocus += ItemOrder_GotFocus;
             button.LostFocus += ItemOrder_LostFocus;
@@ -586,11 +704,15 @@ namespace AppEnteringTrackingAndOrders
                 OrderPanelInfoWrapPanel.Children.Insert(a + 1, button);
             else
                 OrderPanelInfoWrapPanel.Children.Add(button);
+
+            _sumorder += itemModifier.AdditionalCost;
+            RefreshOrderSum();
         }
 
-        private decimal OrderSum()
+        private void RefreshOrderSum()
         {
-            return 0;
+            ButtonOrderSum.Text = _sumorder.ToString();
+            ButtonPaymentOrderSum.Text = _sumorder.ToString();
         }
 
         private void SaveOrder_Click(object sender, RoutedEventArgs e)
@@ -718,31 +840,6 @@ namespace AppEnteringTrackingAndOrders
                 ItemQuantityNumericUpDown.Value = result;
         }
 
-        private void ButtonEnter_Click(object sender, RoutedEventArgs e)
-        {
-            using (var context = new RestaurantContext())
-            {
-                var item = context.OrderItems.Where(i => i.Id == _now_order_item.Id).FirstOrDefault();
-                if (item != null)
-                {
-                    item.Quantity = ItemQuantityNumericUpDown.Value;
-                    context.OrderItems.Update(item);
-                    context.SaveChanges();
-                    RefreshOrderPanelInfo();
-                }
-                else
-                {
-                    int index = _list_order.Items.IndexOf(_now_order_item);
-                    _list_order.Items[index].Quantity = ItemQuantityNumericUpDown.Value;
-
-                    int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
-                    if (a != -1)
-                    {
-                        UI_OrderItems(_now_menu_item, _list_order.Items[index]);
-                        OrderPanelInfoWrapPanel.Children.RemoveAt(a);
-                    }
-                }
-            }
-        }
+        
     }
 }

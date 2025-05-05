@@ -68,19 +68,20 @@
                 <Grid Grid.Row="1">
                     <ScrollViewer x:Name="OrderPanelInfoScrollViewer" 
                                   HorizontalScrollBarVisibility="Disabled" Margin="10,10,10,0" >
-                        <WrapPanel x:Name="OrderPanelInfoWrapPanel" Width="625">
-                            <!--<Border Width="605" Height="80" Margin="0, 5, 0, 0" Style="{DynamicResource BorderGray}">
-                                <TextBlock Text=" Гость 1                                                          276,99₽" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Width="582" Margin="10,0,0,0" />
+                        <StackPanel x:Name="OrderPanelInfoWrapPanel" Orientation="Vertical">
+                            <Border x:Name="OrderPanelInfoWrapPanelBorderSum" Height="80" Style="{DynamicResource BorderGray}" Width="563">
+                                <Grid Height="80" Width="563">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text=" Оплата" Margin="0,20,0,20" FontSize = "24" Foreground="White"/>
+                                    <TextBlock x:Name="ButtonOrderSum" Grid.Column="2" Text="0" Margin="0,20,70,20" FontSize = "24" Foreground="White" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Column="2" Text="руб." Margin="0,20,20,20" FontSize = "24" Foreground="White" HorizontalAlignment="Right"/>
+                                </Grid>
                             </Border>
-                            <Button Width="605" Height="80" Margin="0, 5, 0, 0" Content="⠀Сырная⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀1⠀⠀⠀⠀256,99₽" Style="{DynamicResource ButtonOrderItem}" FontSize = "24"/>
-                            <Button Width="605" Height="80" Margin="0, 5, 0, 0" Content="Помидоры⠀⠀⠀⠀⠀⠀⠀              ⠀⠀⠀1⠀⠀⠀⠀20₽" Style="{DynamicResource ButtonOrderItemModifier}" FontSize = "24"/>
-                            <Border Width="605" Height="80" Margin="0, 5, 0, 0" Style="{DynamicResource BorderGray}">
-                                <TextBlock Text=" Гость 2                                                          271,99₽" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Width="582" Margin="10,0,0,0" />
-                            </Border>
-                            <Button Width="605" Height="80" Margin="0, 5, 0, 0" Content="⠀Пепперони⠀⠀⠀⠀⠀   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀1⠀⠀⠀⠀256,99₽" Style="{DynamicResource ButtonOrderItem}" FontSize = "24"/>
-                            <Button Width="605" Height="80" Margin="0, 5, 0, 0" Content="Лук            ⠀⠀⠀⠀⠀⠀⠀              ⠀⠀⠀1⠀⠀⠀⠀15₽" Style="{DynamicResource ButtonOrderItemModifier}" FontSize = "24"/>
-                            -->
-                        </WrapPanel>
+                        </StackPanel>
                     </ScrollViewer>
                 </Grid>
                 <Grid Grid.Row="2">
@@ -256,9 +257,18 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Button
-                    Style="{DynamicResource ButtonStyleFull}"
-                    Height="80" FontSize="24" Margin="15,15,7,15" Background="#FF3FBB5E" Content="Оплата 553,98₽"/>
+                <Button x:Name="ButtonPaymentOrder" Style="{DynamicResource ButtonStyleFull}" Height="80" FontSize="24" Margin="15,15,7,15" Background="#FF3FBB5E">
+                    <Grid Height="80" Width="563">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text=" Оплата" Margin="0,20,0,20" FontSize = "24" Foreground="White"/>
+                        <TextBlock x:Name="ButtonPaymentOrderSum" Grid.Column="2" Text="0" Margin="0,20,70,20" FontSize = "24" Foreground="White" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Text="руб." Margin="0,20,20,20" FontSize = "24" Foreground="White" HorizontalAlignment="Right"/>
+                    </Grid>
+                </Button>
             </Grid>
             <Grid Grid.Column="2">
                 <Button
