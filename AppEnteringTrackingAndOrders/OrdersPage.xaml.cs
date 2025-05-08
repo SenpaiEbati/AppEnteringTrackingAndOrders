@@ -19,7 +19,6 @@ using System.Xml;
 using static AppEnteringTrackingAndOrders.ConstantsInitialValuesMethodsDb;
 using static MaterialDesignThemes.Wpf.Theme;
 using static MaterialDesignThemes.Wpf.Theme.ToolBar;
-//using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AppEnteringTrackingAndOrders
 {
@@ -37,6 +36,7 @@ namespace AppEnteringTrackingAndOrders
         private UIElement _now_order_UI_item;
         private MenuItem _now_menu_item;
         private OrderItem _now_order_item;
+        private OrderItemModifier _now_order_item_modifier;
         private MenuItem _old_menu_item;
         private MenuItemModifier _now_menu_item_modifier;
         private UIElement _now_order_modifier_UI_item;
@@ -186,6 +186,7 @@ namespace AppEnteringTrackingAndOrders
                 if (clickedItemOrder.Tag is ValueTuple<MenuItem, OrderItem> tuple)
                 {
                     _now_menu_item_modifier = null;
+                    _now_order_item_modifier = null;
                     _now_order_modifier_UI_item = null;
                     _now_menu_item = tuple.Item1;
                     _now_order_item = tuple.Item2;
@@ -200,13 +201,13 @@ namespace AppEnteringTrackingAndOrders
                     return;
                 }
 
-                var itemModifier = clickedItemOrder.Tag as MenuItemModifier;
-                if (itemModifier != null)
+                if (clickedItemOrder.Tag is ValueTuple<MenuItemModifier, OrderItemModifier> tupleMod)
                 {
-                    _now_menu_item_modifier = itemModifier;
+                    _now_menu_item_modifier = tupleMod.Item1;
+                    _now_order_item_modifier = tupleMod.Item2;
                     _now_order_modifier_UI_item = clickedItemOrder;
-                    GroupMenuBorderText.Text = itemModifier.Name;
-                    ItemMenuBorderTextBlock.Text = $"Выберите взаимодействие с {itemModifier.Name}";
+                    GroupMenuBorderText.Text = _now_menu_item_modifier.Name;
+                    ItemMenuBorderTextBlock.Text = $"Выберите взаимодействие с {_now_menu_item_modifier.Name}";
                     GroupMenuButtonsScrollViewer.Visibility = Visibility.Hidden;
                     ItemMenuButtonsScrollViewer.Visibility = Visibility.Hidden;
                     ModifierMenuButtonsScrollViewer.Visibility = Visibility.Visible;
@@ -222,6 +223,7 @@ namespace AppEnteringTrackingAndOrders
             if (clickedItemOrder != null)
             {
                 _now_menu_item_modifier = null;
+                _now_order_item_modifier = null;
                 _now_order_modifier_UI_item = null;
                 _old_menu_item = _now_menu_item;
                 _now_menu_item = null;
@@ -285,6 +287,9 @@ namespace AppEnteringTrackingAndOrders
                         if (_old_order != null && (count >= 0 || _old_order.Items.Count >= 0) )
                         {
                             int index = _list_order.Items.IndexOf(_now_order_item);
+                            if (index == -1)
+                                index = context.OrderItems.Where(x => x.Id == _now_order_item.Id).FirstOrDefault().Id;
+
                             var OrderItemModifier = new OrderItemModifier()
                             {
                                 OrderItemId = index,
@@ -308,7 +313,7 @@ namespace AppEnteringTrackingAndOrders
                                 _list_order.Items[count + 1].Modifiers.Add(OrderItemModifier);
                             }
 
-                            UI_OrderItem_Modifiers(itemModifier);
+                            UI_OrderItem_Modifiers(itemModifier, OrderItemModifier);
                         }
                     }
                 }
@@ -350,6 +355,7 @@ namespace AppEnteringTrackingAndOrders
                         UI_OrderItems(_now_menu_item, _list_order.Items[index]);
                         OrderPanelInfoWrapPanel.Children.RemoveAt(a);
                     }
+                    RefreshOrderSum();
                 }
             }
         }
@@ -370,19 +376,32 @@ namespace AppEnteringTrackingAndOrders
                     else
                     {
                         _list_order.Items.Remove(_now_order_item);
-                        int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
-                        if (a != -1)
-                            OrderPanelInfoWrapPanel.Children.RemoveAt(a);
+
+                        int dishIndex = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
+                        if (dishIndex > 0 && dishIndex != -1) // Проверяем, что это не нулевой элемент
+                        {
+                            // Определяем диапазон для удаления (блюдо + модификаторы)
+                            int startIndex = dishIndex;
+                            int endIndex = dishIndex + _now_order_item.Modifiers.Count;
+
+                            // Удаляем в обратном порядке, чтобы индексы не сдвигались
+                            for (int i = endIndex; i >= startIndex; i--)
+                            {
+                                if (i < OrderPanelInfoWrapPanel.Children.Count)
+                                {
+                                    OrderPanelInfoWrapPanel.Children.RemoveAt(i);
+                                }
+                            }
+                        }
                     }
-                    _sumorder -= _now_menu_item.Price * _now_order_item.Quantity;
-                    RefreshOrderSum();
                 }
+                RefreshOrderSum();
             }
             else if (_now_menu_item_modifier != null)
             {
                 using (var context = new RestaurantContext())
                 {
-                    var itemMod = context.OrderItemModifiers.Where(i => i.MenuItemModifierId == _now_menu_item_modifier.Id).FirstOrDefault();
+                    var itemMod = context.OrderItemModifiers.Where(i => i.Id == _now_order_item_modifier.Id).FirstOrDefault();
                     if (itemMod != null)
                     {
                         context.OrderItemModifiers.Remove(itemMod);
@@ -391,20 +410,22 @@ namespace AppEnteringTrackingAndOrders
                     }
                     else
                     {
+                        int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_modifier_UI_item);
                         for (int i = 0; i < _list_order.Items.Count; i++)
                         {
-                            for (int j = 0; j < _list_order.Items[i].Modifiers.Count; j++)
-                                if (_list_order.Items[i].Modifiers[j].OrderItemId == _now_menu_item_modifier.Id)
+                            int count = _list_order.Items[i].Modifiers.Count;
+                            for (int j = 0; j < count; j++)
+                                if (j == a-2)
                                     _list_order.Items[i].Modifiers.RemoveAt(j);
                         }
 
-                        int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_modifier_UI_item);
                         if (a != -1)
                             OrderPanelInfoWrapPanel.Children.RemoveAt(a);
+
+                        
                     }
-                    _sumorder -= _now_menu_item_modifier.AdditionalCost;
-                    RefreshOrderSum();
                 }
+                RefreshOrderSum();
             }
         }
         private void BackListTableWaitersButton_Click(object sender, RoutedEventArgs e)
@@ -559,7 +580,7 @@ namespace AppEnteringTrackingAndOrders
                             var menuitemmod = context.MenuItemModifiers.Where(i => i.Id == itemmod.MenuItemModifierId).FirstOrDefault();
 
                             if (menuitemmod != null)
-                                UI_OrderItem_Modifiers(menuitemmod);
+                                UI_OrderItem_Modifiers(menuitemmod, itemmod);
                         }
                     }
                 }
@@ -607,7 +628,7 @@ namespace AppEnteringTrackingAndOrders
             // Создаем TextBlock для цены (третья колонка)
             TextBlock priceTextBlock = new TextBlock
             {
-                Text = $"{menuitem.Price} руб.",
+                Text = $"{menuitem.Price * item.Quantity} руб.",
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Right
             };
@@ -635,11 +656,10 @@ namespace AppEnteringTrackingAndOrders
             else
                 OrderPanelInfoWrapPanel.Children.Add(button);
 
-            _sumorder += menuitem.Price;
             RefreshOrderSum();
         }
 
-        private void UI_OrderItem_Modifiers(MenuItemModifier itemModifier)
+        private void UI_OrderItem_Modifiers(MenuItemModifier menuItemModifier, OrderItemModifier orderItemModifier)
         {
             // Создаем кнопку
             System.Windows.Controls.Button button = new System.Windows.Controls.Button
@@ -661,7 +681,7 @@ namespace AppEnteringTrackingAndOrders
             // Создаем TextBlock для названия блюда (первая колонка)
             TextBlock dishNameTextBlock = new TextBlock
             {
-                Text = itemModifier.Name,
+                Text = menuItemModifier.Name,
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 TextTrimming = TextTrimming.CharacterEllipsis
@@ -679,7 +699,7 @@ namespace AppEnteringTrackingAndOrders
             // Создаем TextBlock для цены (третья колонка)
             TextBlock priceTextBlock = new TextBlock
             {
-                Text = $"{itemModifier.AdditionalCost} руб.",
+                Text = $"{menuItemModifier.AdditionalCost} руб.",
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Right
             };
@@ -695,7 +715,9 @@ namespace AppEnteringTrackingAndOrders
 
             button.Style = (Style)FindResource("ButtonOrderItemModifier");
 
-            button.Tag = itemModifier;
+            ValueTuple<MenuItemModifier, OrderItemModifier> tuple = new ValueTuple<MenuItemModifier, OrderItemModifier>(menuItemModifier, orderItemModifier);
+            button.Tag = tuple;
+
             button.GotFocus += ItemOrder_GotFocus;
             button.LostFocus += ItemOrder_LostFocus;
 
@@ -705,12 +727,43 @@ namespace AppEnteringTrackingAndOrders
             else
                 OrderPanelInfoWrapPanel.Children.Add(button);
 
-            _sumorder += itemModifier.AdditionalCost;
             RefreshOrderSum();
         }
 
         private void RefreshOrderSum()
         {
+            _sumorder = 0;
+            using (var context = new RestaurantContext())
+            { 
+                foreach (var orderitem in _list_order.Items)
+                {
+                    var menuitem = context.MenuItems.Where(i => i.Id == orderitem.MenuItemId).FirstOrDefault();
+                    if (menuitem != null)
+                        _sumorder += menuitem.Price * orderitem.Quantity;
+                    foreach (var orderitemmod in orderitem.Modifiers)
+                    {
+                        var menuitemmod = context.MenuItemModifiers.Where(i => i.Id == orderitemmod.MenuItemModifierId).FirstOrDefault();
+                        if (menuitemmod != null)
+                            _sumorder += menuitemmod.AdditionalCost;
+                    }
+                }
+
+                var orderitemB = context.OrderItems.Where(i => i.OrderId == _ID).ToList();
+                foreach (var item in orderitemB)
+                {
+                    var menuitem = context.MenuItems.Where(i => i.Id == item.MenuItemId).FirstOrDefault();
+                    if (menuitem != null)
+                        _sumorder += menuitem.Price * item.Quantity;
+
+                    var orderitemmod = context.OrderItemModifiers.Where(i => i.OrderItemId == item.Id).ToList();
+                    foreach (var itemmod in orderitemmod)
+                    {
+                        var menuitemmod = context.MenuItemModifiers.Where(i => i.Id == itemmod.MenuItemModifierId).FirstOrDefault();
+                        if (menuitemmod != null)
+                            _sumorder += menuitemmod.AdditionalCost;
+                    }
+                }
+            }
             ButtonOrderSum.Text = _sumorder.ToString();
             ButtonPaymentOrderSum.Text = _sumorder.ToString();
         }
@@ -753,6 +806,7 @@ namespace AppEnteringTrackingAndOrders
                     }
                 }
                 context.SaveChanges();
+                _list_order.Items.Clear();
                 NavigationService.GoBack();
             }
         }

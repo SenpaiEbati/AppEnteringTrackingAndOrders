@@ -69,16 +69,25 @@
                     <ScrollViewer x:Name="OrderPanelInfoScrollViewer" 
                                   HorizontalScrollBarVisibility="Disabled" Margin="10,10,10,0" >
                         <StackPanel x:Name="OrderPanelInfoWrapPanel" Orientation="Vertical">
-                            <Border x:Name="OrderPanelInfoWrapPanelBorderSum" Height="80" Style="{DynamicResource BorderGray}" Width="563">
-                                <Grid Height="80" Width="563">
+                            <Border x:Name="OrderPanelInfoWrapPanelBorderSum" HorizontalAlignment="Stretch" Height="80" Style="{DynamicResource BorderGray}">
+                                <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto"/>
+                                        <!-- "Оплата" -->
+                                        <ColumnDefinition Width="*"/>
+                                        <!-- Гибкое пространство -->
+                                        <ColumnDefinition Width="Auto"/>
+                                        <!-- Сумма + валюта -->
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text=" Оплата" Margin="0,20,0,20" FontSize = "24" Foreground="White"/>
-                                    <TextBlock x:Name="ButtonOrderSum" Grid.Column="2" Text="0" Margin="0,20,70,20" FontSize = "24" Foreground="White" HorizontalAlignment="Right"/>
-                                    <TextBlock Grid.Column="2" Text="руб." Margin="0,20,20,20" FontSize = "24" Foreground="White" HorizontalAlignment="Right"/>
+
+                                    <!-- Левый текст -->
+                                    <TextBlock Grid.Column="0" Text="Оплата" Margin="10,0,0,0" FontSize="24" Foreground="White" VerticalAlignment="Center"/>
+
+                                    <!-- Правая группа (сумма + руб.) -->
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
+                                        <TextBlock x:Name="ButtonOrderSum" Text="0" FontSize="24" Foreground="White"/>
+                                        <TextBlock Text=" руб." FontSize="24" Foreground="White" Margin="5,0,0,0"/>
+                                    </StackPanel>
                                 </Grid>
                             </Border>
                         </StackPanel>
@@ -257,16 +266,15 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Button x:Name="ButtonPaymentOrder" Style="{DynamicResource ButtonStyleFull}" Height="80" FontSize="24" Margin="15,15,7,15" Background="#FF3FBB5E">
-                    <Grid Height="80" Width="563">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text=" Оплата" Margin="0,20,0,20" FontSize = "24" Foreground="White"/>
-                        <TextBlock x:Name="ButtonPaymentOrderSum" Grid.Column="2" Text="0" Margin="0,20,70,20" FontSize = "24" Foreground="White" HorizontalAlignment="Right"/>
-                        <TextBlock Grid.Column="2" Text="руб." Margin="0,20,20,20" FontSize = "24" Foreground="White" HorizontalAlignment="Right"/>
+                <Button x:Name="ButtonPaymentOrder" Height="80" FontSize="24" Style="{DynamicResource ButtonStyleFull}" Margin="10,15,10,15" Background="#FF3FBB5E" Padding="0" HorizontalContentAlignment="Stretch">
+                    <Grid>
+                        <!-- Левый элемент (фиксирован у левого края) -->
+                        <TextBlock Text="Оплата" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="24" Foreground="White"/>
+                        <!-- Правый элемент (фиксирован у правого края) -->
+                        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0">
+                            <TextBlock x:Name="ButtonPaymentOrderSum" Text="0" FontSize="24" Foreground="White"/>
+                            <TextBlock Text=" руб." FontSize="24" Foreground="White" Margin="5,0,0,0"/>
+                        </StackPanel>
                     </Grid>
                 </Button>
             </Grid>
