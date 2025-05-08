@@ -53,7 +53,7 @@
                 <Button x:Name="ButtonLightDarkTheme" Height="80" Width="117" VerticalAlignment="Center" Style="{DynamicResource ButtonStyleFull}" HorizontalAlignment="Left" Margin="5,0,0,0" Click="ButtonLightDarkTheme_Click">
                     <Image x:Name="ImageLightDarkTheme" Source="/Image/lightmode.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
                 </Button>
-                <Button Height="80" Width="117" Style="{DynamicResource ButtonStyleFullRed}" HorizontalAlignment="Left" Margin="127,10,0,10">
+                <Button Height="80" Width="117" Style="{DynamicResource ButtonStyleFullRed}" HorizontalAlignment="Left" Margin="127,10,0,10" Click="">
                     <Image x:Name="ImageLogOut" Source="/Image/logout.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
             </Grid>

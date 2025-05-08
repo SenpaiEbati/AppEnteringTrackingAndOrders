@@ -158,6 +158,10 @@ namespace AppEnteringTrackingAndOrders
             RefreshMenuData();
         }
 
+        private void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
 
         private Point _scrollMousePoint;
         private double _hOffset, _vOffset;
