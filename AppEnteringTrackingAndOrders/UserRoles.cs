@@ -35,7 +35,8 @@ namespace AppEnteringTrackingAndOrders
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=testAETAO;Username=postgres;Password=7796");
+            Env.Load();
+            optionsBuilder.UseNpgsql(Env.GetString("DATA_BASE"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

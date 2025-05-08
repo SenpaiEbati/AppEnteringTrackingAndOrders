@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AppEnteringTrackingAndOrders.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250422075630_UserRoles")]
+    [Migration("20250508163041_UserRoles")]
     partial class UserRoles
     {
         /// <inheritdoc />

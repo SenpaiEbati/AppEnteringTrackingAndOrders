@@ -143,6 +143,9 @@ namespace AppEnteringTrackingAndOrders.Migrations.Restaurant
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Guest")
+                        .HasColumnType("integer");
+
                     b.Property<int>("MenuItemId")
                         .HasColumnType("integer");
 

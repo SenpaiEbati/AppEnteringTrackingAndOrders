@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
@@ -68,6 +69,7 @@ namespace AppEnteringTrackingAndOrders
         [Key]
         public int Id { get; set; }
         public int Quantity { get; set; }
+        public int Guest { get; set; }
         public int MenuItemId { get; set; }
         public MenuItem MenuItem { get; set; }
         public int OrderId { get; set; }
@@ -97,7 +99,8 @@ namespace AppEnteringTrackingAndOrders
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=testAETAO;Username=postgres;Password=7796;Include Error Detail = true");
+            Env.Load();
+            optionsBuilder.UseNpgsql(Env.GetString("DATA_BASE"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

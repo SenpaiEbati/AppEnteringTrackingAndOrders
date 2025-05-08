@@ -68,7 +68,7 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="1">
                     <ScrollViewer x:Name="OrderPanelInfoScrollViewer" 
-                                  HorizontalScrollBarVisibility="Disabled" Margin="10,10,10,0" >
+                                  HorizontalScrollBarVisibility="Disabled" Margin="15,10,0,0" >
                         <StackPanel x:Name="OrderPanelInfoWrapPanel" Orientation="Vertical">
                             <Border x:Name="OrderPanelInfoWrapPanelBorderSum" HorizontalAlignment="Stretch" Height="80" Style="{DynamicResource BorderGray}">
                                 <Grid>
@@ -131,7 +131,7 @@
                     </Grid>
                     <Grid Grid.Column="2">
                         <Button x:Name="OrderPanelInfoAddGuestButton" Style="{DynamicResource ButtonStyleFull}"
-                            Height="74" FontSize="24" Content="➕ Гость" VerticalAlignment="Top" Margin="5,6,10,0"/>
+                            Height="74" FontSize="24" Content="➕ Гость" VerticalAlignment="Top" Margin="5,6,10,0" />
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="0">
@@ -149,7 +149,7 @@
                         <Button Style="{DynamicResource ButtonStyleNo}" FontSize="24" Height="74" VerticalAlignment="Center" Content="Все гости" Margin="8,0,8,0"/>
                     </Grid>
                     <Grid Grid.Column="2">
-                        <Button Style="{DynamicResource ButtonStyleTopRight}" FontSize="24" Height="74" VerticalAlignment="Center" Margin="0,0,15,0">
+                        <Button Style="{DynamicResource ButtonStyleTopRight}" FontSize="24" Height="74" VerticalAlignment="Center" Margin="0,0,17,0">
                             <Image x:Name="ImageRightButton" Source="/Image/buttonleftwhite.png" Height="50" Width="50" RenderTransformOrigin="0.5,0.5">
                                 <Image.RenderTransform>
                                     <TransformGroup>

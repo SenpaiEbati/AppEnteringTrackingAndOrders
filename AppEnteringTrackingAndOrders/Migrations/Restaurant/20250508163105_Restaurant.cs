@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AppEnteringTrackingAndOrders.Migrations.Restaurant
 {
     /// <inheritdoc />
-    public partial class MenusAndOrders : Migration
+    public partial class Restaurant : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -109,6 +109,7 @@ namespace AppEnteringTrackingAndOrders.Migrations.Restaurant
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
+                    Guest = table.Column<int>(type: "integer", nullable: false),
                     MenuItemId = table.Column<int>(type: "integer", nullable: false),
                     OrderId = table.Column<int>(type: "integer", nullable: false)
                 },

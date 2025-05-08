@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AppEnteringTrackingAndOrders.Migrations.Restaurant
 {
     [DbContext(typeof(RestaurantContext))]
-    [Migration("20250422075707_MenusAndOrders")]
-    partial class MenusAndOrders
+    [Migration("20250508163105_Restaurant")]
+    partial class Restaurant
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,6 +145,9 @@ namespace AppEnteringTrackingAndOrders.Migrations.Restaurant
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Guest")
+                        .HasColumnType("integer");
 
                     b.Property<int>("MenuItemId")
                         .HasColumnType("integer");

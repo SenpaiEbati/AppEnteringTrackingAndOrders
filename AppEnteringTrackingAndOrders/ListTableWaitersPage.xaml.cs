@@ -60,6 +60,10 @@ namespace AppEnteringTrackingAndOrders
             _IDOrders += 1;
             OrdersPage orderpage = new OrdersPage(_user, _IDOrders);
             orderpage.Unloaded += (s, args) => RefreshMenuData();
+            if (_theme == false)
+                orderpage._theme = true;
+            else
+                orderpage._theme = false;
             NavigationService.Navigate(orderpage);
         }
 
@@ -76,6 +80,7 @@ namespace AppEnteringTrackingAndOrders
                         orderPage._theme = true;
                     else
                         orderPage._theme = false;
+
                     NavigationService.Navigate(orderPage);
                 }
             }
