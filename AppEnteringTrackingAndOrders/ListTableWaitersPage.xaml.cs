@@ -26,6 +26,7 @@ namespace AppEnteringTrackingAndOrders
         private int? _IDYourUserRoles;
         private User _user;
         private int _IDOrders = 0;
+        private bool _theme = true;
 
         public ListTableWaitersPage(User user)
         {
@@ -51,7 +52,6 @@ namespace AppEnteringTrackingAndOrders
                     TextBlockBorderCenterTopMenu.Text = "Все заказы";
                 }
             }
-
             RefreshMenuData();
         }
 
@@ -72,6 +72,10 @@ namespace AppEnteringTrackingAndOrders
                 OrdersPage orderPage = (OrdersPage)clickedButton.Tag;
                 if (orderPage != null)
                 {
+                    if (_theme == false)
+                        orderPage._theme = true;
+                    else
+                        orderPage._theme = false;
                     NavigationService.Navigate(orderPage);
                 }
             }
@@ -121,6 +125,39 @@ namespace AppEnteringTrackingAndOrders
         {
 
         }
+
+        private void ButtonLightDarkTheme_Click(object sender, RoutedEventArgs e)
+        {
+            Uri uri;
+            // определяем путь к файлу ресурсов
+            if (_theme == true)
+            {
+                uri = new Uri("light.xaml", UriKind.Relative);
+                ImageLeftButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
+                ImageRightButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
+                ImageLightDarkTheme.Source = new BitmapImage(new Uri("/Image/moonblack.png", UriKind.Relative));
+                ImageLogOut.Source = new BitmapImage(new Uri("/Image/logoutblack.png", UriKind.Relative));
+                _theme = false;
+            }
+            else
+            {
+                uri = new Uri("dark.xaml", UriKind.Relative);
+                ImageLeftButton.Source = new BitmapImage(new Uri("/Image/buttonleftwhite.png", UriKind.Relative));
+                ImageRightButton.Source = new BitmapImage(new Uri("/Image/buttonleftwhite.png", UriKind.Relative));
+                ImageLightDarkTheme.Source = new BitmapImage(new Uri("/Image/lightmode.png", UriKind.Relative));
+                ImageLogOut.Source = new BitmapImage(new Uri("/Image/logout.png", UriKind.Relative));
+                _theme = true;
+            }
+
+            // загружаем словарь ресурсов
+            ResourceDictionary resourceDict = System.Windows.Application.LoadComponent(uri) as ResourceDictionary;
+            // очищаем коллекцию ресурсов приложения
+            System.Windows.Application.Current.Resources.Clear();
+            // добавляем загруженный словарь ресурсов
+            System.Windows.Application.Current.Resources.MergedDictionaries.Add(resourceDict);
+            RefreshMenuData();
+        }
+
 
         private Point _scrollMousePoint;
         private double _hOffset, _vOffset;

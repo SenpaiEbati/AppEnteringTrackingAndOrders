@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -42,6 +44,7 @@ namespace AppEnteringTrackingAndOrders
         private UIElement _now_order_modifier_UI_item;
         private int? _IDYourUserRoles;
         private int _ID = 0;
+        public bool _theme;
 
         public OrdersPage(User user, int OrderID)
         {
@@ -105,11 +108,30 @@ namespace AppEnteringTrackingAndOrders
                 RefreshOrderPanelInfo();
             }
             TopBorderText.Text = $"Создать заказ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀{DateTime.Now.ToString("HH:mm")}\nСтол:1 Гостей:2";
-
             //ButtonOrdersSumWrapPanel.Content = $"Заказ {OrderSum()}₽";
         }
 
-
+        private void YourPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (_theme == true)
+            {
+                ImageLeftButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
+                ImageRightButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
+                ImageUpButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
+                ImageDownButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
+                ImageSearch.Source = new BitmapImage(new Uri("/Image/searchblack.png", UriKind.Relative));
+                ImageDeleteOrder.Source = new BitmapImage(new Uri("/Image/deleteorderblack.png", UriKind.Relative));
+            }
+            else
+            {
+                ImageLeftButton.Source = new BitmapImage(new Uri("/Image/buttonleftwhite.png", UriKind.Relative));
+                ImageRightButton.Source = new BitmapImage(new Uri("/Image/buttonleftwhite.png", UriKind.Relative));
+                ImageUpButton.Source = new BitmapImage(new Uri("/Image/buttonleftwhite.png", UriKind.Relative));
+                ImageDownButton.Source = new BitmapImage(new Uri("/Image/buttonleftwhite.png", UriKind.Relative));
+                ImageSearch.Source = new BitmapImage(new Uri("/Image/searchwhite.png", UriKind.Relative));
+                ImageDeleteOrder.Source = new BitmapImage(new Uri("/Image/deleteorder.png", UriKind.Relative));
+            }
+        }
 
         private void MenuGroupButton_Click(object sender, RoutedEventArgs e)
         {
@@ -893,7 +915,5 @@ namespace AppEnteringTrackingAndOrders
             if (int.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
                 ItemQuantityNumericUpDown.Value = result;
         }
-
-        
     }
 }

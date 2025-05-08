@@ -72,7 +72,7 @@
                     <Button x:Name="TopButtonDelete" Content="Del" Style="{DynamicResource ButtonStyleTopRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="36" Focusable="False" Click="TopButtonDelete_Click" Margin="468,0,0,0"/>
                     <Button x:Name="CenterButtonZero" Content="0" Style="{DynamicResource ButtonStyleNo}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36"  Focusable="False" Click="DownButtonZero_Click" Margin="468,0,0,0"/>
                     <Button x:Name="DownButtonKeyboard" Style="{DynamicResource ButtonStyleDownRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="36" Focusable="False" Click="DownButtonKeyboard_Click" Margin="468,0,0,0">
-                        <Image Source="/keyboard-512.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50"/>
+                        <Image Source="/Image/keyboard-512.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50"/>
                     </Button>
                 </Grid>
                 <Grid x:Name="KeyboardAbc" Height="378" Width="1140"

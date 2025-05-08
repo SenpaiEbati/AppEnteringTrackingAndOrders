@@ -1,10 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:AppEnteringTrackingAndOrders">
-    
-    
+
     <Style x:Key="TextBlockStyle" TargetType="TextBlock">
-        <Setter Property="Background" Value="Black" />
         <Setter Property="Foreground" Value="White" />
     </Style>
     
@@ -162,11 +160,11 @@
         </Setter>
     </Style>
 
-    
+
     <Style x:Key="ButtonStyleFullGreen" TargetType="Button">
         <Setter Property="Background" Value="#FF70AB64" />
         <Setter Property="Foreground" Value="White" />
-        <Setter Property="BorderBrush" Value="White" />
+        <Setter Property="BorderBrush" Value="#4CAF50" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -179,28 +177,72 @@
                     <ControlTemplate.Triggers>
                         <!-- Анимация для MouseOver -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="DarkGray"/>
-                            <Setter Property="BorderBrush" Value="LightGray"/>
+                            <Setter Property="Background" Value="#81C784"/>
+                            <Setter Property="BorderBrush" Value="#66BB6A"/>
                         </Trigger>
 
                         <!-- Анимация для нажатия -->
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="DimGray"/>
-                            <Setter Property="BorderBrush" Value="Gray"/>
+                            <Setter Property="Background" Value="#4CAF50"/>
+                            <Setter Property="BorderBrush" Value="#388E3C"/>
                         </Trigger>
 
                         <!-- Анимация для IsEnabled (отключенное состояние) -->
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" Value="LightGray"/>
-                            <Setter Property="Foreground" Value="DarkGray"/>
+                            <Setter Property="Background" Value="#C8E6C9"/>
+                            <Setter Property="Foreground" Value="Black"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
-    
+
+    <Style x:Key="ButtonStyleFullRed" TargetType="Button">
+        <Setter Property="Background" Value="#FFCC4444" />
+        <!-- Основной красный цвет -->
+        <Setter Property="Foreground" Value="White" />
+        <!-- Белый текст для лучшей читаемости -->
+        <Setter Property="BorderBrush" Value="#FF5252" />
+        <!-- Темно-красная граница -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="15"
+                    Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация для MouseOver -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FF5252"/>
+                            <!-- Темнее на hover -->
+                            <Setter Property="BorderBrush" Value="#FF3939"/>
+                        </Trigger>
+
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#FF3939"/>
+                            <!-- Еще темнее при нажатии -->
+                            <Setter Property="BorderBrush" Value="#FF2020"/>
+                        </Trigger>
+
+                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#FFBDBD"/>
+                            <!-- Светло-красный -->
+                            <Setter Property="Foreground" Value="#757575"/>
+                            <!-- Серый текст -->
+                            <Setter Property="BorderBrush" Value="#FF9E9E"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ButtonStyleTopLeft" TargetType="Button">
         <Setter Property="Background" Value="Gray" />
         <Setter Property="Foreground" Value="White" />

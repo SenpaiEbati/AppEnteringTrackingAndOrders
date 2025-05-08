@@ -97,7 +97,7 @@
                 Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-300}"
                 Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-110}" Click="ButtonAddUser_Click" Background="#FF33C55D">
                 <Button.OpacityMask>
-                    <ImageBrush ImageSource="/add.png"/>
+                    <ImageBrush ImageSource="/Image/add.png"/>
                 </Button.OpacityMask>
                 <Button.Margin>
                     <MultiBinding Converter="{StaticResource VisibilityToMarginConverter}">
@@ -111,7 +111,7 @@
                     Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-40}"
                     Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-110}" Click="ButtonEditUser_Click">
                 <Button.OpacityMask>
-                    <ImageBrush ImageSource="/change.png"/>
+                    <ImageBrush ImageSource="/Image/change.png"/>
                 </Button.OpacityMask>
                 <Button.Margin>
                     <MultiBinding Converter="{StaticResource VisibilityToMarginConverter}">
@@ -125,7 +125,7 @@
                     Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=220}"
                     Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-110}" Click="ButtonDeleteUser_Click" Background="#FFC53333">
                 <Button.OpacityMask>
-                    <ImageBrush ImageSource="/delete.png"/>
+                    <ImageBrush ImageSource="/Image/delete.png"/>
                 </Button.OpacityMask>
                 <Button.Margin>
                     <MultiBinding Converter="{StaticResource VisibilityToMarginConverter}">
@@ -170,7 +170,7 @@
                 <Button x:Name="TopButtonDelete" Content="Del" Style="{DynamicResource ButtonStyleTopRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="36" Focusable="False" Click="TopButtonDelete_Click" Margin="468,0,0,0"/>
                 <Button x:Name="CenterButtonPoint" Content="0" Style="{DynamicResource ButtonStyleNo}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36"  Focusable="False" Click="CenterButtonPoint_Click" Margin="468,0,0,0"/>
                 <Button x:Name="DownButtonKeyboard" Style="{DynamicResource ButtonStyleDownRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="36" Focusable="False"  Margin="468,0,0,0">
-                    <Image Source="/keyboard-512.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50"/>
+                    <Image Source="/Image/keyboard-512.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50"/>
                 </Button>
             </Grid>
         </Canvas>

@@ -7,6 +7,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="1200" d:DesignWidth="1800"
+      Loaded="YourPage_Loaded"
       Title="OrdersPage">
 
     <Grid x:Name="BackgroundGrid" Style="{DynamicResource BackgroundGridStyle}">
@@ -33,24 +34,24 @@
             </Grid>
             <Grid Grid.Column="1">
                 <Border Height="80" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="0,5,10,5">
-                    <TextBlock x:Name="TopBorderText" FontSize="24" Margin="10,5,10,5" Foreground="White"/>
+                    <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="TopBorderText" FontSize="24" Margin="10,5,10,5"/>
                 </Border>
             </Grid>
             <Grid Grid.Column="2">
                 <Border Height="80" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="0,5,0,5">
-                    <TextBlock Text="По официантам"  FontSize="24" Margin="10,5,10,5" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="По официантам"  FontSize="24" Margin="10,5,10,5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
             </Grid>
             <Grid Grid.Column="3">
-                <Border Height="80" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="10,5,5,5">
-                    <Image Source="/search.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
-                </Border>
+                <Button Height="80" Style="{DynamicResource ButtonStyleFull}" Margin="10,5,5,5">
+                    <Image x:Name="ImageSearch" Source="/Image/searchwhite.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
             </Grid>
 
             <Grid Grid.Column="4">
-                <Border Height="80" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="5,5,10,5">
-                    <Image Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/icons8.png"/>
-                </Border>
+                <Button Height="80" Width="117" Style="{DynamicResource ButtonStyleFullRed}" HorizontalAlignment="Left" Margin="5,5,10,5">
+                    <Image x:Name="ImageDeleteOrder" Source="/Image/deleteorder.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
@@ -81,12 +82,12 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!-- Левый текст -->
-                                    <TextBlock Grid.Column="0" Text="Оплата" Margin="10,0,0,0" FontSize="24" Foreground="White" VerticalAlignment="Center"/>
+                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Grid.Column="0" Text="Оплата" Margin="10,0,0,0" FontSize="24" VerticalAlignment="Center"/>
 
                                     <!-- Правая группа (сумма + руб.) -->
                                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
-                                        <TextBlock x:Name="ButtonOrderSum" Text="0" FontSize="24" Foreground="White"/>
-                                        <TextBlock Text=" руб." FontSize="24" Foreground="White" Margin="5,0,0,0"/>
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="ButtonOrderSum" Text="0" FontSize="24"/>
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" Text=" руб." FontSize="24" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </Grid>
                             </Border>
@@ -101,7 +102,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Button Style="{DynamicResource ButtonStyleFull}" FontSize="24" Margin="10,6,5,0" Height="74" VerticalAlignment="Top">
-                            <Image Source="./buttonleftwhite.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50">
+                            <Image x:Name="ImageUpButton" Source="/Image/buttonleftwhite.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50">
                                 <Image.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
@@ -116,7 +117,7 @@
                     <Grid Grid.Column="1">
                         <Button Style="{DynamicResource ButtonStyleFull}"
                             Height="74" FontSize="24" VerticalAlignment="Top" Margin="8,6,8,0">
-                            <Image Source="./buttonleftwhite.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50">
+                            <Image x:Name="ImageDownButton" Source="/Image/buttonleftwhite.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50">
                                 <Image.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
@@ -141,7 +142,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Button Style="{DynamicResource ButtonStyleTopLeft}" FontSize="24" Margin="15,0,0,0" Height="74" VerticalAlignment="Center">
-                            <Image Source="./buttonleftwhite.png" Height="50" Width="50"></Image>
+                            <Image x:Name="ImageLeftButton" Source="/Image/buttonleftwhite.png" Height="50" Width="50"></Image>
                         </Button>
                     </Grid>
                     <Grid Grid.Column="1">
@@ -149,7 +150,7 @@
                     </Grid>
                     <Grid Grid.Column="2">
                         <Button Style="{DynamicResource ButtonStyleTopRight}" FontSize="24" Height="74" VerticalAlignment="Center" Margin="0,0,15,0">
-                            <Image Source="./buttonleftwhite.png" Height="50" Width="50" RenderTransformOrigin="0.5,0.5">
+                            <Image x:Name="ImageRightButton" Source="/Image/buttonleftwhite.png" Height="50" Width="50" RenderTransformOrigin="0.5,0.5">
                                 <Image.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
@@ -165,46 +166,46 @@
             </Grid>
             <Grid x:Name="GroupMenuButtonsGrid" Grid.Column="1">
                 <Border x:Name="GroupMenuBorder" Style="{DynamicResource BorderGray}" Height="80" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,0,14,0">
-                    <TextBlock x:Name="GroupMenuBorderText" FontSize="24" Foreground="White" Text="Меню" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="GroupMenuBorderText" FontSize="24" Text="Меню" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
                 <ScrollViewer x:Name="GroupMenuButtonsScrollViewer"
                               HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0" Visibility="Visible">
                     <WrapPanel x:Name="GroupMenuButtonsWrapPanel">
-                        <Button x:Name="GroupMenuButtonsWrapPanelAddPositionButton" Content="➕ Добавить&#x0a;     группу&#x0a;    позиций" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="GroupMenuButtonsWrapPanelAddPositionButton_Click"/>
+                        <Button x:Name="GroupMenuButtonsWrapPanelAddPositionButton" Content="➕ Добавить&#x0a;     группу&#x0a;    позиций" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Click="GroupMenuButtonsWrapPanelAddPositionButton_Click"/>
                     </WrapPanel>
                 </ScrollViewer>
                 <ScrollViewer x:Name="ModifierMenuButtonsScrollViewer" 
                               VerticalScrollBarVisibility="Hidden" 
                               HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0" Visibility="Hidden">
                     <WrapPanel x:Name="ModifierMenuButtonsWrapPanel">
-                        <Button x:Name="ModifierMenuButtonsWrapPanel_ModifierButton" Content="Модификатор" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ModifierMenuButtonsWrapPanel_ModifierButton_Click" Focusable="False"/>
-                        <Button x:Name="ModifierMenuButtonsWrapPanel_QuantityButton" Content="Количество" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ModifierMenuButtonsWrapPanel_QuantityButton_Click" Focusable="False"/>
-                        <Button x:Name="ModifierMenuButtonsWrapPanel_DeleteButton" Content="Удалить" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ModifierMenuButtonsWrapPanel_DeleteButton_Click" Focusable="False"/>
+                        <Button x:Name="ModifierMenuButtonsWrapPanel_ModifierButton" Content="Модификатор" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24"  Click="ModifierMenuButtonsWrapPanel_ModifierButton_Click" Focusable="False"/>
+                        <Button x:Name="ModifierMenuButtonsWrapPanel_QuantityButton" Content="Количество" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Click="ModifierMenuButtonsWrapPanel_QuantityButton_Click" Focusable="False"/>
+                        <Button x:Name="ModifierMenuButtonsWrapPanel_DeleteButton" Content="Удалить" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24"  Click="ModifierMenuButtonsWrapPanel_DeleteButton_Click" Focusable="False"/>
                     </WrapPanel>
                 </ScrollViewer>
             </Grid>
             <Grid x:Name="ItemMenuButtonsGrid" Grid.Column="2">
                 <Border x:Name="ItemMenuBorder" Style="{DynamicResource BorderGray}" Height="82" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,-1,15,0">
-                    <TextBlock x:Name="ItemMenuBorderTextBlock" Text="Выберите группу меню" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                    <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="ItemMenuBorderTextBlock" Text="Выберите группу меню" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
                 <ScrollViewer x:Name="ItemMenuButtonsScrollViewer" 
                               HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0" Visibility="Hidden">
                     <WrapPanel x:Name="ItemMenuButtonsWrapPanel">
-                        <Button x:Name="ItemMenuButtonsWrapPanelAddPositionButton" Content="➕ Добавить&#x0a;    позицию" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ItemMenuButtonsWrapPanelAddPositionButton_Click"/>
+                        <Button x:Name="ItemMenuButtonsWrapPanelAddPositionButton" Content="➕ Добавить&#x0a;    позицию" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Click="ItemMenuButtonsWrapPanelAddPositionButton_Click"/>
                     </WrapPanel>
                 </ScrollViewer>
                 <ScrollViewer x:Name="ItemModifierButtonsScrollViewer" 
                               VerticalScrollBarVisibility="Hidden" 
                               HorizontalScrollBarVisibility="Disabled" Margin="0,85,0,0" Visibility="Hidden" Focusable="False">
                     <WrapPanel x:Name="ItemModifierButtonsWrapPanel" Focusable="False">
-                        <Button x:Name="ItemModifierButtonsWrapPanelAddPositionButton" Content="➕ Добавить&#x0a;модификатор" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Click="ItemModifierButtonsWrapPanelAddPositionButton_Click" Focusable="False"/>
-                        <!--<Button Content="Помидоры" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Focusable="False"/>
-                        <Button Content="Лук" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Foreground="White" Focusable="False"/>-->
+                        <Button x:Name="ItemModifierButtonsWrapPanelAddPositionButton" Content="➕ Добавить&#x0a;модификатор" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Click="ItemModifierButtonsWrapPanelAddPositionButton_Click" Focusable="False"/>
+                        <!--<Button Content="Помидоры" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Focusable="False"/>
+                        <Button Content="Лук" Height="175" Width="200" Margin="0,0,10,10" Style="{DynamicResource ButtonStyleNo}" FontSize="24" Focusable="False"/>-->
                     </WrapPanel>
                 </ScrollViewer>
                 <Grid x:Name="ItemQuantityButton" Margin="0,85,0,0" Visibility="Hidden">
                     <Border Style="{DynamicResource BorderGray}" Margin="0,0,16,0" Height="220" VerticalAlignment="Top">
-                        <materialDesign:NumericUpDown x:Name="ItemQuantityNumericUpDown" Padding="30" FontSize="72" Foreground="White" Minimum="0" Margin="0,0,0,30" Maximum="100" Focusable="False" ForceCursor="True" />
+                        <materialDesign:NumericUpDown x:Name="ItemQuantityNumericUpDown" Padding="30" FontSize="72" Minimum="0" Margin="0,0,0,30" Maximum="100" Focusable="False" ForceCursor="True" />
                     </Border>
                     <Grid x:Name="KeyboardNumber" Visibility="Visible" Margin="0,225,16,0">
                         <Grid.ColumnDefinitions>
@@ -266,14 +267,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Button x:Name="ButtonPaymentOrder" Height="80" FontSize="24" Style="{DynamicResource ButtonStyleFull}" Margin="10,15,10,15" Background="#FF3FBB5E" Padding="0" HorizontalContentAlignment="Stretch">
+                <Button x:Name="ButtonPaymentOrder" Height="80" FontSize="24" Style="{DynamicResource ButtonStyleFullGreen}" Margin="10,15,10,15" Padding="0" HorizontalContentAlignment="Stretch">
                     <Grid>
                         <!-- Левый элемент (фиксирован у левого края) -->
-                        <TextBlock Text="Оплата" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="24" Foreground="White"/>
+                        <TextBlock Text="Оплата" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="24"/>
                         <!-- Правый элемент (фиксирован у правого края) -->
                         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0">
-                            <TextBlock x:Name="ButtonPaymentOrderSum" Text="0" FontSize="24" Foreground="White"/>
-                            <TextBlock Text=" руб." FontSize="24" Foreground="White" Margin="5,0,0,0"/>
+                            <TextBlock x:Name="ButtonPaymentOrderSum" Text="0" FontSize="24" />
+                            <TextBlock Text=" руб." FontSize="24" Margin="5,0,0,0"/>
                         </StackPanel>
                     </Grid>
                 </Button>
@@ -281,7 +282,7 @@
             <Grid Grid.Column="2">
                 <Button
                     Style="{DynamicResource ButtonStyleFull}"
-                    Height="80" FontSize="24" Margin="7,15,15,15" Content="Сохранить заказ" Foreground="#FF47E86F" Click="SaveOrder_Click"/>
+                    Height="80" FontSize="24" Margin="7,15,15,15" Content="Сохранить заказ" Click="SaveOrder_Click"/>
             </Grid>
         </Grid>
     </Grid>

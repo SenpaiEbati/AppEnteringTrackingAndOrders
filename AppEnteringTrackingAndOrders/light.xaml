@@ -1,49 +1,45 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:AppEnteringTrackingAndOrders">
-    
-    
+
     <Style x:Key="TextBlockStyle" TargetType="TextBlock">
-        <Setter Property="Background" Value="White" />
-        <Setter Property="Foreground" Value="Gray" />
+        <Setter Property="Foreground" Value="Black" />
     </Style>
-    
-    
+
     <Style x:Key="WindowStyle" TargetType="Window">
         <Setter Property="Background" Value="White" />
     </Style>
 
-
     <Style x:Key="ButtonStyleLeft" TargetType="Button">
-        <Setter Property="Background" Value="Gray" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="BorderBrush" Value="White" />
+        <Setter Property="Background" Value="#B3D9FF" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="BorderBrush" Value="#4D94FF" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border CornerRadius="15,0,0,15"
-                    Background="{TemplateBinding Background}">
+                        Background="{TemplateBinding Background}">
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <!-- Анимация для MouseOver -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="DarkGray"/>
-                            <Setter Property="BorderBrush" Value="LightGray"/>
+                            <Setter Property="Background" Value="#99CCFF"/>
+                            <Setter Property="BorderBrush" Value="#3385FF"/>
                         </Trigger>
 
                         <!-- Анимация для нажатия -->
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="DimGray"/>
-                            <Setter Property="BorderBrush" Value="Gray"/>
+                            <Setter Property="Background" Value="#80BFFF"/>
+                            <Setter Property="BorderBrush" Value="#1A75FF"/>
                         </Trigger>
 
                         <!-- Анимация для IsEnabled (отключенное состояние) -->
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" Value="LightGray"/>
-                            <Setter Property="Foreground" Value="DarkGray"/>
+                            <Setter Property="Background" Value="#E6E6E6"/>
+                            <Setter Property="Foreground" Value="Black"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -52,35 +48,35 @@
     </Style>
 
     <Style x:Key="ButtonStyleRight" TargetType="Button">
-        <Setter Property="Background" Value="Gray" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="BorderBrush" Value="White" />
+        <Setter Property="Background" Value="#B3D9FF" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="BorderBrush" Value="#4D94FF" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border CornerRadius="0,15,15,0"
-                Background="{TemplateBinding Background}">
+                    Background="{TemplateBinding Background}">
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <!-- Анимация для MouseOver -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="DarkGray"/>
-                            <Setter Property="BorderBrush" Value="LightGray"/>
+                            <Setter Property="Background" Value="#99CCFF"/>
+                            <Setter Property="BorderBrush" Value="#3385FF"/>
                         </Trigger>
 
                         <!-- Анимация для нажатия -->
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="DimGray"/>
-                            <Setter Property="BorderBrush" Value="Gray"/>
+                            <Setter Property="Background" Value="#80BFFF"/>
+                            <Setter Property="BorderBrush" Value="#1A75FF"/>
                         </Trigger>
 
                         <!-- Анимация для IsEnabled (отключенное состояние) -->
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" Value="LightGray"/>
-                            <Setter Property="Foreground" Value="DarkGray"/>
+                            <Setter Property="Background" Value="#E6E6E6"/>
+                            <Setter Property="Foreground" Value="Black"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -89,28 +85,83 @@
     </Style>
 
     <Style x:Key="ButtonStyleNo" TargetType="Button">
-        <Setter Property="Background" Value="LightGray"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="Background" Value="#B3D9FF" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="BorderBrush" Value="#4D94FF" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border CornerRadius="0"
-                    Background="{TemplateBinding Background}">
+                        Background="{TemplateBinding Background}">
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация для MouseOver -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#99CCFF"/>
+                            <Setter Property="BorderBrush" Value="#3385FF"/>
+                        </Trigger>
+
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#80BFFF"/>
+                            <Setter Property="BorderBrush" Value="#1A75FF"/>
+                        </Trigger>
+
+                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#E6E6E6"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
-    
+
     <Style x:Key="ButtonStyleFull" TargetType="Button">
-        <Setter Property="Background" Value="LightGray"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="Background" Value="#B3D9FF" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="BorderBrush" Value="#4D94FF" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="15"
+                                Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация для MouseOver -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#99CCFF"/>
+                            <Setter Property="BorderBrush" Value="#3385FF"/>
+                        </Trigger>
+
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#80BFFF"/>
+                            <Setter Property="BorderBrush" Value="#1A75FF"/>
+                        </Trigger>
+
+                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#E6E6E6"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ButtonStyleFullGreen" TargetType="Button">
+        <Setter Property="Background" Value="#FF9BE49F" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="BorderBrush" Value="#4CAF50" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -120,115 +171,269 @@
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="ButtonStyleTopLeft" TargetType="Button">
-        <Setter Property="Background" Value="LightGray"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="BorderBrush" Value="Black"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="15,0,0,0"
-                        Background="{TemplateBinding Background}">
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация для MouseOver -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#81C784"/>
+                            <Setter Property="BorderBrush" Value="#66BB6A"/>
+                        </Trigger>
 
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </Border>
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#4CAF50"/>
+                            <Setter Property="BorderBrush" Value="#388E3C"/>
+                        </Trigger>
+
+                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#C8E6C9"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
-    
-    <Style x:Key="ButtonStyleTopRight" TargetType="Button">
-        <Setter Property="Background" Value="LightGray"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="BorderBrush" Value="Black"/>
+
+    <Style x:Key="ButtonStyleFullRed" TargetType="Button">
+        <Setter Property="Background" Value="#FF6B6B" />
+        <!-- Основной красный цвет -->
+        <Setter Property="Foreground" Value="Black" />
+        <!-- Белый текст для лучшей читаемости -->
+        <Setter Property="BorderBrush" Value="#FF5252" />
+        <!-- Темно-красная граница -->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="0,15,0,0"
+                    <Border CornerRadius="15"
                     Background="{TemplateBinding Background}">
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация для MouseOver -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FF5252"/>
+                            <!-- Темнее на hover -->
+                            <Setter Property="BorderBrush" Value="#FF3939"/>
+                        </Trigger>
+
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#FF3939"/>
+                            <!-- Еще темнее при нажатии -->
+                            <Setter Property="BorderBrush" Value="#FF2020"/>
+                        </Trigger>
+
+                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#FFBDBD"/>
+                            <!-- Светло-красный -->
+                            <Setter Property="Foreground" Value="#757575"/>
+                            <!-- Серый текст -->
+                            <Setter Property="BorderBrush" Value="#FF9E9E"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
-    
+
+    <Style x:Key="ButtonStyleTopLeft" TargetType="Button">
+        <Setter Property="Background" Value="#B3D9FF" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="BorderBrush" Value="#4D94FF" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="15,0,0,0"
+                            Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация для MouseOver -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#99CCFF"/>
+                            <Setter Property="BorderBrush" Value="#3385FF"/>
+                        </Trigger>
+
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#80BFFF"/>
+                            <Setter Property="BorderBrush" Value="#1A75FF"/>
+                        </Trigger>
+
+                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#E6E6E6"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ButtonStyleTopRight" TargetType="Button">
+        <Setter Property="Background" Value="#B3D9FF" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="BorderBrush" Value="#4D94FF" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="0,15,0,0"
+                        Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация для MouseOver -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#99CCFF"/>
+                            <Setter Property="BorderBrush" Value="#3385FF"/>
+                        </Trigger>
+
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#80BFFF"/>
+                            <Setter Property="BorderBrush" Value="#1A75FF"/>
+                        </Trigger>
+
+                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#E6E6E6"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ButtonStyleDownRight" TargetType="Button">
-        <Setter Property="Background" Value="LightGray"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="Background" Value="#B3D9FF" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="BorderBrush" Value="#4D94FF" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border CornerRadius="0,0,15,0"
-                Background="{TemplateBinding Background}">
+                    Background="{TemplateBinding Background}">
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация для MouseOver -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#99CCFF"/>
+                            <Setter Property="BorderBrush" Value="#3385FF"/>
+                        </Trigger>
+
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#80BFFF"/>
+                            <Setter Property="BorderBrush" Value="#1A75FF"/>
+                        </Trigger>
+
+                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#E6E6E6"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
-    
+
     <Style x:Key="ButtonStyleDownLeft" TargetType="Button">
-        <Setter Property="Background" Value="LightGray"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="Background" Value="#B3D9FF" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="BorderBrush" Value="#4D94FF" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border CornerRadius="0,0,0,15"
-            Background="{TemplateBinding Background}">
-
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    
-    
-    <Style x:Key="ButtonEnterLogin" TargetType="Button">
-        <Setter Property="Background" Value="LightGray"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="BorderBrush" Value="Black"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="15,15,15,15"
                 Background="{TemplateBinding Background}">
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация для MouseOver -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#99CCFF"/>
+                            <Setter Property="BorderBrush" Value="#3385FF"/>
+                        </Trigger>
+
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#80BFFF"/>
+                            <Setter Property="BorderBrush" Value="#1A75FF"/>
+                        </Trigger>
+
+                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#E6E6E6"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
-    
-    <Style x:Key="BackgroundGridStyle" TargetType="Grid">
-        <Setter Property="Background" Value="#c9d1f5" />
+
+    <Style x:Key="ButtonEnterLogin" TargetType="Button">
+        <Setter Property="Background" Value="#FFFFB23F" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="15,15,15,15"
+                    Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Анимация для MouseOver -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FF8F00"/>
+                            <Setter Property="BorderBrush" Value="#FF6D00"/>
+                        </Trigger>
+
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#E65100"/>
+                            <Setter Property="BorderBrush" Value="#BF360C"/>
+                        </Trigger>
+
+                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#FFCC80"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
+    <Style x:Key="BackgroundGridStyle" TargetType="Grid">
+        <Setter Property="Background" Value="White" />
+    </Style>
 
     <Style x:Key="BorderCenterLine" TargetType="Border">
-        <Setter Property="Background" Value="Black"/>
+        <Setter Property="Background" Value="#4D94FF"/>
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect Color="Black"
+                <DropShadowEffect Color="#4D94FF"
                                           BlurRadius="8"
                                           ShadowDepth="0"/>
             </Setter.Value>
@@ -236,6 +441,85 @@
     </Style>
 
     <Style x:Key="BorderGray" TargetType="Border">
-        <Setter Property="Background" Value="Gray"/>
+        <Setter Property="Background" Value="#B3D9FF"/>
+    </Style>
+
+    <Style x:Key="ButtonOrderItem" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter Property="Background" Value="#B3D9FF"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#B3D9FF"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ButtonOrderItemModifier" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="MainBorder"
+                        Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}">
+                        <Grid>
+                            <Rectangle Name="LeftLine" 
+                                   Width="2" 
+                                   Height="80" 
+                                   Fill="#4D94FF" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" 
+                                   Margin="10,0,0,0"/>
+
+                            <ContentPresenter HorizontalAlignment="Stretch" 
+                                          VerticalAlignment="Stretch" 
+                                          Margin="30,0,0,0"
+                                          TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="MainBorder" Property="Background" Value="#B3D9FF"/>
+                            <Setter TargetName="LeftLine" Property="Fill" Value="#E6F2FF"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="MainBorder" Property="Background" Value="#B3D9FF"/>
+                            <Setter TargetName="LeftLine" Property="Fill" Value="#E6F2FF"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

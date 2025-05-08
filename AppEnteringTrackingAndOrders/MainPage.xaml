@@ -53,7 +53,7 @@
                         Content="Войти" Width="500" Style="{DynamicResource ButtonEnterLogin}" FontSize="24" Click="ButtonEnter_Click" Height="72" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,13,10"/>
                     <Button x:Name="ButtonSettingUser" Height="72" Width="72" Style="{DynamicResource ButtonEnterLogin}" Click="ButtonSettingUser_Click" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="12,0,0,10">
                         <Button.OpacityMask>
-                            <ImageBrush ImageSource="/settinguser.png"/>
+                            <ImageBrush ImageSource="/Image/settinguser.png"/>
                         </Button.OpacityMask>
                     </Button>
                 </Grid>
@@ -85,7 +85,7 @@
                     <Button x:Name="TopButtonDelete" Content="Del" Style="{DynamicResource ButtonStyleTopRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="36" Focusable="False" Click="TopButtonDelete_Click" Margin="468,0,0,0"/>
                     <Button x:Name="CenterButtonZero" Content="0" Style="{DynamicResource ButtonStyleNo}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36"  Focusable="False" Click="DownButtonZero_Click" Margin="468,0,0,0"/>
                     <Button x:Name="DownButtonKeyboard" Style="{DynamicResource ButtonStyleDownRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="36" Focusable="False" Click="DownButtonKeyboard_Click" Margin="468,0,0,0">
-                        <Image Source="/keyboard-512.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50"/>
+                        <Image Source="/Image/keyboard-512.png" RenderTransformOrigin="0.5,0.5" Height="50" Width="50"/>
                     </Button>
                 </Grid>
                 <Grid x:Name="KeyboardAbc" Height="378" Width="1140"
@@ -118,7 +118,7 @@
                     <Button x:Name="Button23" Content="э" Style="{DynamicResource ButtonStyleFull}" FontSize="36" Width="90" Height="90" HorizontalAlignment="Left" VerticalAlignment="Top" Focusable="False" Margin="995,95,0,0" Click="Button23_Click"/>
 
                     <Button x:Name="ButtonShift" Style="{DynamicResource ButtonStyleFull}" FontSize="36" Width="90" Height="90" HorizontalAlignment="Left" VerticalAlignment="Top" Focusable="False" Margin="0,190,0,0" OpacityMask="Black" Click="ButtonShift_Click">
-                        <Image Height="45" Width="45" Source="/shift-2.png"/>
+                        <Image Height="45" Width="45" Source="/Image/shift-2.png"/>
                     </Button>
                     <Button x:Name="ButtonZ" Content="я" Style="{DynamicResource ButtonStyleFull}" FontSize="36" Width="90" Height="90" HorizontalAlignment="Left" VerticalAlignment="Top" Focusable="False" Margin="95,190,0,0" Click="ButtonZ_Click"/>
                     <Button x:Name="ButtonX" Content="ч" Style="{DynamicResource ButtonStyleFull}" FontSize="36" Width="90" Height="90" HorizontalAlignment="Left" VerticalAlignment="Top" Focusable="False" Margin="190,190,0,0" Click="ButtonX_Click"/>
