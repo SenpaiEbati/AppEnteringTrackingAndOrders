@@ -34,7 +34,29 @@
             </Grid>
             <Grid Grid.Column="1">
                 <Border Height="80" Style="{DynamicResource BorderGray}" CornerRadius="15" Margin="0,5,10,5">
-                    <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="TopBorderText" FontSize="24" Margin="10,5,10,5"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <!-- "Оплата" -->
+                            <ColumnDefinition Width="*"/>
+                            <!-- Гибкое пространство -->
+                            <ColumnDefinition Width="Auto"/>
+                            <!-- Сумма + валюта -->
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Column="0" Grid.Row="0">
+                            <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="NameOrderTopText" Text="Создание заказа №10" FontSize="24" Margin="10,5,10,5"/>
+                        </Grid>
+                        <Grid Grid.Column="0" Grid.Row="1">
+                            <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="TableGuestTopText" Text="Стол №1   Гостей: 2" FontSize="24" Margin="10,5,10,5"/>
+                        </Grid>
+                        <Grid Grid.Column="2" Grid.Row="0">
+                            <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="TimeTopText" Text="12:30" FontSize="24" Margin="10,5,10,5"/>
+                        </Grid>
+                    </Grid>
                 </Border>
             </Grid>
             <Grid Grid.Column="2">
@@ -49,7 +71,7 @@
             </Grid>
 
             <Grid Grid.Column="4">
-                <Button Height="80" Width="117" Style="{DynamicResource ButtonStyleFullRed}" HorizontalAlignment="Left" Margin="5,5,10,5">
+                <Button Height="80" Style="{DynamicResource ButtonStyleFullRed}" Margin="5,5,11,5">
                     <Image x:Name="ImageDeleteOrder" Source="/Image/deleteorder.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
             </Grid>

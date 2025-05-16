@@ -80,24 +80,11 @@ namespace AppEnteringTrackingAndOrders
 
                 context.SaveChanges();
 
-                var order = context.Orders.FirstOrDefault(i => i.Id == _ID);
-                if (order != null)
-                {
-                    _is_new_order = false;
-                    _old_order = order;
-                }
-                else
-                {
-                    _is_new_order = true;
-                    var oldorder = new Order { Id = _ID, OrderDate = DateTime.UtcNow };
-                    _old_order = oldorder;
-                }
-
                 RefreshGroupMenuData();
 
                 RefreshOrderPanelInfo();
             }
-            TopBorderText.Text = $"Создать заказ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀{DateTime.Now.ToString("HH:mm")}\nСтол:1 Гостей:2";
+            //TopBorderText.Text = $"Создать заказ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀{DateTime.Now.ToString("HH:mm")}\nСтол:1 Гостей:2";
             //ButtonOrdersSumWrapPanel.Content = $"Заказ {OrderSum()}₽";
         }
 
@@ -121,6 +108,25 @@ namespace AppEnteringTrackingAndOrders
                 ImageSearch.Source = new BitmapImage(new Uri("/Image/searchwhite.png", UriKind.Relative));
                 ImageDeleteOrder.Source = new BitmapImage(new Uri("/Image/deleteorder.png", UriKind.Relative));
             }
+            using (var context = new RestaurantContext())
+            {
+                var order = context.Orders.FirstOrDefault(i => i.Id == _ID);
+                if (order != null)
+                {
+                    _is_new_order = false;
+                    _old_order = order;
+                    NameOrderTopText.Text = $"Изменение заказа №{_ID}";
+                }
+                else
+                {
+                    _is_new_order = true;
+                    var oldorder = new Order { Id = _ID, OrderDate = DateTime.UtcNow };
+                    _old_order = oldorder;
+                    NameOrderTopText.Text = $"Создание заказа №{_ID}";
+                }
+            }
+            TableGuestTopText.Text = $"Стол:1 Гостей: {_Guest}";
+            TimeTopText.Text = DateTime.Now.ToString("HH:mm");
         }
 
         private void MenuGroupButton_Click(object sender, RoutedEventArgs e)
