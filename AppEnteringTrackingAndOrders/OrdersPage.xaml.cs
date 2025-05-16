@@ -667,29 +667,63 @@ namespace AppEnteringTrackingAndOrders
         {
             OrderPanelInfoWrapPanel.Children.Clear();
             OrderPanelInfoWrapPanel.Children.Add(OrderPanelInfoWrapPanelBorderSum);
+
             using (var context = new RestaurantContext())
             {
-                List<OrderItem> OrderItem = context.OrderItems.Where(i => i.OrderId == _ID).ToList();
-                foreach (OrderItem item in OrderItem)
+                // Получаем все элементы заказа
+                List<OrderItem> allOrderItems = context.OrderItems
+                    .Where(i => i.OrderId == _ID)
+                    .Include(i => i.Modifiers)
+                    .ToList();
+
+                // Разделяем элементы на две группы: без гостей и с гостями
+                var itemsWithoutGuest = allOrderItems.Where(item => item.Guest == 0).ToList();
+                var itemsWithGuest = allOrderItems.Where(item => item.Guest != 0)
+                                                 .GroupBy(item => item.Guest)
+                                                 .OrderBy(group => group.Key)
+                                                 .ToList();
+
+                // Сначала выводим элементы без гостей
+                foreach (OrderItem item in itemsWithoutGuest)
                 {
-                    var menuitem = context.MenuItems.Where(i => i.Id == item.MenuItemId).FirstOrDefault();
-                    if (menuitem != null)
+                    var menuItem = context.MenuItems.FirstOrDefault(i => i.Id == item.MenuItemId);
+                    if (menuItem != null)
                     {
-                        int c = OrderPanelInfoWrapPanel.Children.Count;
-                        if (item.Guest != 0)
+                        UI_OrderItems(menuItem, item);
+
+                        foreach (OrderItemModifier itemMod in item.Modifiers)
                         {
-                            UI_Guest(item.Guest, c, RefreshGuestSum(item.Guest));
-                            _Guest = item.Guest;
+                            var menuItemMod = context.MenuItemModifiers.FirstOrDefault(i => i.Id == itemMod.MenuItemModifierId);
+                            if (menuItemMod != null)
+                                UI_OrderItem_Modifiers(menuItemMod, itemMod);
                         }
-                        UI_OrderItems(menuitem, item);
+                    }
+                }
 
-                        List<OrderItemModifier> OrderItemModifier = context.OrderItemModifiers.Where(i => i.OrderItemId == item.Id).ToList();
-                        foreach (OrderItemModifier itemmod in OrderItemModifier)
+                // Затем выводим элементы с гостями, сгруппированные по номеру гостя
+                foreach (var guestGroup in itemsWithGuest)
+                {
+                    int guestId = guestGroup.Key;
+                    decimal guestSum = RefreshGuestSum(guestId);
+
+                    // Добавляем заголовок гостя
+                    int currentIndex = OrderPanelInfoWrapPanel.Children.Count;
+                    UI_Guest(guestId, currentIndex, guestSum);
+
+                    // Добавляем все элементы этого гостя
+                    foreach (OrderItem item in guestGroup)
+                    {
+                        var menuItem = context.MenuItems.FirstOrDefault(i => i.Id == item.MenuItemId);
+                        if (menuItem != null)
                         {
-                            var menuitemmod = context.MenuItemModifiers.Where(i => i.Id == itemmod.MenuItemModifierId).FirstOrDefault();
+                            UI_OrderItems(menuItem, item);
 
-                            if (menuitemmod != null)
-                                UI_OrderItem_Modifiers(menuitemmod, itemmod);
+                            foreach (OrderItemModifier itemMod in item.Modifiers)
+                            {
+                                var menuItemMod = context.MenuItemModifiers.FirstOrDefault(i => i.Id == itemMod.MenuItemModifierId);
+                                if (menuItemMod != null)
+                                    UI_OrderItem_Modifiers(menuItemMod, itemMod);
+                            }
                         }
                     }
                 }
