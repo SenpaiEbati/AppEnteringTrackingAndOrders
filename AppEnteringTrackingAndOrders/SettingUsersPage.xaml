@@ -97,7 +97,7 @@
                 Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-300}"
                 Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-110}" Click="ButtonAddUser_Click" Background="#FF33C55D">
                 <Button.OpacityMask>
-                    <ImageBrush ImageSource="/Image/add.png"/>
+                    <ImageBrush ImageSource="/add.png"/>
                 </Button.OpacityMask>
                 <Button.Margin>
                     <MultiBinding Converter="{StaticResource VisibilityToMarginConverter}">
@@ -111,7 +111,7 @@
                     Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-40}"
                     Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-110}" Click="ButtonEditUser_Click">
                 <Button.OpacityMask>
-                    <ImageBrush ImageSource="/Image/change.png"/>
+                    <ImageBrush ImageSource="Image/change.png"/>
                 </Button.OpacityMask>
                 <Button.Margin>
                     <MultiBinding Converter="{StaticResource VisibilityToMarginConverter}">
@@ -125,7 +125,7 @@
                     Canvas.Left="{Binding ActualWidth, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=220}"
                     Canvas.Top="{Binding ActualHeight, ElementName=Canvas10, Converter={StaticResource HalfSizeConverter}, ConverterParameter=-110}" Click="ButtonDeleteUser_Click" Background="#FFC53333">
                 <Button.OpacityMask>
-                    <ImageBrush ImageSource="/Image/delete.png"/>
+                    <ImageBrush ImageSource="Image/delete.png"/>
                 </Button.OpacityMask>
                 <Button.Margin>
                     <MultiBinding Converter="{StaticResource VisibilityToMarginConverter}">

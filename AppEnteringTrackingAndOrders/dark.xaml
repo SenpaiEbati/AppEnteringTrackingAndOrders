@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:AppEnteringTrackingAndOrders">
+                    xmlns:local="clr-namespace:AppEnteringTrackingAndOrders"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <Style x:Key="TextBlockStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="White" />
@@ -451,6 +452,37 @@
         <Setter Property="Background" Value="Gray"/>
     </Style>
 
+    <Style x:Key="ButtonGray" TargetType="Button">
+        <Setter Property="Background" Value="Gray" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="White" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="0"
+                Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="DarkGray"/>
+                            <Setter Property="Foreground" Value="LightGray"/>
+                        </Trigger>
+                        <!-- Анимация для нажатия -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="DimGray"/>
+                            <Setter Property="BorderBrush" Value="Gray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ButtonOrderItem" TargetType="Button">
         <!-- Устанавливаем прозрачный фон вместо null, чтобы вся кнопка была кликабельной -->
         <Setter Property="Background" Value="Transparent"/>
@@ -536,5 +568,9 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="NumericUpDown" TargetType="materialDesign:NumericUpDown">
+        <Setter Property="Foreground" Value="White"/>
     </Style>
 </ResourceDictionary>

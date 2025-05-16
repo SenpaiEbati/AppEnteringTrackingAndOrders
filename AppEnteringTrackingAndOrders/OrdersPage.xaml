@@ -130,8 +130,8 @@
                         </Button>
                     </Grid>
                     <Grid Grid.Column="2">
-                        <Button x:Name="OrderPanelInfoAddGuestButton" Style="{DynamicResource ButtonStyleFull}"
-                            Height="74" FontSize="24" Content="➕ Гость" VerticalAlignment="Top" Margin="5,6,10,0" />
+                        <Button x:Name="OrderPanelInfoAddGuestButton" Style="{DynamicResource ButtonStyleFull}" Focusable="False"
+                            Height="74" FontSize="24" Content="➕ Гость" VerticalAlignment="Top" Margin="5,6,10,0" Click="OrderPanelInfoAddGuestButton_Click"/>
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="0">
@@ -146,7 +146,7 @@
                         </Button>
                     </Grid>
                     <Grid Grid.Column="1">
-                        <Button Style="{DynamicResource ButtonStyleNo}" FontSize="24" Height="74" VerticalAlignment="Center" Content="Все гости" Margin="8,0,8,0"/>
+                        <Button Style="{DynamicResource ButtonStyleNo}" FontSize="24" Height="74" VerticalAlignment="Center" Content="Все гости" Margin="8,0,8,0" />
                     </Grid>
                     <Grid Grid.Column="2">
                         <Button Style="{DynamicResource ButtonStyleTopRight}" FontSize="24" Height="74" VerticalAlignment="Center" Margin="0,0,17,0">
@@ -165,7 +165,7 @@
                 </Grid>
             </Grid>
             <Grid x:Name="GroupMenuButtonsGrid" Grid.Column="1">
-                <Border x:Name="GroupMenuBorder" Style="{DynamicResource BorderGray}" Height="80" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,0,14,0">
+                <Border x:Name="GroupMenuBorder" Style="{DynamicResource BorderGray}" Height="74" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,0,14,0">
                     <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="GroupMenuBorderText" FontSize="24" Text="Меню" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
                 <ScrollViewer x:Name="GroupMenuButtonsScrollViewer"
@@ -185,7 +185,7 @@
                 </ScrollViewer>
             </Grid>
             <Grid x:Name="ItemMenuButtonsGrid" Grid.Column="2">
-                <Border x:Name="ItemMenuBorder" Style="{DynamicResource BorderGray}" Height="82" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,-1,15,0">
+                <Border x:Name="ItemMenuBorder" Style="{DynamicResource BorderGray}" Height="74" CornerRadius="15,15,0,0" VerticalAlignment="Top" Margin="0,-1,15,0">
                     <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="ItemMenuBorderTextBlock" Text="Выберите группу меню" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
                 <ScrollViewer x:Name="ItemMenuButtonsScrollViewer" 
@@ -205,7 +205,7 @@
                 </ScrollViewer>
                 <Grid x:Name="ItemQuantityButton" Margin="0,85,0,0" Visibility="Hidden">
                     <Border Style="{DynamicResource BorderGray}" Margin="0,0,16,0" Height="220" VerticalAlignment="Top">
-                        <materialDesign:NumericUpDown x:Name="ItemQuantityNumericUpDown" Padding="30" FontSize="72" Minimum="0" Margin="0,0,0,30" Maximum="100" Focusable="False" ForceCursor="True" />
+                        <materialDesign:NumericUpDown x:Name="ItemQuantityNumericUpDown" Padding="30" FontSize="72" Minimum="0" Margin="0,0,0,30" Maximum="100" Focusable="False" ForceCursor="True" Style="{DynamicResource NumericUpDown}" />
                     </Border>
                     <Grid x:Name="KeyboardNumber" Visibility="Visible" Margin="0,225,16,0">
                         <Grid.ColumnDefinitions>

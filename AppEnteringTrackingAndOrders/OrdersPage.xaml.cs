@@ -1,5 +1,6 @@
 ﻿using MaterialDesignThemes.Wpf;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -42,9 +43,13 @@ namespace AppEnteringTrackingAndOrders
         private MenuItem _old_menu_item;
         private MenuItemModifier _now_menu_item_modifier;
         private UIElement _now_order_modifier_UI_item;
+        private int _now_guest_id;
+        private UIElement _now_guest_UI_item;
         private int? _IDYourUserRoles;
         private int _ID = 0;
+        private int _Guest = 0;
         public bool _theme;
+
 
         public OrdersPage(User user, int OrderID)
         {
@@ -88,22 +93,7 @@ namespace AppEnteringTrackingAndOrders
                     _old_order = oldorder;
                 }
 
-                List<Group> groups = context.Groups.AsNoTracking().ToList();
-                foreach (var group in groups)
-                {
-                    System.Windows.Controls.Button button = new System.Windows.Controls.Button()
-                    {
-                        Width = 200,
-                        Height = 175,
-                        Margin = new Thickness(0, 0, 10, 10),
-                        Content = group.Name,
-                        FontSize = 24
-                    };
-                    button.Style = (Style)FindResource("ButtonStyleNo");
-                    button.Tag = group;
-                    button.Click += MenuGroupButton_Click;
-                    GroupMenuButtonsWrapPanel.Children.Add(button);
-                }
+                RefreshGroupMenuData();
 
                 RefreshOrderPanelInfo();
             }
@@ -158,6 +148,7 @@ namespace AppEnteringTrackingAndOrders
                                 Height = 175,
                                 Margin = new Thickness(0, 0, 10, 10),
                                 Content = item.Name,
+                                Focusable = false,
                                 FontSize = 24
                             };
                             button.Style = (Style)FindResource("ButtonStyleNo");
@@ -191,7 +182,16 @@ namespace AppEnteringTrackingAndOrders
                                 Quantity = 1,
                                 OrderId = _old_order.Id
                             };
-                            _list_order.Items.Add(orderitem);
+                            if (_now_guest_id > 0) 
+                            {
+                                orderitem.Guest = _now_guest_id;
+                                _list_order.Items.Add(orderitem);
+                            }
+                            else
+                            {
+                                _list_order.Items.Add(orderitem);
+                            }
+                            
 
                             UI_OrderItems(menuitem, orderitem);
                         }
@@ -405,13 +405,19 @@ namespace AppEnteringTrackingAndOrders
                             // Определяем диапазон для удаления (блюдо + модификаторы)
                             int startIndex = dishIndex;
                             int endIndex = dishIndex + _now_order_item.Modifiers.Count;
-
+                            
                             // Удаляем в обратном порядке, чтобы индексы не сдвигались
                             for (int i = endIndex; i >= startIndex; i--)
                             {
                                 if (i < OrderPanelInfoWrapPanel.Children.Count)
                                 {
                                     OrderPanelInfoWrapPanel.Children.RemoveAt(i);
+                                    if (_Guest != 0 && startIndex == i)
+                                    {
+                                        OrderPanelInfoWrapPanel.Children.RemoveAt(i-1);
+                                        _Guest--;
+                                    }
+                                        
                                 }
                             }
                         }
@@ -419,7 +425,7 @@ namespace AppEnteringTrackingAndOrders
                 }
                 RefreshOrderSum();
             }
-            else if (_now_menu_item_modifier != null)
+            else if (_now_order_item_modifier != null)
             {
                 using (var context = new RestaurantContext())
                 {
@@ -433,18 +439,17 @@ namespace AppEnteringTrackingAndOrders
                     else
                     {
                         int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_modifier_UI_item);
-                        for (int i = 0; i < _list_order.Items.Count; i++)
-                        {
-                            int count = _list_order.Items[i].Modifiers.Count;
-                            for (int j = 0; j < count; j++)
-                                if (j == a-2)
-                                    _list_order.Items[i].Modifiers.RemoveAt(j);
-                        }
+                        if (a != -1) { 
+                            for (int i = 0; i < _list_order.Items.Count; i++)
+                            {
+                                int count = _list_order.Items[i].Modifiers.Count;
+                                for (int j = 0; j < count; j++)
+                                    if (j == a - 2)
+                                        _list_order.Items[i].Modifiers.RemoveAt(j);
+                            }
 
-                        if (a != -1)
                             OrderPanelInfoWrapPanel.Children.RemoveAt(a);
-
-                        
+                        }
                     }
                 }
                 RefreshOrderSum();
@@ -457,8 +462,76 @@ namespace AppEnteringTrackingAndOrders
 
         private void OrderPanelInfoAddGuestButton_Click(object sender, RoutedEventArgs e)
         {
-
-            /* OrderPanelInfoWrapPanel.Children.Add();*/
+            if (_now_order_item != null)
+            {
+                using (var context = new RestaurantContext())
+                {
+                    var item = context.OrderItems.Where(i => i.Id == _now_order_item.Id).FirstOrDefault();
+                    if (item != null && item.Guest == 0)
+                    {
+                        item.Guest = _Guest++;
+                        context.OrderItems.Update(item);
+                        context.SaveChanges();
+                        RefreshOrderPanelInfo();
+                    }
+                    else
+                    {
+                        if (_now_order_item.Guest == 0)
+                        {
+                            int i = _list_order.Items.IndexOf(_now_order_item);
+                            int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
+                            if (i != -1)
+                            {
+                                _Guest++;
+                                _list_order.Items[i].Guest = _Guest;
+                            }
+                            if (a != -1)
+                                UI_Guest(_Guest, a, RefreshGuestSum(_Guest));
+                        }
+                    }
+                }
+            }
+            else if (_now_menu_item_modifier != null)
+            {
+                using (var context = new RestaurantContext())
+                {
+                    var itemMod = context.OrderItemModifiers.Where(i => i.Id == _now_order_item_modifier.Id).FirstOrDefault();
+                    if (itemMod != null)
+                    {
+                        var item = context.OrderItems.Where(i => i.Id == itemMod.OrderItemId).FirstOrDefault();
+                        if (item != null && item.Guest == 0)
+                        { 
+                            _Guest++;
+                            item.Guest = _Guest;
+                            context.OrderItems.Update(item);
+                            context.SaveChanges();
+                            RefreshOrderPanelInfo();
+                        }
+                    }
+                    else
+                    {
+                        int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_modifier_UI_item);
+                        if (a != -1)
+                        {
+                            int indexMod = -1;
+                            for (int i = 0; i < _list_order.Items.Count; i++)
+                            {
+                                int count = _list_order.Items[i].Modifiers.Count;
+                                for (int j = 0; j < count; j++)
+                                    if (j == a - 2 && _list_order.Items[i].Guest == 0)
+                                    {
+                                        indexMod = j;
+                                        _Guest++;
+                                        _list_order.Items[i].Guest = _Guest;
+                                    }
+                                        
+                            }
+                            if (indexMod != -1)
+                                UI_Guest(_Guest, a - indexMod - 1, RefreshGuestSum(_Guest));
+                        }
+                    }
+                }
+            }
         }
 
         private void GroupMenuButtonsWrapPanelAddPositionButton_Click(object sender, RoutedEventArgs e)
@@ -489,6 +562,7 @@ namespace AppEnteringTrackingAndOrders
                         Height = 175,
                         Margin = new Thickness(0, 0, 10, 10),
                         Content = group.Name,
+                        Focusable = false,
                         FontSize = 24
                     };
                     button.Style = (Style)FindResource("ButtonStyleNo");
@@ -530,6 +604,7 @@ namespace AppEnteringTrackingAndOrders
                         Height = 175,
                         Margin = new Thickness(0, 0, 10, 10),
                         Content = item.Name,
+                        Focusable = false,
                         FontSize = 24
                     };
                     button.Style = (Style)FindResource("ButtonStyleNo");
@@ -594,6 +669,12 @@ namespace AppEnteringTrackingAndOrders
                     var menuitem = context.MenuItems.Where(i => i.Id == item.MenuItemId).FirstOrDefault();
                     if (menuitem != null)
                     {
+                        int c = OrderPanelInfoWrapPanel.Children.Count;
+                        if (item.Guest != 0)
+                        {
+                            UI_Guest(item.Guest, c, RefreshGuestSum(item.Guest));
+                            _Guest = item.Guest;
+                        }
                         UI_OrderItems(menuitem, item);
 
                         List<OrderItemModifier> OrderItemModifier = context.OrderItemModifiers.Where(i => i.OrderItemId == item.Id).ToList();
@@ -673,8 +754,11 @@ namespace AppEnteringTrackingAndOrders
             button.LostFocus += ItemOrder_LostFocus;
 
             int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
+            int с = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
             if (a != -1)
                 OrderPanelInfoWrapPanel.Children.Insert(a + 1, button);
+            else if (_now_guest_id > 0 && с != -1)
+                OrderPanelInfoWrapPanel.Children.Insert(с + 1, button);
             else
                 OrderPanelInfoWrapPanel.Children.Add(button);
 
@@ -752,6 +836,99 @@ namespace AppEnteringTrackingAndOrders
             RefreshOrderSum();
         }
 
+        private void UI_Guest(int GuestId, int indexPanel, decimal sum)
+        {
+            System.Windows.Controls.Button button = new System.Windows.Controls.Button
+            {
+                Height = 80,
+                FontSize = 24,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                Margin = new Thickness(0, 10, 0, 10),
+                Width = double.NaN,
+            };
+
+            Grid grid = new Grid();
+
+            // Добавляем колонки с пропорциональной шириной (*)
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(193, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(83, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(122, GridUnitType.Star) });
+
+            TextBlock dishNameTextBlock = new TextBlock
+            {
+                Text = $"Гость {GuestId}",
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                TextTrimming = TextTrimming.CharacterEllipsis,
+                Margin = new Thickness(10, 0, 0, 0)
+            };
+            Grid.SetColumn(dishNameTextBlock, 0);
+
+            TextBlock quantityTextBlock = new TextBlock
+            {
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Left
+            };
+            Grid.SetColumn(quantityTextBlock, 1);
+
+            // Создаем TextBlock для цены (третья колонка)
+            TextBlock priceTextBlock = new TextBlock
+            {
+                Text = $"{sum} руб.",
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                Margin = new Thickness(0, 0, 10, 0),
+
+            };
+            Grid.SetColumn(priceTextBlock, 2);
+
+            // Добавляем TextBlock'и в Grid
+            grid.Children.Add(dishNameTextBlock);
+            grid.Children.Add(quantityTextBlock);
+            grid.Children.Add(priceTextBlock);
+
+            // Устанавливаем Grid в Content кнопки
+            button.Content = grid;
+            button.GotFocus += Guests_GotFocus;
+            button.LostFocus += Guests_LostFocus;
+            button.Tag = GuestId;
+            button.Style = (Style)FindResource("ButtonGray");
+
+            OrderPanelInfoWrapPanel.Children.Insert(indexPanel, button);
+        }
+
+        private void Guests_GotFocus(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.Button clickedGuest = sender as System.Windows.Controls.Button;
+            if (clickedGuest != null)
+            {
+                int index = (int)clickedGuest.Tag;
+                if (index > 0)
+                {
+                    _now_guest_id = index;
+                    _now_guest_UI_item = clickedGuest;
+                }            
+            }
+        }
+
+        private void Guests_LostFocus(object sender, RoutedEventArgs e)
+        {
+            // Получаем элемент, который получил фокус после потери
+            var newFocusedElement = Keyboard.FocusedElement as FrameworkElement;
+            // Если новый фокус - это элемент с Focusable = false, игнорируем событие
+            if (newFocusedElement != null && !newFocusedElement.Focusable)
+            {
+                return; // Не меняем стиль, фокус остаётся на текущем элементе
+            }
+
+            System.Windows.Controls.Button clickedGuest = sender as System.Windows.Controls.Button;
+            if (clickedGuest != null)
+            {
+                _now_guest_id = -1;
+                _now_guest_UI_item = null;
+            }
+        }
+
         private void RefreshOrderSum()
         {
             _sumorder = 0;
@@ -788,6 +965,50 @@ namespace AppEnteringTrackingAndOrders
             }
             ButtonOrderSum.Text = _sumorder.ToString();
             ButtonPaymentOrderSum.Text = _sumorder.ToString();
+        }
+
+        private decimal RefreshGuestSum(int guestId)
+        {
+            decimal sumguest = 0.00M;
+            using (var context = new RestaurantContext())
+            {
+                foreach (var orderitem in _list_order.Items)
+                {
+                    if (orderitem.Guest == guestId)
+                    {
+                        var menuitem = context.MenuItems.Where(i => i.Id == orderitem.MenuItemId).FirstOrDefault();
+                        if (menuitem != null)
+                            sumguest += menuitem.Price * orderitem.Quantity;
+                        foreach (var orderitemmod in orderitem.Modifiers)
+                        {
+                            var menuitemmod = context.MenuItemModifiers.Where(i => i.Id == orderitemmod.MenuItemModifierId).FirstOrDefault();
+                            if (menuitemmod != null)
+                                sumguest += menuitemmod.AdditionalCost;
+                        }
+                    }
+                }
+
+                var orderitemB = context.OrderItems.Where(i => i.OrderId == _ID).ToList();
+                foreach (var item in orderitemB)
+                {
+                    if (item.Guest == guestId)
+                    {
+                        var menuitem = context.MenuItems.Where(i => i.Id == item.MenuItemId).FirstOrDefault();
+                        if (menuitem != null)
+                            sumguest += menuitem.Price * item.Quantity;
+
+                        var orderitemmod = context.OrderItemModifiers.Where(i => i.OrderItemId == item.Id).ToList();
+                        foreach (var itemmod in orderitemmod)
+                        {
+                            var menuitemmod = context.MenuItemModifiers.Where(i => i.Id == itemmod.MenuItemModifierId).FirstOrDefault();
+                            if (menuitemmod != null)
+                                sumguest += menuitemmod.AdditionalCost;
+                        }
+                    }
+                }
+            }
+
+            return sumguest;
         }
 
         private void SaveOrder_Click(object sender, RoutedEventArgs e)

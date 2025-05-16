@@ -10,12 +10,11 @@
 
   <ItemGroup>
     <None Remove=".env" />
+    <None Remove="add.png" />
     <None Remove="backbutton.png" />
     <None Remove="buttonleft.png" />
     <None Remove="buttonleftright.png" />
     <None Remove="buttonleftwhite.png" />
-    <None Remove="change.png" />
-    <None Remove="delete.png" />
     <None Remove="deleteorder.png" />
     <None Remove="deleteorderblack.png" />
     <None Remove="icons8.png" />
@@ -56,6 +55,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="add.png" />
     <Resource Include="Image\backbutton.png" />
     <Resource Include="Image\buttonleft.png" />
     <Resource Include="Image\buttonleftwhite.png" />
