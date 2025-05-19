@@ -468,6 +468,8 @@ namespace AppEnteringTrackingAndOrders
         private void BackListTableWaitersButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+            if (_is_new_order == true)
+                NavigationService.GoBack();
         }
 
         private void OrderPanelInfoAddGuestButton_Click(object sender, RoutedEventArgs e)
