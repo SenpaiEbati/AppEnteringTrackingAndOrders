@@ -130,7 +130,7 @@
 
         <Grid Grid.Row="2">
             <Button Style="{DynamicResource ButtonStyleFull}"
-                    Height="80" Width="600" FontSize="24" Margin="10" Content="Сохранить название" HorizontalAlignment="Left" Foreground="#FF47E86F" Click="SaveItemButton_Click">
+                    Height="80" Width="600" FontSize="24" Margin="10" Content="Создать модификатор" HorizontalAlignment="Left" Click="SaveItemButton_Click">
             </Button>
         </Grid>
     </Grid>

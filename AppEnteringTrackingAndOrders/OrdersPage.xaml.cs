@@ -47,7 +47,8 @@ namespace AppEnteringTrackingAndOrders
         private UIElement _now_guest_UI_item;
         private int? _IDYourUserRoles;
         private int _ID = 0;
-        private int _Guest = 0;
+        public int _Guest = 0;
+        public int _TableID = 0;
         public bool _theme;
 
 
@@ -108,6 +109,9 @@ namespace AppEnteringTrackingAndOrders
                 ImageSearch.Source = new BitmapImage(new Uri("/Image/searchwhite.png", UriKind.Relative));
                 ImageDeleteOrder.Source = new BitmapImage(new Uri("/Image/deleteorder.png", UriKind.Relative));
             }
+
+            
+
             using (var context = new RestaurantContext())
             {
                 var order = context.Orders.FirstOrDefault(i => i.Id == _ID);
@@ -125,7 +129,7 @@ namespace AppEnteringTrackingAndOrders
                     NameOrderTopText.Text = $"Создание заказа №{_ID}";
                 }
             }
-            TableGuestTopText.Text = $"Стол:1 Гостей: {_Guest}";
+            TableGuestTopText.Text = $"Стол:{_TableID} Гостей: {_Guest}";
             TimeTopText.Text = DateTime.Now.ToString("HH:mm");
         }
 
@@ -1091,6 +1095,8 @@ namespace AppEnteringTrackingAndOrders
                 context.SaveChanges();
                 _list_order.Items.Clear();
                 NavigationService.GoBack();
+                if (_is_new_order == true)
+                    NavigationService.GoBack();
             }
         }
 

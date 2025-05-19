@@ -1012,20 +1012,29 @@ namespace AppEnteringTrackingAndOrders
                     }
                     else 
                     {
-                        // Присоединяем Group к контексту
-                        context.Attach(_group);
-
-                        var item = new MenuItem
+                        var check = context.MenuItems.Where(i => i.Name == Convert.ToString(TextBoxNameItem.Text) &&
+                                                                 i.Price == Convert.ToDecimal(Math.Round(DecimalPriceItem.Value, 2))).FirstOrDefault();
+                        if (check == null)
                         {
-                            Name = Convert.ToString(TextBoxNameItem.Text),
-                            Description = Convert.ToString(TextBoxDescItem.Text),
-                            Price = Convert.ToDecimal(Math.Round(DecimalPriceItem.Value,2)),
-                            Destination = Convert.ToString(ComboBoxItemKitchOrBar.Text),
-                            GroupId = _group.Id,
-                        };
-                        context.MenuItems.Add(item);
-                        context.SaveChanges();
-                        NavigationService.GoBack();
+                            // Присоединяем Group к контексту
+                            context.Attach(_group);
+
+                            var item = new MenuItem
+                            {
+                                Name = Convert.ToString(TextBoxNameItem.Text),
+                                Description = Convert.ToString(TextBoxDescItem.Text),
+                                Price = Convert.ToDecimal(Math.Round(DecimalPriceItem.Value, 2)),
+                                Destination = Convert.ToString(ComboBoxItemKitchOrBar.Text),
+                                GroupId = _group.Id,
+                            };
+                            context.MenuItems.Add(item);
+                            context.SaveChanges();
+                            NavigationService.GoBack();
+                        }
+                        else
+                        {
+                            ShowError(TextBoxNameItem, "Данное блюдо уже существует !!");
+                        }
                     }
                 }
             }

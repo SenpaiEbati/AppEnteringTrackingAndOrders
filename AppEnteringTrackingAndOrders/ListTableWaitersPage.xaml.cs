@@ -59,12 +59,13 @@ namespace AppEnteringTrackingAndOrders
         {
             _IDOrders += 1;
             OrdersPage orderpage = new OrdersPage(_user, _IDOrders);
+            PreOrderPage preOrderPage = new PreOrderPage(orderpage);
             orderpage.Unloaded += (s, args) => RefreshMenuData();
             if (_theme == false)
                 orderpage._theme = true;
             else
                 orderpage._theme = false;
-            NavigationService.Navigate(orderpage);
+            NavigationService.Navigate(preOrderPage);
         }
 
         private void EditButtonsToWrapPanel(object sender, RoutedEventArgs e)

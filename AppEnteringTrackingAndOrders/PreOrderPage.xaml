@@ -1,0 +1,86 @@
+﻿<Page x:Class="AppEnteringTrackingAndOrders.PreOrderPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AppEnteringTrackingAndOrders"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="1200" d:DesignWidth="1800"
+      Title="PreOrderPage">
+
+    <Grid x:Name="BackgroundGrid" Style="{DynamicResource BackgroundGridStyle}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="Canvas00" Grid.Row="0">
+            <Button x:Name="BackOrdersButton" 
+                Style="{DynamicResource ButtonStyleFull}"
+                Height="80" Width="150"
+                Content="Назад"
+                Click="BackOrdersButton_Click" FontSize="24" Margin="10" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <Grid x:Name="GridCenter" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="236*"/>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="237*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <Border x:Name="BorderNumericGuestCount" Height="72" Width="600" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
+                        </Border.Effect>
+                        <materialDesign:NumericUpDown x:Name="NumericGuestCount" GotFocus="NumericGuestCount_GotFocus" materialDesign:HintAssist.Hint="Количество гостей" FontSize="24" Minimum="0" Style="{StaticResource MaterialDesignFloatingHintNumericUpDown}" Margin="38,10,38,10" Maximum="1000" Focusable="True"/>
+                    </Border>
+                    <Border x:Name="BorderNumericTableID" Height="72" Width="600" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,80,0,0">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
+                        </Border.Effect>
+                        <materialDesign:NumericUpDown x:Name="NumericTableID" GotFocus="NumericTableID_GotFocus" materialDesign:HintAssist.Hint="Номер стола" FontSize="24" Minimum="1" Style="{StaticResource MaterialDesignFloatingHintNumericUpDown}" Margin="38,10,38,10" Maximum="1000" Focusable="True"/>
+                    </Border>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Border Style="{DynamicResource BorderCenterLine}" 
+                        Width="4" 
+                        Height="360" 
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        CornerRadius="2">
+                </Border>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Grid x:Name="KeyboardNumber" Height="463" Width="626"
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Center" Visibility="Visible">
+
+                    <Button x:Name="TopMiddleButtonTwo" Content="2" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Left" VerticalAlignment="Top" Click="TopMiddleButtonTwo_Click" Focusable="False" Margin="157,0,0,0"/>
+                    <Button x:Name="TopRightButtonThree" Content="3" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150" HorizontalAlignment="Right" VerticalAlignment="Top" Click="TopRightButtonThree_Click" Focusable="False" Margin="0,0,163,0"/>
+                    <Button x:Name="TopLeftButtonOne" Content="1" Style="{DynamicResource ButtonStyleTopLeft}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="36" Click="TopLeftButtonOne_Click" Focusable="False"/>
+                    <Button x:Name="CenterMiddleButtonFive" Content="5" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Left" VerticalAlignment="Center" Click="CenterMiddleButtonFive_Click" Focusable="False" Margin="157,0,0,0"/>
+                    <Button x:Name="CenterLeftButtonFour" Content="4" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Left" VerticalAlignment="Center" Click="CenterLeftButtonFour_Click" Focusable="False"/>
+                    <Button x:Name="CenterRightButtonSix" Content="6" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Left" VerticalAlignment="Center" Click="CenterRightButtonSix_Click" Focusable="False" Margin="313,0,0,0"/>
+                    <Button x:Name="DownMiddleButtonEight" Content="8" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Focusable="False" Click="DownMiddleButtonEight_Click" Margin="157,0,0,0"/>
+                    <Button x:Name="DownLeftButtonSeven" Content="7" Style="{DynamicResource ButtonStyleDownLeft}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Focusable="False" Click="DownLeftButtonSeven_Click"/>
+                    <Button x:Name="DownRightButtonNine" Content="9" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Focusable="False" Click="DownRightButtonNine_Click" Margin="0,0,163,0"/>
+                    <Button x:Name="TopButtonDelete" Content="Del" Style="{DynamicResource ButtonStyleTopRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="36" Focusable="False" Click="TopButtonDelete_Click" Margin="468,0,0,0"/>
+                    <Button x:Name="CenterButtonZero" Content="0" Style="{DynamicResource ButtonStyleNo}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36"  Focusable="False" Click="DownButtonZero_Click" Margin="468,0,0,0"/>
+                    <Button x:Name="DownButtonKeyboard" Style="{DynamicResource ButtonStyleDownRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="36" Focusable="False" Margin="468,0,0,0">
+                        
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Button Style="{DynamicResource ButtonStyleFull}"
+                    Height="80" Width="600" FontSize="24" Margin="10" Content="Продолжить" HorizontalAlignment="Right" Click="СontinuationItemButton_Click">
+            </Button>
+        </Grid>
+    </Grid>
+</Page>
