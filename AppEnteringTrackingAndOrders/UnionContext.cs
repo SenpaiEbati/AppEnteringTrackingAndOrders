@@ -208,6 +208,28 @@ namespace AppEnteringTrackingAndOrders
                 }
             }
         }
+
+        public void InitializeDatabase()
+        {
+            try
+            {
+                if (Database.EnsureCreated())
+                {
+                    ConstantsInitialValuesMethodsDb.InitializeRoles();
+                    ConstantsInitialValuesMethodsDb.InitializeAdminUser();
+                }
+                else
+                {
+                    Database.Migrate();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Логирование ошибки
+                Console.WriteLine($"Ошибка инициализации БД: {ex.Message}");
+                throw;
+            }
+        }
     }
 
     public static class ConstantsInitialValuesMethodsDb

@@ -24,6 +24,10 @@ namespace AppEnteringTrackingAndOrders
         public MainWindow()
         {
             InitializeComponent();
+            using (var context = new RestaurantContext())
+            {
+                context.InitializeDatabase();
+            }
             MainWindowFrame.Content = new MainPage();
         }
     }
