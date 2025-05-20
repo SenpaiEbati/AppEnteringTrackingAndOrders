@@ -25,7 +25,6 @@ namespace AppEnteringTrackingAndOrders
     {
         private int? _IDYourUserRoles;
         private User _user;
-        private int _IDOrders = 0;
         private bool _theme = true;
 
         public ListTableWaitersPage(User user)
@@ -57,8 +56,7 @@ namespace AppEnteringTrackingAndOrders
 
         private void AddButtonsToWrapPanel(object sender, RoutedEventArgs e)
         {
-            _IDOrders += 1;
-            OrdersPage orderpage = new OrdersPage(_user, _IDOrders);
+            OrdersPage orderpage = new OrdersPage(_user);
             PreOrderPage preOrderPage = new PreOrderPage(orderpage);
             orderpage.Unloaded += (s, args) => RefreshMenuData();
             if (_theme == false)
@@ -66,6 +64,7 @@ namespace AppEnteringTrackingAndOrders
             else
                 orderpage._theme = false;
             NavigationService.Navigate(preOrderPage);
+
         }
 
         private void EditButtonsToWrapPanel(object sender, RoutedEventArgs e)
@@ -96,11 +95,8 @@ namespace AppEnteringTrackingAndOrders
                 List<Order> orders = context.Orders.AsNoTracking().ToList();
                 foreach (var order in orders)
                 {
-                    OrdersPage orderpage = new OrdersPage(_user, order.Id);
-                    if (orders[orders.Count - 1] == order)
-                    {
-                        _IDOrders = order.Id;
-                    }
+                    OrdersPage orderpage = new OrdersPage(_user);
+                    orderpage._ID = order.Id;
                     Button button = new Button()
                     {
                         Width = 365,

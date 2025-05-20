@@ -1,4 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -267,6 +268,11 @@ namespace AppEnteringTrackingAndOrders
                 var check = context.Orders.Where(i => i.TableID == Convert.ToInt32(NumericTableID.Value)).FirstOrDefault();
                 if (check == null)
                 {
+                    List<Order> orders = context.Orders.AsNoTracking().ToList();
+                    if (orders.LastOrDefault() != null)
+                        _ordersPage._ID = orders.LastOrDefault().Id + 1;
+                    else
+                        _ordersPage._ID = 1;
                     _ordersPage._TableID = Convert.ToInt32(NumericTableID.Value);
                     _ordersPage._Guest = Convert.ToInt32(NumericGuestCount.Value);
                     NavigationService.Navigate(_ordersPage);

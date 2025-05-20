@@ -29,7 +29,6 @@
     <None Remove="searchblack.png" />
     <None Remove="searchwhite.png" />
     <None Remove="settinguser.png" />
-    <None Remove="shift-2.png" />
   </ItemGroup>
 
   <ItemGroup>

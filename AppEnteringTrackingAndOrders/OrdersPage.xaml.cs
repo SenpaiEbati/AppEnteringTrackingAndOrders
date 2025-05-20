@@ -46,15 +46,14 @@ namespace AppEnteringTrackingAndOrders
         private int _now_guest_id;
         private UIElement _now_guest_UI_item;
         private int? _IDYourUserRoles;
-        private int _ID = 0;
+        public int _ID = 0;
         public int _Guest = 0;
         public int _TableID = 0;
         public bool _theme;
 
 
-        public OrdersPage(User user, int OrderID)
+        public OrdersPage(User user)
         {
-            _ID = OrderID;
             InitializeComponent();
 
             _IDYourUserRoles = GetRoleIdForUser(user);
@@ -124,7 +123,7 @@ namespace AppEnteringTrackingAndOrders
                 else
                 {
                     _is_new_order = true;
-                    var oldorder = new Order { Id = _ID, OrderDate = DateTime.UtcNow };
+                    var oldorder = new Order { Id = _ID, TableID = _TableID, OrderDate = DateTime.UtcNow };
                     _old_order = oldorder;
                     NameOrderTopText.Text = $"Создание заказа №{_ID}";
                 }
