@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -92,11 +93,13 @@ namespace AppEnteringTrackingAndOrders
             WrapPanelOrders.Children.Add(AddOrderButton);
             using (var context = new RestaurantContext())
             {
-                List<Order> orders = context.Orders.AsNoTracking().ToList();
+                List<Order> orders = context.Orders.OrderBy(i => i.TableID).AsNoTracking().ToList();
                 foreach (var order in orders)
                 {
                     OrdersPage orderpage = new OrdersPage(_user);
+                    orderpage.Unloaded += (s, args) => RefreshMenuData();
                     orderpage._ID = order.Id;
+
                     Button button = new Button()
                     {
                         Width = 365,
@@ -104,12 +107,21 @@ namespace AppEnteringTrackingAndOrders
                         Margin = new Thickness(0, 0, 10, 10),
                         FontSize = 24
                     };
+
                     decimal orderprise = 0.00M;
-                    for (int i = 0; i < order.Items.Count; i++)
-                    {
-                        orderprise += order.Items[i].MenuItem.Price;
-                    }
-                    button.Content = $"{order.Id}".ToUpper() + $"                                  {orderprise}₽\n\nИванов\n{order.OrderDate.Hour}:{order.OrderDate.Minute} • Зал • Общий";
+                    List<OrderItem> countItem = context.OrderItems.Where(i => i.OrderId == order.Id).ToList();
+                    if (countItem != null)
+                        foreach (var item in countItem) { 
+                            var price = context.MenuItems.Where(i => i.Id == item.MenuItemId).FirstOrDefault();
+                            if (price != null)
+                                orderprise += price.Price;
+                        }
+
+                    var user = context.Users.Where(i => i.UserId == order.UserId).FirstOrDefault();
+                    if (user == null)
+                        MessageBox.Show("Не найден ни один пользователь !!! ", "Критическая ошибка!");
+
+                    button.Content = $"Стол №{order.TableID}" + $"                     {orderprise}₽\n\n{user.Username}\n{order.OrderDate.DateTime.ToString("HH:mm")} • Зал • Общий";
                     button.Style = (Style)FindResource("ButtonStyleFull");
                     button.Tag = orderpage;
                     button.Click += EditButtonsToWrapPanel;

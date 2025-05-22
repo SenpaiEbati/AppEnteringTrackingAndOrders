@@ -35,7 +35,7 @@ namespace AppEnteringTrackingAndOrders
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string Destination { get; set; } // "Kitchen" или "Bar"
+        public string Destination { get; set; }
         public int GroupId { get; set; }
         public Group Group { get; set; }
         public List<MenuItemModifier> Modifiers { get; set; } = new List<MenuItemModifier>();
@@ -56,7 +56,12 @@ namespace AppEnteringTrackingAndOrders
         [Key]
         public int Id { get; set; }
         public DateTimeOffset OrderDate { get; set; }
-        public int TableID { get; set; } // Добавленный столбец
+        public int TableID { get; set; }
+
+        // Связь с пользователем
+        public int UserId { get; set; }
+        public User User { get; set; }
+
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
     }
 
@@ -91,6 +96,7 @@ namespace AppEnteringTrackingAndOrders
         public string Username { get; set; }
         public string PasswordHash { get; set; }
         public ICollection<Role> Roles { get; set; }
+        public ICollection<Order> Orders { get; set; } // Обратная связь с заказами
     }
 
     public class Role
@@ -104,7 +110,6 @@ namespace AppEnteringTrackingAndOrders
     // Основной контекст базы данных
     public class RestaurantContext : DbContext
     {
-        // Для меню и заказов
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
@@ -112,8 +117,6 @@ namespace AppEnteringTrackingAndOrders
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<OrderItemModifier> OrderItemModifiers { get; set; }
-
-        // Для пользователей и ролей
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
 
@@ -156,7 +159,13 @@ namespace AppEnteringTrackingAndOrders
                 .WithMany()
                 .HasForeignKey(oim => oim.MenuItemModifierId);
 
-            // Настройка связей для пользователей и ролей
+            // Настройка связи User-Order
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId);
+
+            // Настройка связи многие-ко-многим для User-Role
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Roles)
                 .WithMany(r => r.Users)

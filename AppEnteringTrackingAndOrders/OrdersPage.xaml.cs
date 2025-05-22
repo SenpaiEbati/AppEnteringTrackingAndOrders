@@ -45,6 +45,7 @@ namespace AppEnteringTrackingAndOrders
         private UIElement _now_order_modifier_UI_item;
         private int _now_guest_id;
         private UIElement _now_guest_UI_item;
+        private User _user;
         private int? _IDYourUserRoles;
         public int _ID = 0;
         public int _Guest = 0;
@@ -55,7 +56,7 @@ namespace AppEnteringTrackingAndOrders
         public OrdersPage(User user)
         {
             InitializeComponent();
-
+            _user = user;
             _IDYourUserRoles = GetRoleIdForUser(user);
             if (_IDYourUserRoles != null)
             {
@@ -80,9 +81,6 @@ namespace AppEnteringTrackingAndOrders
 
                 context.SaveChanges();
 
-                RefreshGroupMenuData();
-
-                RefreshOrderPanelInfo();
             }
             //TopBorderText.Text = $"Создать заказ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀{DateTime.Now.ToString("HH:mm")}\nСтол:1 Гостей:2";
             //ButtonOrdersSumWrapPanel.Content = $"Заказ {OrderSum()}₽";
@@ -109,7 +107,9 @@ namespace AppEnteringTrackingAndOrders
                 ImageDeleteOrder.Source = new BitmapImage(new Uri("/Image/deleteorder.png", UriKind.Relative));
             }
 
-            
+            RefreshGroupMenuData();
+
+            RefreshOrderPanelInfo();
 
             using (var context = new RestaurantContext())
             {
@@ -123,7 +123,7 @@ namespace AppEnteringTrackingAndOrders
                 else
                 {
                     _is_new_order = true;
-                    var oldorder = new Order { Id = _ID, TableID = _TableID, OrderDate = DateTime.UtcNow };
+                    var oldorder = new Order { Id = _ID, TableID = _TableID, OrderDate = DateTime.UtcNow, UserId = _user.UserId};
                     _old_order = oldorder;
                     NameOrderTopText.Text = $"Создание заказа №{_ID}";
                 }
