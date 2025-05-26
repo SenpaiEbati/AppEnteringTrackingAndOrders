@@ -38,11 +38,11 @@
                             <Setter Property="BorderBrush" Value="Gray"/>
                         </Trigger>
 
-                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <!-- Анимация для IsEnabled (отключенное состояние) 
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="LightGray"/>
                             <Setter Property="Foreground" Value="DarkGray"/>
-                        </Trigger>
+                        </Trigger> -->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -75,11 +75,11 @@
                             <Setter Property="BorderBrush" Value="Gray"/>
                         </Trigger>
 
-                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <!-- Анимация для IsEnabled (отключенное состояние)
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="LightGray"/>
                             <Setter Property="Foreground" Value="DarkGray"/>
-                        </Trigger>
+                        </Trigger> -->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -112,11 +112,11 @@
                             <Setter Property="BorderBrush" Value="Gray"/>
                         </Trigger>
 
-                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <!-- Анимация для IsEnabled (отключенное состояние) 
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="LightGray"/>
                             <Setter Property="Foreground" Value="DarkGray"/>
-                        </Trigger>
+                        </Trigger> -->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -150,11 +150,11 @@
                             <Setter Property="BorderBrush" Value="Gray"/>
                         </Trigger>
 
-                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <!-- Анимация для IsEnabled (отключенное состояние)
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="LightGray"/>
                             <Setter Property="Foreground" Value="DarkGray"/>
-                        </Trigger>
+                        </Trigger> -->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

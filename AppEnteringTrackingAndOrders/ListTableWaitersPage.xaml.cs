@@ -27,6 +27,9 @@ namespace AppEnteringTrackingAndOrders
         private int? _IDYourUserRoles;
         private User _user;
         private bool _theme = true;
+        private bool _tableoruser = true;
+        private List<User> _users;
+        private int numview = -1;
 
         public ListTableWaitersPage(User user)
         {
@@ -46,20 +49,26 @@ namespace AppEnteringTrackingAndOrders
             {
                 if (_IDYourUserRoles == 3)
                 {
-                    BorderCenterTopMenu.Width += 5;
-                    ButtonLeftTopMenu.Visibility = Visibility.Hidden;
-                    ButtonRightTopMenu.Visibility = Visibility.Hidden;
-                    TextBlockBorderCenterTopMenu.Text = "Все заказы";
+                    ButtonLeftTopMenu.IsEnabled = false;
+                    ButtonRightTopMenu.IsEnabled = false;
+                    ButtonChangeViewTableOrUser.IsEnabled = false;
+                    ButtonCenterTopMenu.IsEnabled = false;
+                    ButtonCenterTopMenu.Content = $"Все заказы {_user.Username}";
                 }
             }
-            RefreshMenuData();
+            RefreshMenuDataDefault();
+
+            using (var context = new RestaurantContext())
+            {
+                _users = context.Users.ToList();
+            }
         }
 
         private void AddButtonsToWrapPanel(object sender, RoutedEventArgs e)
         {
             OrdersPage orderpage = new OrdersPage(_user);
             PreOrderPage preOrderPage = new PreOrderPage(orderpage);
-            orderpage.Unloaded += (s, args) => RefreshMenuData();
+            orderpage.Unloaded += (s, args) => RefreshMenuDataDefault();
             if (_theme == false)
                 orderpage._theme = true;
             else
@@ -87,17 +96,34 @@ namespace AppEnteringTrackingAndOrders
             }
         }
 
-        private void RefreshMenuData()
+        private void RefreshMenuDataDefault()
         {
             WrapPanelOrders.Children.Clear();
             WrapPanelOrders.Children.Add(AddOrderButton);
             using (var context = new RestaurantContext())
             {
-                List<Order> orders = context.Orders.OrderBy(i => i.TableID).AsNoTracking().ToList();
+                List<Order> orders;
+
+                if (_IDYourUserRoles != 3)
+                {
+                    if (numview == -1)
+                        if (_tableoruser == true)
+                            orders = context.Orders.OrderBy(i => i.TableID).AsNoTracking().ToList();
+                        else
+                            orders = context.Orders.OrderBy(i => i.User.Username).ThenBy(i => i.TableID).AsNoTracking().ToList();
+                    else
+                        if (_tableoruser == true)
+                            orders = context.Orders.Where(i => i.UserId == _users[numview].UserId).OrderBy(i => i.TableID).AsNoTracking().ToList();
+                        else
+                            orders = context.Orders.Where(i => i.UserId == _users[numview].UserId).OrderBy(i => i.User.Username).ThenBy(i => i.TableID).AsNoTracking().ToList();
+                }
+                else
+                    orders = context.Orders.Where(i => i.UserId == _user.UserId).OrderBy(i => i.TableID).AsNoTracking().ToList();
+
                 foreach (var order in orders)
                 {
                     OrdersPage orderpage = new OrdersPage(_user);
-                    orderpage.Unloaded += (s, args) => RefreshMenuData();
+                    orderpage.Unloaded += (s, args) => RefreshMenuDataDefault();
                     orderpage._ID = order.Id;
 
                     Button button = new Button()
@@ -111,7 +137,8 @@ namespace AppEnteringTrackingAndOrders
                     decimal orderprise = 0.00M;
                     List<OrderItem> countItem = context.OrderItems.Where(i => i.OrderId == order.Id).ToList();
                     if (countItem != null)
-                        foreach (var item in countItem) { 
+                        foreach (var item in countItem)
+                        {
                             var price = context.MenuItems.Where(i => i.Id == item.MenuItemId).FirstOrDefault();
                             if (price != null)
                                 orderprise += price.Price;
@@ -130,14 +157,47 @@ namespace AppEnteringTrackingAndOrders
             }
         }
 
+        private void ButtonChangeViewTableOrUser_Click(object sender, RoutedEventArgs e)
+        {
+            if (_tableoruser == false)
+            {
+                _tableoruser = true;
+                ButtonChangeViewTableOrUser.Content = "По столам";
+                RefreshMenuDataDefault();
+            }
+            else if (_tableoruser == true)
+            {
+                _tableoruser = false;
+                ButtonChangeViewTableOrUser.Content = "По официантам";
+                RefreshMenuDataDefault();
+            }
+        }
+
         private void ButtonLeftTopMenu_Click(object sender, RoutedEventArgs e)
         {
+            if (_users.Count == 0) return;
+            numview = (numview <= 0) ? _users.Count - 1 : numview - 1;
+            UpdateButtonCenterTopMenu();
 
         }
 
         private void ButtonRightTopMenu_Click(object sender, RoutedEventArgs e)
         {
+            if (_users.Count == 0) return;
+            numview = (numview >= _users.Count - 1) ? 0 : numview + 1;
+            UpdateButtonCenterTopMenu();
+        }
 
+        private void ButtonCenterTopMenu_Click(object sender, RoutedEventArgs e)
+        {
+            numview = -1;
+            UpdateButtonCenterTopMenu();
+        }
+
+        private void UpdateButtonCenterTopMenu()
+        {
+            ButtonCenterTopMenu.Content = (numview == -1) ? "Все официанты" : _users[numview].Username;
+            RefreshMenuDataDefault();
         }
 
         private void ButtonLightDarkTheme_Click(object sender, RoutedEventArgs e)
@@ -169,7 +229,7 @@ namespace AppEnteringTrackingAndOrders
             System.Windows.Application.Current.Resources.Clear();
             // добавляем загруженный словарь ресурсов
             System.Windows.Application.Current.Resources.MergedDictionaries.Add(resourceDict);
-            RefreshMenuData();
+            RefreshMenuDataDefault();
         }
 
         private void LogOut_Click(object sender, RoutedEventArgs e)

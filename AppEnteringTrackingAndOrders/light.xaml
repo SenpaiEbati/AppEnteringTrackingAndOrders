@@ -37,11 +37,11 @@
                             <Setter Property="BorderBrush" Value="#1A75FF"/>
                         </Trigger>
 
-                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <!-- Анимация для IsEnabled (отключенное состояние)
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="#E6E6E6"/>
                             <Setter Property="Foreground" Value="Black"/>
-                        </Trigger>
+                        </Trigger> -->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -74,11 +74,11 @@
                             <Setter Property="BorderBrush" Value="#1A75FF"/>
                         </Trigger>
 
-                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <!-- Анимация для IsEnabled (отключенное состояние)
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="#E6E6E6"/>
                             <Setter Property="Foreground" Value="Black"/>
-                        </Trigger>
+                        </Trigger> -->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -111,11 +111,11 @@
                             <Setter Property="BorderBrush" Value="#1A75FF"/>
                         </Trigger>
 
-                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <!-- Анимация для IsEnabled (отключенное состояние) 
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="#E6E6E6"/>
                             <Setter Property="Foreground" Value="Black"/>
-                        </Trigger>
+                        </Trigger -->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -148,11 +148,11 @@
                             <Setter Property="BorderBrush" Value="#1A75FF"/>
                         </Trigger>
 
-                        <!-- Анимация для IsEnabled (отключенное состояние) -->
+                        <!-- Анимация для IsEnabled (отключенное состояние)
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="#E6E6E6"/>
                             <Setter Property="Foreground" Value="Black"/>
-                        </Trigger>
+                        </Trigger> -->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

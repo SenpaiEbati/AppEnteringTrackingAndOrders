@@ -62,9 +62,9 @@ namespace AppEnteringTrackingAndOrders
             {
                 if (_IDYourUserRoles != 1)
                 {
-                    GroupMenuButtonsWrapPanelAddPositionButton.Visibility = Visibility.Hidden;
-                    ItemMenuButtonsWrapPanelAddPositionButton.Visibility = Visibility.Hidden;
-                    ItemModifierButtonsWrapPanelAddPositionButton.Visibility = Visibility.Hidden;
+                    GroupMenuButtonsWrapPanelAddPositionButton.Visibility = Visibility.Collapsed;
+                    ItemMenuButtonsWrapPanelAddPositionButton.Visibility = Visibility.Collapsed;
+                    ItemModifierButtonsWrapPanelAddPositionButton.Visibility = Visibility.Collapsed;
                 }
             }
 

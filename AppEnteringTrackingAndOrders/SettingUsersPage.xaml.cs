@@ -341,7 +341,7 @@ namespace AppEnteringTrackingAndOrders
         {
             AddUserWithRoles(textBox.Text, passwordBoxOne.Password, ComboBoxRoles.Text);
 
-            MessageBox.Show("ADD USER");  // ----
+            //ADD USER
 
             ResetForm();
             UpdateHintsAddUser("Добавлен новый пользователь", Brushes.Green);
@@ -355,7 +355,7 @@ namespace AppEnteringTrackingAndOrders
             passwordBoxOne.Foreground = Brushes.Black;
             HintAssist.SetHint(passwordBoxOne, "Введите пароль");
 
-            MessageBox.Show("ERROR ADD USER NO ComboBoxRoles"); // ----
+            //ERROR ADD USER NO ComboBoxRoles
         }
 
         // Отображение ошибки пароля
@@ -365,7 +365,7 @@ namespace AppEnteringTrackingAndOrders
 
             ComboBoxRoles.Foreground = Brushes.Black;
 
-            MessageBox.Show("ERROR ADD USER NO passwordBoxOne"); // ----
+            //ERROR ADD USER NO passwordBoxOne
         }
 
         // Отображение ошибки роли и пароля
@@ -373,7 +373,7 @@ namespace AppEnteringTrackingAndOrders
         {
             ShowError(ComboBoxRoles, "Не выбрана роль!");
             ShowError(passwordBoxOne, "Не введен пароль!");
-            MessageBox.Show("ERROR ADD USER NO ComboBoxRoles AND passwordBoxOne"); // ----
+            //ERROR ADD USER NO ComboBoxRoles AND passwordBoxOne
         }
 
         // Обработка существующего пользователя
@@ -487,7 +487,7 @@ namespace AppEnteringTrackingAndOrders
             {
                 EditUserWithRoles(textBox.Text, passwordBoxTwo.Password, ComboBoxRoles.Text);
 
-                MessageBox.Show("EDIT USER"); // ----
+                //EDIT USER
                 ResetForm();
                 UpdateHintsEditUser("Изменения приняты", Brushes.Green);
             }
@@ -504,7 +504,7 @@ namespace AppEnteringTrackingAndOrders
         {
             UpdateRolesBasedOnUserEditUser();
             ShowError(passwordBoxOne, "Не введен пароль!");
-            MessageBox.Show("ERROR EDIT USER NO passwordBoxOne"); // ----
+            //ERROR EDIT USER NO passwordBoxOne
         }
 
         // Отображение ошибки второго пароля
@@ -512,7 +512,7 @@ namespace AppEnteringTrackingAndOrders
         {
             UpdateRolesBasedOnUserEditUser();
             ShowError(passwordBoxTwo, "Не введен пароль!");
-            MessageBox.Show("ERROR EDIT USER NO passwordBoxTwo"); // ----
+            //ERROR EDIT USER NO passwordBoxTwo
         }
 
         // Отображение ошибки роли
@@ -520,7 +520,7 @@ namespace AppEnteringTrackingAndOrders
         {
             UpdateRolesBasedOnUserEditUser();
             ShowError(ComboBoxRoles, "Не выбрана роль!");
-            MessageBox.Show("ERROR EDIT USER NO ComboBoxRoles"); // ----
+            //ERROR EDIT USER NO ComboBoxRoles
         }
 
         // Отображение ошибки обоих паролей
@@ -529,7 +529,7 @@ namespace AppEnteringTrackingAndOrders
             UpdateRolesBasedOnUserEditUser();
             ShowError(passwordBoxOne, "Не введен пароль!");
             ShowError(passwordBoxTwo, "Не введен пароль!");
-            MessageBox.Show("ERROR EDIT USER NO passwordBoxOne AND passwordBoxTwo"); // ----
+            //ERROR EDIT USER NO passwordBoxOne AND passwordBoxTwo
         }
 
         // Отображение ошибки второго пароля и роли
@@ -538,7 +538,7 @@ namespace AppEnteringTrackingAndOrders
             UpdateRolesBasedOnUserEditUser();
             ShowError(passwordBoxTwo, "Не введен пароль!");
             ShowError(ComboBoxRoles, "Не выбрана роль!");
-            MessageBox.Show("ERROR EDIT USER NO ComboBoxRoles AND passwordBoxTwo"); // ----
+            //ERROR EDIT USER NO ComboBoxRoles AND passwordBoxTwo
         }
 
         // Отображение ошибки первого пароля и роли
@@ -547,7 +547,7 @@ namespace AppEnteringTrackingAndOrders
             UpdateRolesBasedOnUserEditUser();
             ShowError(passwordBoxOne, "Не введен пароль!");
             ShowError(ComboBoxRoles, "Не выбрана роль!");
-            MessageBox.Show("ERROR EDIT USER NO ComboBoxRoles AND passwordBoxOne"); // ----
+            //ERROR EDIT USER NO ComboBoxRoles AND passwordBoxOne
         }
 
         // Отображение ошибки всех полей
@@ -557,7 +557,7 @@ namespace AppEnteringTrackingAndOrders
             ShowError(passwordBoxOne, "Не введен пароль!");
             ShowError(passwordBoxTwo, "Не введен пароль!");
             ShowError(ComboBoxRoles, "Не выбрана роль!");
-            MessageBox.Show("ERROR EDIT USER NO ComboBoxRoles AND passwordBoxOne AND passwordBoxTwo"); // ----
+            //ERROR EDIT USER NO ComboBoxRoles AND passwordBoxOne AND passwordBoxTwo
         }
 
         // Подготовка формы для редактирования
@@ -655,7 +655,7 @@ namespace AppEnteringTrackingAndOrders
                 {
                     DeleteUserWithRoles(textBox.Text);
 
-                    MessageBox.Show("DELETE USER"); // ----
+                    //DELETE USER
                     ResetForm();
                     UpdateDeletionHints("Пользователь удален", Brushes.Green);
                 }
@@ -677,7 +677,7 @@ namespace AppEnteringTrackingAndOrders
             HintAssist.SetHint(passwordBoxTwo, "Повторите старый пароль пользователя");
 
             ShowError(passwordBoxOne, "Не введен пароль!");
-            MessageBox.Show("ERROR DELETE USER NO passwordBoxOne"); // ----
+            //ERROR DELETE USER NO passwordBoxOne
         }
 
         // Отображение ошибки: отсутствует второй пароль
@@ -687,7 +687,7 @@ namespace AppEnteringTrackingAndOrders
             HintAssist.SetHint(passwordBoxOne, "Введите старый пароль пользователя");
 
             ShowError(passwordBoxTwo, "Не введен пароль!");
-            MessageBox.Show("ERROR DELETE USER NO passwordBoxTwo"); // ----
+            //ERROR DELETE USER NO passwordBoxTwo
         }
 
         // Отображение ошибки: отсутствуют оба пароля
@@ -695,7 +695,7 @@ namespace AppEnteringTrackingAndOrders
         {
             ShowError(passwordBoxOne, "Не введен пароль!");
             ShowError(passwordBoxTwo, "Не введен пароль!");
-            MessageBox.Show("ERROR DELETE USER NO passwordBoxOne AND passwordBoxTwo"); // ----
+            //ERROR DELETE USER NO passwordBoxOne AND passwordBoxTwo
         }
 
         // Отображение ошибки: удаление недоступно
