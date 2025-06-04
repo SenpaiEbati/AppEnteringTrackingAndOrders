@@ -1,6 +1,7 @@
 ﻿using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,10 +45,23 @@ namespace AppEnteringTrackingAndOrders
         // ---------------------------------------
         private void TopLeftButtonOne_Click(object sender, RoutedEventArgs e)
         {
-            if (TextBoxNameItem.IsKeyboardFocused)
+            if (TextBoxNameItem.IsFocused)
             {
                 TextBoxNameItem.Text += "1";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsFocused)
+            {
+                TextBoxDescItem.Text += "1";
+                TextBoxDescItem.Focus();
+            }
+            else if (DecimalPriceItem.IsFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "1";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+
+                DecimalPriceItem.Focus();
             }
         }
 
@@ -58,6 +72,19 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "2";
                 TextBoxNameItem.Focus();
             }
+            else if (TextBoxDescItem.IsFocused)
+            {
+                TextBoxDescItem.Text += "2";
+                TextBoxDescItem.Focus();
+            }
+            else if (DecimalPriceItem.IsFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "2";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+
+                DecimalPriceItem.Focus();
+            }
         }
 
         private void TopRightButtonThree_Click(object sender, RoutedEventArgs e)
@@ -66,6 +93,19 @@ namespace AppEnteringTrackingAndOrders
             {
                 TextBoxNameItem.Text += "3";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsFocused)
+            {
+                TextBoxDescItem.Text += "3";
+                TextBoxDescItem.Focus();
+            }
+            else if (DecimalPriceItem.IsFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "3";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+
+                DecimalPriceItem.Focus();
             }
         }
 
@@ -76,6 +116,19 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "4";
                 TextBoxNameItem.Focus();
             }
+            else if (TextBoxDescItem.IsFocused)
+            {
+                TextBoxDescItem.Text += "4";
+                TextBoxDescItem.Focus();
+            }
+            else if (DecimalPriceItem.IsFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "4";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+
+                DecimalPriceItem.Focus();
+            }
         }
 
         private void CenterMiddleButtonFive_Click(object sender, RoutedEventArgs e)
@@ -84,6 +137,19 @@ namespace AppEnteringTrackingAndOrders
             {
                 TextBoxNameItem.Text += "5";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsFocused)
+            {
+                TextBoxDescItem.Text += "5";
+                TextBoxDescItem.Focus();
+            }
+            else if (DecimalPriceItem.IsFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "5";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+
+                DecimalPriceItem.Focus();
             }
         }
 
@@ -94,6 +160,19 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "6";
                 TextBoxNameItem.Focus();
             }
+            else if (TextBoxDescItem.IsFocused)
+            {
+                TextBoxDescItem.Text += "6";
+                TextBoxDescItem.Focus();
+            }
+            else if (DecimalPriceItem.IsFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "6";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+
+                DecimalPriceItem.Focus();
+            }
         }
 
         private void DownLeftButtonSeven_Click(object sender, RoutedEventArgs e)
@@ -102,6 +181,19 @@ namespace AppEnteringTrackingAndOrders
             {
                 TextBoxNameItem.Text += "7";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsFocused)
+            {
+                TextBoxDescItem.Text += "7";
+                TextBoxDescItem.Focus();
+            }
+            else if (DecimalPriceItem.IsFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "7";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+
+                DecimalPriceItem.Focus();
             }
         }
 
@@ -112,6 +204,19 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "8";
                 TextBoxNameItem.Focus();
             }
+            else if (TextBoxDescItem.IsFocused)
+            {
+                TextBoxDescItem.Text += "8";
+                TextBoxDescItem.Focus();
+            }
+            else if (DecimalPriceItem.IsFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "8";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+
+                DecimalPriceItem.Focus();
+            }
         }
 
         private void DownRightButtonNine_Click(object sender, RoutedEventArgs e)
@@ -120,6 +225,19 @@ namespace AppEnteringTrackingAndOrders
             {
                 TextBoxNameItem.Text += "9";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsFocused)
+            {
+                TextBoxDescItem.Text += "9";
+                TextBoxDescItem.Focus();
+            }
+            else if (DecimalPriceItem.IsFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "9";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+
+                DecimalPriceItem.Focus();
             }
         }
 
@@ -131,6 +249,25 @@ namespace AppEnteringTrackingAndOrders
                     TextBoxNameItem.Text = TextBoxNameItem.Text.Substring(0, TextBoxNameItem.Text.Length - 1);
                 TextBoxNameItem.Focus();
             }
+            else if (TextBoxDescItem.IsFocused)
+            {
+                if (TextBoxDescItem.Text.Length > 0)
+                    TextBoxDescItem.Text = TextBoxDescItem.Text.Substring(0, TextBoxDescItem.Text.Length - 1);
+                TextBoxDescItem.Focus();
+            }
+            else if (DecimalPriceItem.IsFocused)
+            {
+                string currentValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture);
+                if (currentValue.Length > 0)
+                {
+                    string newValue = currentValue.Substring(0, currentValue.Length - 1);
+                    if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                        DecimalPriceItem.Value = result;
+                    else
+                        DecimalPriceItem.Value = 0; // Если строка пустая, сбрасываем на 0
+                }
+                DecimalPriceItem.Focus();
+            }
         }
 
         private void DownButtonZero_Click(object sender, RoutedEventArgs e)
@@ -139,6 +276,19 @@ namespace AppEnteringTrackingAndOrders
             {
                 TextBoxNameItem.Text += "0";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsFocused)
+            {
+                TextBoxDescItem.Text += "0";
+                TextBoxDescItem.Focus();
+            }
+            else if (DecimalPriceItem.IsFocused)
+            {
+                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "0";
+                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    DecimalPriceItem.Value = result;
+
+                DecimalPriceItem.Focus();
             }
         }
 
@@ -177,16 +327,14 @@ namespace AppEnteringTrackingAndOrders
 
         private void ButtonQ_Click(object sender, RoutedEventArgs e)
         {
-            if (TextBoxNameItem.IsKeyboardFocused)
+            if (TextBoxNameItem.IsFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "й" : "Й";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "q" : "Q";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "й" : "Й"; else TextBoxNameItem.Text += _shiftKey == false ? "q" : "Q";
+                TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "й" : "Й"; else TextBoxDescItem.Text += _shiftKey == false ? "q" : "Q";
                 TextBoxNameItem.Focus();
             }
         }
@@ -195,31 +343,28 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "ц" : "Ц";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "w" : "W";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "ц" : "Ц"; else TextBoxNameItem.Text += _shiftKey == false ? "w" : "W";
                 TextBoxNameItem.Focus();
             }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "ц" : "Ц"; else TextBoxDescItem.Text += _shiftKey == false ? "w" : "W";
+                TextBoxDescItem.Focus();
+            }
+
         }
 
         private void ButtonE_Click(object sender, RoutedEventArgs e)
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "у" : "У";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "e" : "E";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "у" : "У"; else TextBoxNameItem.Text += _shiftKey == false ? "e" : "E";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "у" : "У"; else TextBoxDescItem.Text += _shiftKey == false ? "e" : "E";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -227,15 +372,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "к" : "К";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "r" : "R";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "к" : "К"; else TextBoxNameItem.Text += _shiftKey == false ? "r" : "R";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "к" : "К"; else TextBoxDescItem.Text += _shiftKey == false ? "r" : "R";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -243,15 +386,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "е" : "Е";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "t" : "T";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "е" : "Е"; else TextBoxNameItem.Text += _shiftKey == false ? "t" : "T";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "е" : "Е"; else TextBoxDescItem.Text += _shiftKey == false ? "t" : "T";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -259,15 +400,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "н" : "Н";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "y" : "Y";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "н" : "Н"; else TextBoxNameItem.Text += _shiftKey == false ? "y" : "Y";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "н" : "Н"; else TextBoxDescItem.Text += _shiftKey == false ? "y" : "Y";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -275,15 +414,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "г" : "Г";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "u" : "U";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "г" : "Г"; else TextBoxNameItem.Text += _shiftKey == false ? "u" : "U";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "г" : "Г"; else TextBoxDescItem.Text += _shiftKey == false ? "u" : "U";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -291,15 +428,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "ш" : "Ш";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "i" : "I";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "ш" : "Ш"; else TextBoxNameItem.Text += _shiftKey == false ? "i" : "I";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "ш" : "Ш"; else TextBoxDescItem.Text += _shiftKey == false ? "i" : "I";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -307,15 +442,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "щ" : "Щ";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "o" : "O";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "щ" : "Щ"; else TextBoxNameItem.Text += _shiftKey == false ? "o" : "O";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "щ" : "Щ"; else TextBoxDescItem.Text += _shiftKey == false ? "o" : "O";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -323,15 +456,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "з" : "З";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "p" : "P";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "з" : "З"; else TextBoxNameItem.Text += _shiftKey == false ? "p" : "P";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "з" : "З"; else TextBoxDescItem.Text += _shiftKey == false ? "p" : "P";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -339,15 +470,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "х" : "Х";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "[" : "{";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "х" : "Х"; else TextBoxNameItem.Text += _shiftKey == false ? "[" : "{";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "х" : "Х"; else TextBoxDescItem.Text += _shiftKey == false ? "[" : "{";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -355,15 +484,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "ъ" : "Ъ";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "]" : "}";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "ъ" : "Ъ"; else TextBoxNameItem.Text += _shiftKey == false ? "]" : "}";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "ъ" : "Ъ"; else TextBoxDescItem.Text += _shiftKey == false ? "]" : "}";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -371,15 +498,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "ф" : "Ф";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "a" : "A";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "ф" : "Ф"; else TextBoxNameItem.Text += _shiftKey == false ? "a" : "A";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "ф" : "Ф"; else TextBoxDescItem.Text += _shiftKey == false ? "a" : "A";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -387,15 +512,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "ы" : "Ы";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "s" : "S";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "ы" : "Ы"; else TextBoxNameItem.Text += _shiftKey == false ? "s" : "S";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "ы" : "Ы"; else TextBoxDescItem.Text += _shiftKey == false ? "s" : "S";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -403,15 +526,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "в" : "В";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "d" : "D";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "в" : "В"; else TextBoxNameItem.Text += _shiftKey == false ? "d" : "D";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "в" : "В"; else TextBoxDescItem.Text += _shiftKey == false ? "d" : "D";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -419,15 +540,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "а" : "А";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "f" : "F";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "а" : "А"; else TextBoxNameItem.Text += _shiftKey == false ? "f" : "F";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "а" : "А"; else TextBoxDescItem.Text += _shiftKey == false ? "f" : "F";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -435,15 +554,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "п" : "П";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "g" : "G";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "п" : "П"; else TextBoxNameItem.Text += _shiftKey == false ? "g" : "G";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "п" : "П"; else TextBoxDescItem.Text += _shiftKey == false ? "g" : "G";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -451,15 +568,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "р" : "Р";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "h" : "H";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "р" : "Р"; else TextBoxNameItem.Text += _shiftKey == false ? "h" : "H";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "р" : "Р"; else TextBoxDescItem.Text += _shiftKey == false ? "h" : "H";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -467,15 +582,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "о" : "О";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "j" : "J";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "о" : "О"; else TextBoxNameItem.Text += _shiftKey == false ? "j" : "J";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "о" : "О"; else TextBoxDescItem.Text += _shiftKey == false ? "j" : "J";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -483,15 +596,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "л" : "Л";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "k" : "K";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "л" : "Л"; else TextBoxNameItem.Text += _shiftKey == false ? "k" : "K";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "л" : "Л"; else TextBoxDescItem.Text += _shiftKey == false ? "k" : "K";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -499,15 +610,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "д" : "Д";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "l" : "L";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "д" : "Д"; else TextBoxNameItem.Text += _shiftKey == false ? "l" : "L";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "д" : "Д"; else TextBoxDescItem.Text += _shiftKey == false ? "l" : "L";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -515,15 +624,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "ж" : "Ж";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? ";" : ":";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "ж" : "Ж"; else TextBoxNameItem.Text += _shiftKey == false ? ";" : ":";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "ж" : "Ж"; else TextBoxDescItem.Text += _shiftKey == false ? ";" : ":";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -531,15 +638,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "э" : "Э";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "'" : "\"";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "э" : "Э"; else TextBoxNameItem.Text += _shiftKey == false ? "'" : "\"";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "э" : "Э"; else TextBoxDescItem.Text += _shiftKey == false ? "'" : "\"";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -629,15 +734,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "я" : "Я";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "z" : "Z";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "я" : "Я"; else TextBoxNameItem.Text += _shiftKey == false ? "z" : "Z";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "я" : "Я"; else TextBoxDescItem.Text += _shiftKey == false ? "z" : "Z";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -645,15 +748,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "ч" : "Ч";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "x" : "X";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "ч" : "Ч"; else TextBoxNameItem.Text += _shiftKey == false ? "x" : "X";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "ч" : "Ч"; else TextBoxDescItem.Text += _shiftKey == false ? "x" : "X";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -661,15 +762,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "с" : "С";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "c" : "C";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "с" : "С"; else TextBoxNameItem.Text += _shiftKey == false ? "c" : "C";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "с" : "С"; else TextBoxDescItem.Text += _shiftKey == false ? "c" : "C";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -677,15 +776,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "м" : "М";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "v" : "V";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "м" : "М"; else TextBoxNameItem.Text += _shiftKey == false ? "v" : "V";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "м" : "М"; else TextBoxDescItem.Text += _shiftKey == false ? "v" : "V";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -693,15 +790,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "и" : "И";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "b" : "B";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "и" : "И"; else TextBoxNameItem.Text += _shiftKey == false ? "b" : "B";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "и" : "И"; else TextBoxDescItem.Text += _shiftKey == false ? "b" : "B";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -709,15 +804,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "т" : "Т";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "n" : "N";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "т" : "Т"; else TextBoxNameItem.Text += _shiftKey == false ? "n" : "N";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "т" : "Т"; else TextBoxDescItem.Text += _shiftKey == false ? "n" : "N";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -725,15 +818,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "ь" : "Ь";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "m" : "M";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "ь" : "Ь"; else TextBoxNameItem.Text += _shiftKey == false ? "m" : "M";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "ь" : "Ь"; else TextBoxDescItem.Text += _shiftKey == false ? "m" : "M";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -741,15 +832,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "б" : "Б";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "<" : "<";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "б" : "Б"; else TextBoxNameItem.Text += _shiftKey == false ? "<" : "<";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "б" : "Б"; else TextBoxDescItem.Text += _shiftKey == false ? "<" : "<";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -757,15 +846,13 @@ namespace AppEnteringTrackingAndOrders
         {
             if (TextBoxNameItem.IsKeyboardFocused)
             {
-                if (_langRuENKey == false)
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? "ю" : "Ю";
-                }
-                else
-                {
-                    TextBoxNameItem.Text += _shiftKey == false ? ">" : ">";
-                }
+                if (_langRuENKey == false) TextBoxNameItem.Text += _shiftKey == false ? "ю" : "Ю"; else TextBoxNameItem.Text += _shiftKey == false ? ">" : ">";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                if (_langRuENKey == false) TextBoxDescItem.Text += _shiftKey == false ? "ю" : "Ю"; else TextBoxDescItem.Text += _shiftKey == false ? ">" : ">";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -857,6 +944,11 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += " ";
                 TextBoxNameItem.Focus();
             }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                TextBoxDescItem.Text += " ";
+                TextBoxDescItem.Focus();
+            }
         }
 
         private void ButtonComma_Click(object sender, RoutedEventArgs e)
@@ -866,6 +958,11 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += ",";
                 TextBoxNameItem.Focus();
             }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                TextBoxDescItem.Text += ",";
+                TextBoxDescItem.Focus();
+            }
         }
 
         private void ButtonPoint_Click(object sender, RoutedEventArgs e)
@@ -874,6 +971,11 @@ namespace AppEnteringTrackingAndOrders
             {
                 TextBoxNameItem.Text += ".";
                 TextBoxNameItem.Focus();
+            }
+            else if (TextBoxDescItem.IsKeyboardFocused)
+            {
+                TextBoxDescItem.Text += ".";
+                TextBoxDescItem.Focus();
             }
         }
 
@@ -931,6 +1033,9 @@ namespace AppEnteringTrackingAndOrders
 
             KeyboardAbc.Width = 1140; KeyboardAbc.Height = 378;
             BorderTextBoxNameItem.Width = 598; TextBoxNameItem.Margin = new Thickness(39, 3, 39, 3);
+            BorderTextBoxDescItem.Width = 598; TextBoxDescItem.Margin = new Thickness(39, 3, 39, 3);
+            BorderDecimalPriceItem.Width = 598; DecimalPriceItem.Margin = new Thickness(39, 3, 39, 3);
+            BorderComboBoxItem.Width = 598; BorderComboBoxItem.Margin = new Thickness(39, 3, 39, 3);
         }
 
         private void SizeKeyboardButtonSmall()
@@ -985,6 +1090,9 @@ namespace AppEnteringTrackingAndOrders
 
             KeyboardAbc.Width = 900; KeyboardAbc.Height = 296;
             BorderTextBoxNameItem.Width = 448; TextBoxNameItem.Margin = new Thickness(39, 3, 39, 3);
+            BorderTextBoxDescItem.Width = 448; TextBoxDescItem.Margin = new Thickness(39, 3, 39, 3);
+            BorderDecimalPriceItem.Width = 448; DecimalPriceItem.Margin = new Thickness(39, 3, 39, 3);
+            BorderComboBoxItem.Width = 448; BorderComboBoxItem.Margin = new Thickness(39, 3, 39, 3);
         }
 
         private void SaveItemButton_Click(object sender, RoutedEventArgs e)
