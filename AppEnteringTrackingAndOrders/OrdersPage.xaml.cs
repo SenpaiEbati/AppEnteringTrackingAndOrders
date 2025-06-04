@@ -92,8 +92,6 @@ namespace AppEnteringTrackingAndOrders
             {
                 ImageLeftButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
                 ImageRightButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
-                ImageUpButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
-                ImageDownButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
                 ImageSearch.Source = new BitmapImage(new Uri("/Image/searchblack.png", UriKind.Relative));
                 ImageDeleteOrder.Source = new BitmapImage(new Uri("/Image/deleteorderblack.png", UriKind.Relative));
             }
@@ -101,8 +99,6 @@ namespace AppEnteringTrackingAndOrders
             {
                 ImageLeftButton.Source = new BitmapImage(new Uri("/Image/buttonleftwhite.png", UriKind.Relative));
                 ImageRightButton.Source = new BitmapImage(new Uri("/Image/buttonleftwhite.png", UriKind.Relative));
-                ImageUpButton.Source = new BitmapImage(new Uri("/Image/buttonleftwhite.png", UriKind.Relative));
-                ImageDownButton.Source = new BitmapImage(new Uri("/Image/buttonleftwhite.png", UriKind.Relative));
                 ImageSearch.Source = new BitmapImage(new Uri("/Image/searchwhite.png", UriKind.Relative));
                 ImageDeleteOrder.Source = new BitmapImage(new Uri("/Image/deleteorder.png", UriKind.Relative));
             }
@@ -1071,12 +1067,24 @@ namespace AppEnteringTrackingAndOrders
 
         private void SaveOrder_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new RestaurantContext())
+            var context = new RestaurantContext();
+            if (_is_new_order == true)
             {
-                if (_is_new_order == true)
+                context.Orders.Add(_old_order);
+                foreach (var item in _list_order.Items)
                 {
-                    context.Orders.Add(_old_order);
-                    foreach (var item in _list_order.Items)
+                    context.OrderItems.Add(item);
+                    foreach (var mod in item.Modifiers)
+                    {
+                        context.OrderItemModifiers.Add(mod);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in _list_order.Items)
+                {
+                    if (item.Id != -1)
                     {
                         context.OrderItems.Add(item);
                         foreach (var mod in item.Modifiers)
@@ -1084,34 +1092,24 @@ namespace AppEnteringTrackingAndOrders
                             context.OrderItemModifiers.Add(mod);
                         }
                     }
-                }
-                else
-                {
-                    foreach (var item in _list_order.Items)
+                    else
                     {
-                        if (item.Id != -1)
+                        foreach (var mod in item.Modifiers)
                         {
-                            context.OrderItems.Add(item);
-                            foreach (var mod in item.Modifiers)
-                            {
-                                context.OrderItemModifiers.Add(mod);
-                            }
-                        }
-                        else
-                        {
-                            foreach (var mod in item.Modifiers)
-                            {
-                                context.OrderItemModifiers.Add(mod);
-                            }
+                            context.OrderItemModifiers.Add(mod);
                         }
                     }
                 }
-                context.SaveChanges();
-                _list_order.Items.Clear();
-                NavigationService.GoBack();
-                if (_is_new_order == true)
-                    NavigationService.GoBack();
             }
+            context.SaveChanges();
+
+            Task a = context.SendOrderAsync(_ID);
+
+            _list_order.Items.Clear();
+            NavigationService.GoBack();
+            if (_is_new_order == true)
+                NavigationService.GoBack();
+            
         }
 
         private void ButtonDeleteOrder_Click(object sender, RoutedEventArgs e)
@@ -1145,6 +1143,11 @@ namespace AppEnteringTrackingAndOrders
                         NavigationService.GoBack();
                 }
             }
+        }
+
+        private void ButtonPaymentOrder_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void TopLeftButtonOne_Click(object sender, RoutedEventArgs e)
@@ -1229,6 +1232,5 @@ namespace AppEnteringTrackingAndOrders
             if (int.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
                 ItemQuantityNumericUpDown.Value = result;
         }
-
     }
 }

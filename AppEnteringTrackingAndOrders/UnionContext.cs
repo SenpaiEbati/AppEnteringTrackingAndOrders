@@ -174,47 +174,100 @@ namespace AppEnteringTrackingAndOrders
 
         public async Task SendOrderAsync(int orderId)
         {
-            var order = await Orders
-                .Include(o => o.Items)
-                    .ThenInclude(oi => oi.MenuItem)
-                .Include(o => o.Items)
-                    .ThenInclude(oi => oi.Modifiers)
-                        .ThenInclude(oim => oim.MenuItemModifier)
-                .FirstOrDefaultAsync(o => o.Id == orderId);
-
-            if (order != null)
+            try
             {
-                var kitchenItems = order.Items.Where(oi => oi.MenuItem.Destination == "Кухня").ToList();
-                var barItems = order.Items.Where(oi => oi.MenuItem.Destination == "Бар").ToList();
-
-                Console.WriteLine($"Order for table: {order.TableID}");
-                Console.WriteLine("Sending to kitchen:");
-                foreach (var item in kitchenItems)
+                using (var context = new RestaurantContext())
                 {
-                    Console.WriteLine($"{item.MenuItem.Name} x {item.Quantity}");
-                    if (item.Modifiers.Any())
+                    // Получаем базовую информацию о заказе
+                    var order = await context.Orders
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(o => o.Id == orderId);
+
+                    if (order == null)
                     {
-                        Console.WriteLine("Modifiers:");
-                        foreach (var modifier in item.Modifiers)
+                        await Logger.LogAsync($"Заказ с ID {orderId} не найден.");
+                        return;
+                    }
+                    await Logger.LogAsync($"Начало обработки заказа {orderId} для стола {order.TableID}");
+                    // Получаем все элементы заказа с их модификаторами
+                    var orderItems = await context.OrderItems
+                        .AsNoTracking()
+                        .Where(oi => oi.OrderId == orderId)
+                        .Include(oi => oi.Modifiers)
+                        .ToListAsync();
+
+                    // Получаем ID всех MenuItem и MenuItemModifier
+                    var menuItemIds = orderItems.Select(oi => oi.MenuItemId).Distinct();
+                    var modifierIds = orderItems.SelectMany(oi => oi.Modifiers.Select(m => m.MenuItemModifierId)).Distinct();
+
+                    // Загружаем связанные данные отдельными запросами
+                    var menuItems = await context.MenuItems
+                        .AsNoTracking()
+                        .Where(mi => menuItemIds.Contains(mi.Id))
+                        .ToDictionaryAsync(mi => mi.Id);
+
+                    var modifiers = await context.MenuItemModifiers
+                        .AsNoTracking()
+                        .Where(mim => modifierIds.Contains(mim.Id))
+                        .ToDictionaryAsync(mim => mim.Id);
+
+                    // Формируем вывод
+                    await Logger.LogAsync($"---Заказ для стола: {order.TableID}---");
+
+                    var kitchenItems = orderItems
+                        .Where(oi => menuItems.TryGetValue(oi.MenuItemId, out var mi) && mi.Destination == "Кухня")
+                        .ToList();
+
+                    var barItems = orderItems
+                        .Where(oi => menuItems.TryGetValue(oi.MenuItemId, out var mi) && mi.Destination == "Бар")
+                        .ToList();
+
+                    if (kitchenItems.Count > 0) await Logger.LogAsync("---Отправка на кухню---:");
+                    foreach (var item in kitchenItems)
+                    {
+                        if (menuItems.TryGetValue(item.MenuItemId, out var menuItem))
                         {
-                            Console.WriteLine($"- {modifier.MenuItemModifier.Name}");
+                            await Logger.LogAsync($"---x{item.Quantity} {menuItem.Name}---");
+                            if (item.Modifiers.Any())
+                            {
+                                await Logger.LogAsync("   ---Модификатор:---");
+                                foreach (var modifier in item.Modifiers)
+                                {
+                                    if (modifiers.TryGetValue(modifier.MenuItemModifierId, out var mod))
+                                    {
+                                        await Logger.LogAsync($"   - {mod.Name}");
+                                    }
+                                }
+                            }
                         }
                     }
-                }
 
-                Console.WriteLine("Sending to bar:");
-                foreach (var item in barItems)
-                {
-                    Console.WriteLine($"{item.MenuItem.Name} x {item.Quantity}");
-                    if (item.Modifiers.Any())
+                    if (barItems.Count > 0) await Logger.LogAsync("---Отправка на бар:---");
+                    foreach (var item in barItems)
                     {
-                        Console.WriteLine("Modifiers:");
-                        foreach (var modifier in item.Modifiers)
+                        if (menuItems.TryGetValue(item.MenuItemId, out var menuItem))
                         {
-                            Console.WriteLine($"- {modifier.MenuItemModifier.Name}");
+                            await Logger.LogAsync($"---x{item.Quantity} {menuItem.Name}---");
+                            if (item.Modifiers.Any())
+                            {
+                                await Logger.LogAsync("   ---Модификатор:---");
+                                foreach (var modifier in item.Modifiers)
+                                {
+                                    if (modifiers.TryGetValue(modifier.MenuItemModifierId, out var mod))
+                                    {
+                                        await Logger.LogAsync($"   - {mod.Name}");
+                                    }
+                                }
+                            }
                         }
                     }
+                    await Logger.LogAsync($"Заказ {orderId} успешно отправлен на кухню/бар");
                 }
+            }
+            catch (Exception ex)
+            {
+                await Logger.LogAsync($"Ошибка при отправке заказа: {ex.Message}");
+                throw;
             }
         }
 
