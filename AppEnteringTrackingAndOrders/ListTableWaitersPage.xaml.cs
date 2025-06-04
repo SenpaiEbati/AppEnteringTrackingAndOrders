@@ -70,9 +70,9 @@ namespace AppEnteringTrackingAndOrders
             PreOrderPage preOrderPage = new PreOrderPage(orderpage);
             orderpage.Unloaded += (s, args) => RefreshMenuDataDefault();
             if (_theme == false)
-                orderpage._theme = true;
+                orderpage.Theme = true;
             else
-                orderpage._theme = false;
+                orderpage.Theme = false;
             NavigationService.Navigate(preOrderPage);
 
         }
@@ -86,12 +86,27 @@ namespace AppEnteringTrackingAndOrders
                 OrdersPage orderPage = (OrdersPage)clickedButton.Tag;
                 if (orderPage != null)
                 {
-                    if (_theme == false)
-                        orderPage._theme = true;
-                    else
-                        orderPage._theme = false;
+                    if (orderPage.IsPaid == false)
+                    {
+                        if (_theme == false)
+                            orderPage.Theme = true;
+                        else
+                            orderPage.Theme = false;
 
-                    NavigationService.Navigate(orderPage);
+                        NavigationService.Navigate(orderPage);
+                    }
+                    else
+                    {
+                        if (_IDYourUserRoles != 3)
+                        {
+                            if (_theme == false)
+                                orderPage.Theme = true;
+                            else
+                                orderPage.Theme = false;
+
+                            NavigationService.Navigate(orderPage);
+                        }
+                    }
                 }
             }
         }
@@ -124,7 +139,7 @@ namespace AppEnteringTrackingAndOrders
                 {
                     OrdersPage orderpage = new OrdersPage(_user);
                     orderpage.Unloaded += (s, args) => RefreshMenuDataDefault();
-                    orderpage._ID = order.Id;
+                    orderpage.ID = order.Id;
 
                     Button button = new Button()
                     {
@@ -141,15 +156,23 @@ namespace AppEnteringTrackingAndOrders
                         {
                             var price = context.MenuItems.Where(i => i.Id == item.MenuItemId).FirstOrDefault();
                             if (price != null)
-                                orderprise += price.Price;
+                                orderprise += price.Price * item.Quantity;
                         }
 
                     var user = context.Users.Where(i => i.UserId == order.UserId).FirstOrDefault();
+                    button.Style = (Style)FindResource("ButtonStyleFull");
+
                     if (user == null)
                         MessageBox.Show("Не найден ни один пользователь !!! ", "Критическая ошибка!");
+                    if (order.IsPaid == false)
+                        button.Content = $"Стол №{order.TableID}" + $"                   {orderprise}₽\n\n{user.Username}\n{order.OrderDate.DateTime.ToString("HH:mm")} • Зал • Общий";
+                    else
+                    {
+                        button.Style = (Style)FindResource("ButtonStyleFullRed");
+                        button.Content = $"Стол №{order.TableID}" + $"                   {orderprise}₽\nОПЛАЧЕН!!!\n{user.Username}\n{order.OrderDate.DateTime.ToString("HH:mm")} • Зал • Общий";
+                    }
 
-                    button.Content = $"Стол №{order.TableID}" + $"                     {orderprise}₽\n\n{user.Username}\n{order.OrderDate.DateTime.ToString("HH:mm")} • Зал • Общий";
-                    button.Style = (Style)FindResource("ButtonStyleFull");
+                    orderpage.IsPaid = order.IsPaid;
                     button.Tag = orderpage;
                     button.Click += EditButtonsToWrapPanel;
                     WrapPanelOrders.Children.Add(button);

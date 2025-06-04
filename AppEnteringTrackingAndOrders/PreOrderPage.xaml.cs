@@ -286,11 +286,11 @@ namespace AppEnteringTrackingAndOrders
                 {
                     List<Order> orders = context.Orders.AsNoTracking().ToList();
                     if (orders.LastOrDefault() != null)
-                        _ordersPage._ID = orders.LastOrDefault().Id + 1;
+                        _ordersPage.ID = orders.LastOrDefault().Id + 1;
                     else
-                        _ordersPage._ID = 1;
-                    _ordersPage._TableID = Convert.ToInt32(NumericTableID.Value);
-                    _ordersPage._Guest = Convert.ToInt32(NumericGuestCount.Value);
+                        _ordersPage.ID = 1;
+                    _ordersPage.TableID = Convert.ToInt32(NumericTableID.Value);
+                    _ordersPage.Guest = Convert.ToInt32(NumericGuestCount.Value);
                     NavigationService.Navigate(_ordersPage);
                 }
                 else

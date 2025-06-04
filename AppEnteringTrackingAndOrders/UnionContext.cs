@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text;
 
 namespace AppEnteringTrackingAndOrders
 {
@@ -57,7 +58,7 @@ namespace AppEnteringTrackingAndOrders
         public int Id { get; set; }
         public DateTimeOffset OrderDate { get; set; }
         public int TableID { get; set; }
-
+        public bool IsPaid { get; set; }
         // Связь с пользователем
         public int UserId { get; set; }
         public User User { get; set; }
@@ -212,7 +213,7 @@ namespace AppEnteringTrackingAndOrders
                         .ToDictionaryAsync(mim => mim.Id);
 
                     // Формируем вывод
-                    await Logger.LogAsync($"---Заказ для стола: {order.TableID}---");
+                    await Logger.LogAsync($"┏ Заказ для стола: {order.TableID} ┓");
 
                     var kitchenItems = orderItems
                         .Where(oi => menuItems.TryGetValue(oi.MenuItemId, out var mi) && mi.Destination == "Кухня")
@@ -222,45 +223,46 @@ namespace AppEnteringTrackingAndOrders
                         .Where(oi => menuItems.TryGetValue(oi.MenuItemId, out var mi) && mi.Destination == "Бар")
                         .ToList();
 
-                    if (kitchenItems.Count > 0) await Logger.LogAsync("---Отправка на кухню---:");
+                    if (kitchenItems.Count > 0) await Logger.LogAsync("┃ Отправка на кухню: ┃");
                     foreach (var item in kitchenItems)
                     {
                         if (menuItems.TryGetValue(item.MenuItemId, out var menuItem))
                         {
-                            await Logger.LogAsync($"---x{item.Quantity} {menuItem.Name}---");
+                            await Logger.LogAsync($"┃ x{item.Quantity} {menuItem.Name} ┃");
                             if (item.Modifiers.Any())
                             {
-                                await Logger.LogAsync("   ---Модификатор:---");
+                                await Logger.LogAsync("┃   Модификатор: ┃");
                                 foreach (var modifier in item.Modifiers)
                                 {
                                     if (modifiers.TryGetValue(modifier.MenuItemModifierId, out var mod))
                                     {
-                                        await Logger.LogAsync($"   - {mod.Name}");
+                                        await Logger.LogAsync($"┃   - {mod.Name} ┃");
                                     }
                                 }
                             }
                         }
                     }
-
-                    if (barItems.Count > 0) await Logger.LogAsync("---Отправка на бар:---");
+                    await Logger.LogAsync("──────────────────");
+                    if (barItems.Count > 0) await Logger.LogAsync("┃ Отправка на бар: ┃");
                     foreach (var item in barItems)
                     {
                         if (menuItems.TryGetValue(item.MenuItemId, out var menuItem))
                         {
-                            await Logger.LogAsync($"---x{item.Quantity} {menuItem.Name}---");
+                            await Logger.LogAsync($"┃ x{item.Quantity} {menuItem.Name} ┃");
                             if (item.Modifiers.Any())
                             {
-                                await Logger.LogAsync("   ---Модификатор:---");
+                                await Logger.LogAsync("┃   Модификатор: ┃");
                                 foreach (var modifier in item.Modifiers)
                                 {
                                     if (modifiers.TryGetValue(modifier.MenuItemModifierId, out var mod))
                                     {
-                                        await Logger.LogAsync($"   - {mod.Name}");
+                                        await Logger.LogAsync($"┃   - {mod.Name} ┃");
                                     }
                                 }
                             }
                         }
                     }
+                    await Logger.LogAsync("┗ Конец чека ┛");
                     await Logger.LogAsync($"Заказ {orderId} успешно отправлен на кухню/бар");
                 }
             }
@@ -268,6 +270,96 @@ namespace AppEnteringTrackingAndOrders
             {
                 await Logger.LogAsync($"Ошибка при отправке заказа: {ex.Message}");
                 throw;
+            }
+        }
+
+        public async Task SendPaymentReceiptAsync(int orderId)
+        {
+            try
+            {
+                using (var context = new RestaurantContext())
+                {
+                    // Получаем информацию о заказе
+                    var order = await context.Orders
+                        .AsNoTracking()
+                        .Include(o => o.User)
+                        .FirstOrDefaultAsync(o => o.Id == orderId);
+
+                    if (order == null)
+                    {
+                        await Logger.LogAsync($"Заказ с ID {orderId} не найден.");
+                        return;
+                    }
+
+                    // Получаем все элементы заказа с группировкой по гостям
+                    var orderItems = await context.OrderItems
+                        .AsNoTracking()
+                        .Where(oi => oi.OrderId == orderId)
+                        .Include(oi => oi.MenuItem)
+                        .Include(oi => oi.Modifiers)
+                            .ThenInclude(oim => oim.MenuItemModifier)
+                        .ToListAsync();
+
+                    // Группируем по гостям (0 - общие позиции)
+                    var groupedItems = orderItems
+                        .GroupBy(oi => oi.Guest)
+                        .OrderBy(g => g.Key); // Сначала общие позиции (Guest = 0), затем по номерам гостей
+
+                    // Формируем чек
+                    var receipt = new StringBuilder();
+                    receipt.AppendLine($"┃ Чек по заказу #{orderId}");
+                    receipt.AppendLine($"┃ Стол: {order.TableID}");
+                    receipt.AppendLine($"┃ Дата: {order.OrderDate:dd.MM.yyyy HH:mm}");
+                    receipt.AppendLine($"┃ Официант: {order.User?.Username ?? "Не указан"}");
+                    receipt.AppendLine("----------------------------------");
+
+                    decimal totalSum = 0;
+
+                    foreach (var group in groupedItems)
+                    {
+                        if (group.Key > 0)
+                        {
+                            receipt.AppendLine($"\n┃ Гость {group.Key}:");
+                        }
+                        else if (groupedItems.Count() > 1) // Если есть гости, выводим "Общие позиции"
+                        {
+                            receipt.AppendLine("\n┃ Общие позиции:");
+                        }
+
+                        decimal groupSum = 0;
+
+                        foreach (var item in group)
+                        {
+                            // Добавляем основное блюдо
+                            receipt.AppendLine($"┃ {item.MenuItem.Name} x{item.Quantity} - {item.MenuItem.Price * item.Quantity} руб.");
+                            groupSum += item.MenuItem.Price * item.Quantity;
+
+                            // Добавляем модификаторы
+                            foreach (var modifier in item.Modifiers)
+                            {
+                                receipt.AppendLine($"┃  + {modifier.MenuItemModifier.Name} - {modifier.MenuItemModifier.AdditionalCost} руб.");
+                                groupSum += modifier.MenuItemModifier.AdditionalCost;
+                            }
+                        }
+
+                        receipt.AppendLine($"┃ Итого: {groupSum} руб.");
+                        totalSum += groupSum;
+                    }
+
+                    receipt.AppendLine("\n----------------------------------");
+                    receipt.AppendLine($"┃ ОБЩАЯ СУММА: {totalSum} руб.");
+                    receipt.AppendLine("----------------------------------");
+                    receipt.AppendLine("┃ Спасибо за посещение!");
+
+
+                    await Logger.LogAsync(receipt.ToString());
+                    await Logger.LogAsync($"Сформирован чек для заказа {orderId}");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Logger.LogAsync($"Ошибка при формировании чека: {ex}");
+                return;
             }
         }
 

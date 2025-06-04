@@ -47,10 +47,13 @@ namespace AppEnteringTrackingAndOrders
         private UIElement _now_guest_UI_item;
         private User _user;
         private int? _IDYourUserRoles;
-        public int _ID = 0;
-        public int _Guest = 0;
-        public int _TableID = 0;
-        public bool _theme;
+
+        // Свойства
+        private int _ID = 0;
+        private int _Guest = 0;
+        private int _TableID = 0;
+        private bool _Theme;
+        private bool _IsPaid = false;
 
 
         public OrdersPage(User user)
@@ -82,13 +85,11 @@ namespace AppEnteringTrackingAndOrders
                 context.SaveChanges();
 
             }
-            //TopBorderText.Text = $"Создать заказ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀{DateTime.Now.ToString("HH:mm")}\nСтол:1 Гостей:2";
-            //ButtonOrdersSumWrapPanel.Content = $"Заказ {OrderSum()}₽";
         }
 
         private void YourPage_Loaded(object sender, RoutedEventArgs e)
         {
-            if (_theme == true)
+            if (_Theme == true)
             {
                 ImageLeftButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
                 ImageRightButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
@@ -115,12 +116,13 @@ namespace AppEnteringTrackingAndOrders
                     _is_new_order = false;
                     _old_order = order;
                     _TableID = order.TableID;
+                    _IsPaid = order.IsPaid;
                     NameOrderTopText.Text = $"Изменение заказа №{_ID}";
                 }
                 else
                 {
                     _is_new_order = true;
-                    var oldorder = new Order { Id = _ID, TableID = _TableID, OrderDate = DateTime.UtcNow, UserId = _user.UserId};
+                    var oldorder = new Order { Id = _ID, TableID = _TableID, OrderDate = DateTime.UtcNow, UserId = _user.UserId, IsPaid = _IsPaid};
                     _old_order = oldorder;
                     NameOrderTopText.Text = $"Создание заказа №{_ID}";
                 }
@@ -1067,24 +1069,24 @@ namespace AppEnteringTrackingAndOrders
 
         private void SaveOrder_Click(object sender, RoutedEventArgs e)
         {
+            SaveOrder();
             var context = new RestaurantContext();
+            Task a = context.SendOrderAsync(_ID);
+
+            _list_order.Items.Clear();
+            NavigationService.GoBack();
             if (_is_new_order == true)
+                NavigationService.GoBack();
+        }
+
+        private void SaveOrder()
+        {
+            using (var context = new RestaurantContext())
             {
-                context.Orders.Add(_old_order);
-                foreach (var item in _list_order.Items)
+                if (_is_new_order == true)
                 {
-                    context.OrderItems.Add(item);
-                    foreach (var mod in item.Modifiers)
-                    {
-                        context.OrderItemModifiers.Add(mod);
-                    }
-                }
-            }
-            else
-            {
-                foreach (var item in _list_order.Items)
-                {
-                    if (item.Id != -1)
+                    context.Orders.Add(_old_order);
+                    foreach (var item in _list_order.Items)
                     {
                         context.OrderItems.Add(item);
                         foreach (var mod in item.Modifiers)
@@ -1092,24 +1094,33 @@ namespace AppEnteringTrackingAndOrders
                             context.OrderItemModifiers.Add(mod);
                         }
                     }
-                    else
+                }
+                else
+                {
+                    var a = context.Orders.Where(i => i.Id == _ID).FirstOrDefault();
+                    a.IsPaid = _IsPaid;
+                    context.Update(a);
+                    foreach (var item in _list_order.Items)
                     {
-                        foreach (var mod in item.Modifiers)
+                        if (item.Id != -1)
                         {
-                            context.OrderItemModifiers.Add(mod);
+                            context.OrderItems.Add(item);
+                            foreach (var mod in item.Modifiers)
+                            {
+                                context.OrderItemModifiers.Add(mod);
+                            }
+                        }
+                        else
+                        {
+                            foreach (var mod in item.Modifiers)
+                            {
+                                context.OrderItemModifiers.Add(mod);
+                            }
                         }
                     }
                 }
+                context.SaveChanges();
             }
-            context.SaveChanges();
-
-            Task a = context.SendOrderAsync(_ID);
-
-            _list_order.Items.Clear();
-            NavigationService.GoBack();
-            if (_is_new_order == true)
-                NavigationService.GoBack();
-            
         }
 
         private void ButtonDeleteOrder_Click(object sender, RoutedEventArgs e)
@@ -1137,7 +1148,7 @@ namespace AppEnteringTrackingAndOrders
                             context.SaveChanges();
                         }
                     }
-
+                    _list_order.Items.Clear();
                     NavigationService.GoBack();
                     if (_is_new_order == true)
                         NavigationService.GoBack();
@@ -1147,7 +1158,14 @@ namespace AppEnteringTrackingAndOrders
 
         private void ButtonPaymentOrder_Click(object sender, RoutedEventArgs e)
         {
-
+            _IsPaid = true;
+            SaveOrder();
+            var context = new RestaurantContext();
+            Task a = context.SendPaymentReceiptAsync(_ID);
+            _list_order.Items.Clear();
+            NavigationService.GoBack();
+            if (_is_new_order == true)
+                NavigationService.GoBack();
         }
 
         private void TopLeftButtonOne_Click(object sender, RoutedEventArgs e)
@@ -1231,6 +1249,38 @@ namespace AppEnteringTrackingAndOrders
             string newValue = ItemQuantityNumericUpDown.Value.ToString(CultureInfo.InvariantCulture) + "0";
             if (int.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
                 ItemQuantityNumericUpDown.Value = result;
+        }
+
+        // Свойства
+
+        public int ID
+        {
+            //get { return _ID; }
+            set { _ID = value; }
+        }
+
+        public int Guest
+        {
+            //get { return _Guest; }
+            set { _Guest = value; }
+        }
+
+        public int TableID
+        {
+            //get { return _TableID; }
+            set { _TableID = value; }
+        }
+
+        public bool Theme
+        {
+            //get { return _Theme; }
+            set { _Theme = value; }
+        }
+
+        public bool IsPaid
+        {
+            get { return _IsPaid; }
+            set { _IsPaid = value; }
         }
     }
 }
