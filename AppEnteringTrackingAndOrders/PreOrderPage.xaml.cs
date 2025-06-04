@@ -290,7 +290,6 @@ namespace AppEnteringTrackingAndOrders
                     else
                         _ordersPage.ID = 1;
                     _ordersPage.TableID = Convert.ToInt32(NumericTableID.Value);
-                    _ordersPage.Guest = Convert.ToInt32(NumericGuestCount.Value);
                     NavigationService.Navigate(_ordersPage);
                 }
                 else

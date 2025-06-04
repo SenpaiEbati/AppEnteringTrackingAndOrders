@@ -31,13 +31,13 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
-                    <Border x:Name="BorderNumericGuestCount" Height="72" Width="600" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Border Visibility="Collapsed" x:Name="BorderNumericGuestCount" Height="72" Width="600" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
                         </Border.Effect>
                         <materialDesign:NumericUpDown x:Name="NumericGuestCount" GotFocus="NumericGuestCount_GotFocus" materialDesign:HintAssist.Hint="Количество гостей" FontSize="24" Minimum="0" Style="{StaticResource MaterialDesignFloatingHintNumericUpDown}" Margin="38,10,38,10" Maximum="1000" Focusable="True"/>
                     </Border>
-                    <Border x:Name="BorderNumericTableID" Height="72" Width="600" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,80,0,0">
+                    <Border x:Name="BorderNumericTableID" Height="72" Width="600" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
                         </Border.Effect>
@@ -69,10 +69,7 @@
                     <Button x:Name="DownLeftButtonSeven" Content="7" Style="{DynamicResource ButtonStyleDownLeft}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Focusable="False" Click="DownLeftButtonSeven_Click"/>
                     <Button x:Name="DownRightButtonNine" Content="9" Style="{DynamicResource ButtonStyleNo}" FontSize="36" Width="150" Height="150"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Focusable="False" Click="DownRightButtonNine_Click" Margin="0,0,163,0"/>
                     <Button x:Name="TopButtonDelete" Content="Del" Style="{DynamicResource ButtonStyleTopRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="36" Focusable="False" Click="TopButtonDelete_Click" Margin="468,0,0,0"/>
-                    <Button x:Name="CenterButtonZero" Content="0" Style="{DynamicResource ButtonStyleNo}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36"  Focusable="False" Click="DownButtonZero_Click" Margin="468,0,0,0"/>
-                    <Button x:Name="DownButtonKeyboard" Style="{DynamicResource ButtonStyleDownRight}" Width="150" Height="150" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="36" Focusable="False" Margin="468,0,0,0">
-                        
-                    </Button>
+                    <Button x:Name="CenterButtonZero" Content="0" Style="{DynamicResource ButtonStyleDownRight}" Width="150" Height="307" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="36"  Focusable="False" Click="DownButtonZero_Click" Margin="468,156,0,0"/>
                 </Grid>
             </Grid>
         </Grid>
