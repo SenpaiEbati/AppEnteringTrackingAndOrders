@@ -31,6 +31,22 @@ namespace AppEnteringTrackingAndOrders
         {
             InitializeComponent();
             _ordersPage = ordersPage;
+
+            using (var context = new RestaurantContext())
+            {
+                var existingTables = context.Orders
+                    .Select(o => o.TableID)
+                    .Distinct()
+                    .ToList();
+
+                int nextTableId = 1;
+                while (existingTables.Contains(nextTableId))
+                {
+                    nextTableId++;
+                }
+
+                NumericTableID.Value = nextTableId;
+            }
         }
 
         private void BackOrdersButton_Click(object sender, RoutedEventArgs e)

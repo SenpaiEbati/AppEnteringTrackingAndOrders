@@ -118,6 +118,7 @@ namespace AppEnteringTrackingAndOrders
                 {
                     _is_new_order = false;
                     _old_order = order;
+                    _TableID = order.TableID;
                     NameOrderTopText.Text = $"Изменение заказа №{_ID}";
                 }
                 else
@@ -400,9 +401,15 @@ namespace AppEnteringTrackingAndOrders
                     var item = context.OrderItems.Where(i => i.Id == _now_order_item.Id).FirstOrDefault();
                     if (item != null)
                     {
-                        context.OrderItems.Remove(item);
-                        context.SaveChanges();
-                        RefreshOrderPanelInfo();
+                        var result = MessageBox.Show("Удалить безвозратно?", "Подтверждение",
+                                MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            context.OrderItems.Remove(item);
+                            context.SaveChanges();
+                            RefreshOrderPanelInfo();
+                        }
                     }
                     else
                     {
@@ -414,7 +421,7 @@ namespace AppEnteringTrackingAndOrders
                             // Определяем диапазон для удаления (блюдо + модификаторы)
                             int startIndex = dishIndex;
                             int endIndex = dishIndex + _now_order_item.Modifiers.Count;
-                            
+
                             // Удаляем в обратном порядке, чтобы индексы не сдвигались
                             for (int i = endIndex; i >= startIndex; i--)
                             {
@@ -423,10 +430,10 @@ namespace AppEnteringTrackingAndOrders
                                     OrderPanelInfoWrapPanel.Children.RemoveAt(i);
                                     if (_Guest != 0 && startIndex == i)
                                     {
-                                        OrderPanelInfoWrapPanel.Children.RemoveAt(i-1);
+                                        OrderPanelInfoWrapPanel.Children.RemoveAt(i - 1);
                                         _Guest--;
                                     }
-                                        
+
                                 }
                             }
                         }
@@ -466,8 +473,11 @@ namespace AppEnteringTrackingAndOrders
         }
         private void BackListTableWaitersButton_Click(object sender, RoutedEventArgs e)
         {
+            // Очищаем список несохраненных изменений
+            _list_order.Items.Clear();
+
             NavigationService.GoBack();
-            if (_is_new_order == true)
+            if (_is_new_order)
                 NavigationService.GoBack();
         }
 
@@ -543,6 +553,7 @@ namespace AppEnteringTrackingAndOrders
                     }
                 }
             }
+
         }
 
         private void GroupMenuButtonsWrapPanelAddPositionButton_Click(object sender, RoutedEventArgs e)
@@ -939,6 +950,8 @@ namespace AppEnteringTrackingAndOrders
             button.Tag = GuestId;
             button.Style = (Style)FindResource("ButtonGray");
 
+            TableGuestTopText.Text = $"Стол:{_TableID} Гостей: {_Guest}";
+
             OrderPanelInfoWrapPanel.Children.Insert(indexPanel, button);
         }
 
@@ -1101,6 +1114,39 @@ namespace AppEnteringTrackingAndOrders
             }
         }
 
+        private void ButtonDeleteOrder_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Удалить заказ безвозратно?", "Подтверждение",
+                                MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                using (var context = new RestaurantContext())
+                {
+                    if (_is_new_order == false)
+                    {
+                        var orderToDelete = context.Orders.Include(o => o.Items).ThenInclude(i => i.Modifiers).FirstOrDefault(o => o.Id == _ID);
+                        if (orderToDelete != null)
+                        {
+                            foreach (var item in orderToDelete.Items)
+                            {
+                                context.OrderItemModifiers.RemoveRange(item.Modifiers);
+                            }
+                            context.OrderItems.RemoveRange(orderToDelete.Items);
+
+                            context.Orders.Remove(orderToDelete);
+
+                            context.SaveChanges();
+                        }
+                    }
+
+                    NavigationService.GoBack();
+                    if (_is_new_order == true)
+                        NavigationService.GoBack();
+                }
+            }
+        }
+
         private void TopLeftButtonOne_Click(object sender, RoutedEventArgs e)
         {
             string newValue = ItemQuantityNumericUpDown.Value.ToString(CultureInfo.InvariantCulture) + "1";
@@ -1183,5 +1229,6 @@ namespace AppEnteringTrackingAndOrders
             if (int.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
                 ItemQuantityNumericUpDown.Value = result;
         }
+
     }
 }
