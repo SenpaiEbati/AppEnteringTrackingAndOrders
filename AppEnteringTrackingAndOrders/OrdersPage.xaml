@@ -19,9 +19,9 @@
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="213*"/>
-                <ColumnDefinition Width="1321*"/>
+                <ColumnDefinition Width="1454*"/>
                 <ColumnDefinition Width="0*"/>
-                <ColumnDefinition Width="133*"/>
+                <ColumnDefinition Width="0*"/>
                 <ColumnDefinition Width="133*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
@@ -59,14 +59,10 @@
                     </Grid>
                 </Border>
             </Grid>
-            <Grid Grid.Column="3">
-                <Button Height="80" Style="{DynamicResource ButtonStyleFull}" Margin="5,5,5,5">
-                    <Image x:Name="ImageSearch" Source="/Image/searchwhite.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Button>
-            </Grid>
+            <Grid Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,133,0"/>
 
             <Grid Grid.Column="4">
-                <Button x:Name="ButtonDeleteOrder" Height="80" Style="{DynamicResource ButtonStyleFullRed}" Margin="0,5,15,5" Click="ButtonDeleteOrder_Click">
+                <Button x:Name="ButtonDeleteOrder" Height="80" Style="{DynamicResource ButtonStyleFullRed}" Margin="5,5,15,5" Click="ButtonDeleteOrder_Click">
                     <Image x:Name="ImageDeleteOrder" Source="/Image/deleteorder.png" Margin="20,14,20,14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
             </Grid>
@@ -99,11 +95,11 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!-- Левый текст -->
-                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Grid.Column="0" Text="Оплата" Margin="10,0,0,0" FontSize="24" VerticalAlignment="Center"/>
+                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Grid.Column="0" Text="Общее" Margin="10,0,0,0" FontSize="24" VerticalAlignment="Center"/>
 
                                     <!-- Правая группа (сумма + руб.) -->
                                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
-                                        <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="ButtonOrderSum" Text="0" FontSize="24"/>
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="ButtonOrderSum2" Text="256,00" FontSize="24"/>
                                         <TextBlock Style="{DynamicResource TextBlockStyle}" Text=" руб." FontSize="24" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </Grid>
@@ -257,6 +253,14 @@
                             <TextBlock x:Name="ButtonPaymentOrderSum" Text="0" FontSize="24" />
                             <TextBlock Text=" руб." FontSize="24" Margin="5,0,0,0"/>
                         </StackPanel>
+                    </Grid>
+                </Button>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Button x:Name="ButtonCloseOrder" Height="80" FontSize="24" Style="{DynamicResource ButtonStyleFullRed}" Margin="10,15,10,15" Padding="0" HorizontalContentAlignment="Stretch" Click="ButtonClosedOrder_Click" Visibility="Collapsed">
+                    <Grid>
+                        <!-- Левый элемент (фиксирован у левого края) -->
+                        <TextBlock Text="Закрытие заказа" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="24"/>
                     </Grid>
                 </Button>
             </Grid>

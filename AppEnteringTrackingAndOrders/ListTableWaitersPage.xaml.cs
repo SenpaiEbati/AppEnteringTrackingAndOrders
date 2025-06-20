@@ -123,17 +123,17 @@ namespace AppEnteringTrackingAndOrders
                 {
                     if (numview == -1)
                         if (_tableoruser == true)
-                            orders = context.Orders.OrderBy(i => i.TableID).AsNoTracking().ToList();
+                            orders = context.Orders.Where(i => i.IsClosed == false).OrderBy(i => i.TableID).AsNoTracking().ToList();
                         else
-                            orders = context.Orders.OrderBy(i => i.User.Username).ThenBy(i => i.TableID).AsNoTracking().ToList();
+                            orders = context.Orders.Where(i => i.IsClosed == false).OrderBy(i => i.User.Username).ThenBy(i => i.TableID).AsNoTracking().ToList();
                     else
                         if (_tableoruser == true)
-                            orders = context.Orders.Where(i => i.UserId == _users[numview].UserId).OrderBy(i => i.TableID).AsNoTracking().ToList();
+                            orders = context.Orders.Where(i => i.UserId == _users[numview].UserId && i.IsClosed == false).OrderBy(i => i.TableID).AsNoTracking().ToList();
                         else
-                            orders = context.Orders.Where(i => i.UserId == _users[numview].UserId).OrderBy(i => i.User.Username).ThenBy(i => i.TableID).AsNoTracking().ToList();
+                            orders = context.Orders.Where(i => i.UserId == _users[numview].UserId && i.IsClosed == false).OrderBy(i => i.User.Username).ThenBy(i => i.TableID).AsNoTracking().ToList();
                 }
                 else
-                    orders = context.Orders.Where(i => i.UserId == _user.UserId).OrderBy(i => i.TableID).AsNoTracking().ToList();
+                    orders = context.Orders.Where(i => i.UserId == _user.UserId && i.IsClosed == false).OrderBy(i => i.TableID).AsNoTracking().ToList();
 
                 foreach (var order in orders)
                 {

@@ -54,6 +54,7 @@ namespace AppEnteringTrackingAndOrders
         private int _TableID = 0;
         private bool _Theme;
         private bool _IsPaid = false;
+        private bool _IsClosed = false;
 
 
         public OrdersPage(User user)
@@ -93,14 +94,12 @@ namespace AppEnteringTrackingAndOrders
             {
                 ImageLeftButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
                 ImageRightButton.Source = new BitmapImage(new Uri("/Image/buttonleft.png", UriKind.Relative));
-                ImageSearch.Source = new BitmapImage(new Uri("/Image/searchblack.png", UriKind.Relative));
                 ImageDeleteOrder.Source = new BitmapImage(new Uri("/Image/deleteorderblack.png", UriKind.Relative));
             }
             else
             {
                 ImageLeftButton.Source = new BitmapImage(new Uri("/Image/buttonleftwhite.png", UriKind.Relative));
                 ImageRightButton.Source = new BitmapImage(new Uri("/Image/buttonleftwhite.png", UriKind.Relative));
-                ImageSearch.Source = new BitmapImage(new Uri("/Image/searchwhite.png", UriKind.Relative));
                 ImageDeleteOrder.Source = new BitmapImage(new Uri("/Image/deleteorder.png", UriKind.Relative));
             }
 
@@ -129,6 +128,15 @@ namespace AppEnteringTrackingAndOrders
             }
             TableGuestTopText.Text = $"Стол:{_TableID} Гостей: {_Guest}";
             TimeTopText.Text = DateTime.Now.ToString("HH:mm");
+
+            if (_is_new_order == false)
+            {
+                ButtonDeleteOrder.Style = (Style)FindResource("ButtonStyleFull");
+            }
+            if (_IsPaid == true && _IDYourUserRoles != 3)
+            {
+                ButtonCloseOrder.Visibility = Visibility.Visible;
+            }
         }
 
         private void MenuGroupButton_Click(object sender, RoutedEventArgs e)
@@ -1019,7 +1027,7 @@ namespace AppEnteringTrackingAndOrders
                     }
                 }
             }
-            ButtonOrderSum.Text = _sumorder.ToString();
+            //ButtonOrderSum.Text = _sumorder.ToString();
             ButtonPaymentOrderSum.Text = _sumorder.ToString();
         }
 
@@ -1125,34 +1133,37 @@ namespace AppEnteringTrackingAndOrders
 
         private void ButtonDeleteOrder_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Удалить заказ безвозратно?", "Подтверждение",
-                                MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
+            if (_is_new_order == true)
             {
-                using (var context = new RestaurantContext())
-                {
-                    if (_is_new_order == false)
+                /*var result = MessageBox.Show("Удалить заказ безвозратно?", "Подтверждение",
+                                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {*/
+                    using (var context = new RestaurantContext())
                     {
-                        var orderToDelete = context.Orders.Include(o => o.Items).ThenInclude(i => i.Modifiers).FirstOrDefault(o => o.Id == _ID);
-                        if (orderToDelete != null)
+                        if (_is_new_order == false)
                         {
-                            foreach (var item in orderToDelete.Items)
+                            var orderToDelete = context.Orders.Include(o => o.Items).ThenInclude(i => i.Modifiers).FirstOrDefault(o => o.Id == _ID);
+                            if (orderToDelete != null)
                             {
-                                context.OrderItemModifiers.RemoveRange(item.Modifiers);
+                                foreach (var item in orderToDelete.Items)
+                                {
+                                    context.OrderItemModifiers.RemoveRange(item.Modifiers);
+                                }
+                                context.OrderItems.RemoveRange(orderToDelete.Items);
+
+                                context.Orders.Remove(orderToDelete);
+
+                                context.SaveChanges();
                             }
-                            context.OrderItems.RemoveRange(orderToDelete.Items);
-
-                            context.Orders.Remove(orderToDelete);
-
-                            context.SaveChanges();
                         }
-                    }
-                    _list_order.Items.Clear();
-                    NavigationService.GoBack();
-                    if (_is_new_order == true)
+                        _list_order.Items.Clear();
                         NavigationService.GoBack();
-                }
+                        if (_is_new_order == true)
+                            NavigationService.GoBack();
+                    }
+                /*}*/
             }
         }
 
@@ -1168,69 +1179,79 @@ namespace AppEnteringTrackingAndOrders
                 NavigationService.GoBack();
         }
 
+        private void ButtonClosedOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if (_IsPaid == true)
+            {
+                using (var context = new RestaurantContext())
+                {
+                    var a = context.Orders.Where(i => i.Id == _ID).FirstOrDefault();
+                    _IsClosed = true;
+                    a.IsClosed = _IsClosed;
+
+                    context.SaveChanges();
+
+                    NavigationService.GoBack();
+                    if (_is_new_order == true)
+                        NavigationService.GoBack();
+                }
+            }
+        }
+
         private void TopLeftButtonOne_Click(object sender, RoutedEventArgs e)
         {
             string newValue = ItemQuantityNumericUpDown.Value.ToString(CultureInfo.InvariantCulture) + "1";
             if (int.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
                 ItemQuantityNumericUpDown.Value = result;
         }
-
         private void TopMiddleButtonTwo_Click(object sender, RoutedEventArgs e)
         {
             string newValue = ItemQuantityNumericUpDown.Value.ToString(CultureInfo.InvariantCulture) + "2";
             if (int.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
                 ItemQuantityNumericUpDown.Value = result;
         }
-
         private void TopRightButtonThree_Click(object sender, RoutedEventArgs e)
         {
             string newValue = ItemQuantityNumericUpDown.Value.ToString(CultureInfo.InvariantCulture) + "3";
             if (int.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
                 ItemQuantityNumericUpDown.Value = result;
         }
-
         private void CenterLeftButtonFour_Click(object sender, RoutedEventArgs e)
         {
             string newValue = ItemQuantityNumericUpDown.Value.ToString(CultureInfo.InvariantCulture) + "4";
             if (int.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
                 ItemQuantityNumericUpDown.Value = result;
         }
-
         private void CenterMiddleButtonFive_Click(object sender, RoutedEventArgs e)
         {
             string newValue = ItemQuantityNumericUpDown.Value.ToString(CultureInfo.InvariantCulture) + "5";
             if (int.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
                 ItemQuantityNumericUpDown.Value = result;
         }
-
         private void CenterRightButtonSix_Click(object sender, RoutedEventArgs e)
         {
             string newValue = ItemQuantityNumericUpDown.Value.ToString(CultureInfo.InvariantCulture) + "6";
             if (int.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
                 ItemQuantityNumericUpDown.Value = result;
         }
-
         private void DownLeftButtonSeven_Click(object sender, RoutedEventArgs e)
         {
             string newValue = ItemQuantityNumericUpDown.Value.ToString(CultureInfo.InvariantCulture) + "7";
             if (int.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
                 ItemQuantityNumericUpDown.Value = result;
         }
-
         private void DownMiddleButtonEight_Click(object sender, RoutedEventArgs e)
         {
             string newValue = ItemQuantityNumericUpDown.Value.ToString(CultureInfo.InvariantCulture) + "8";
             if (int.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
                 ItemQuantityNumericUpDown.Value = result;
         }
-
         private void DownRightButtonNine_Click(object sender, RoutedEventArgs e)
         {
             string newValue = ItemQuantityNumericUpDown.Value.ToString(CultureInfo.InvariantCulture) + "9";
             if (int.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
                 ItemQuantityNumericUpDown.Value = result;
         }
-
         private void TopButtonDelete_Click(object sender, RoutedEventArgs e)
         {
             string currentValue = ItemQuantityNumericUpDown.Value.ToString(CultureInfo.InvariantCulture);
@@ -1243,7 +1264,6 @@ namespace AppEnteringTrackingAndOrders
                     ItemQuantityNumericUpDown.Value = 0; // Если строка пустая, сбрасываем на 0
             }
         }
-
         private void DownButtonZero_Click(object sender, RoutedEventArgs e)
         {
             string newValue = ItemQuantityNumericUpDown.Value.ToString(CultureInfo.InvariantCulture) + "0";
@@ -1282,5 +1302,7 @@ namespace AppEnteringTrackingAndOrders
             get { return _IsPaid; }
             set { _IsPaid = value; }
         }
+
+        
     }
 }

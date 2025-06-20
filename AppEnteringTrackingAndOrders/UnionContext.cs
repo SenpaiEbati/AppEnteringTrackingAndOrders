@@ -59,6 +59,7 @@ namespace AppEnteringTrackingAndOrders
         public DateTimeOffset OrderDate { get; set; }
         public int TableID { get; set; }
         public bool IsPaid { get; set; }
+        public bool IsClosed { get; set; }
         // Связь с пользователем
         public int UserId { get; set; }
         public User User { get; set; }
@@ -96,8 +97,9 @@ namespace AppEnteringTrackingAndOrders
         public int UserId { get; set; }
         public string Username { get; set; }
         public string PasswordHash { get; set; }
-        public ICollection<Role> Roles { get; set; }
-        public ICollection<Order> Orders { get; set; } // Обратная связь с заказами
+        public int RoleId { get; set; }  // Внешний ключ
+        public Role Role { get; set; }   // Одна роль
+        public ICollection<Order> Orders { get; set; }
     }
 
     public class Role
@@ -105,7 +107,7 @@ namespace AppEnteringTrackingAndOrders
         [Key]
         public int RoleId { get; set; }
         public string RoleName { get; set; }
-        public ICollection<User> Users { get; set; }
+        public ICollection<User> Users { get; set; } // Все пользователи с этой ролью
     }
 
     // Основной контекст базы данных
@@ -166,11 +168,10 @@ namespace AppEnteringTrackingAndOrders
                 .WithMany(u => u.Orders)
                 .HasForeignKey(o => o.UserId);
 
-            // Настройка связи многие-ко-многим для User-Role
             modelBuilder.Entity<User>()
-                .HasMany(u => u.Roles)
-                .WithMany(r => r.Users)
-                .UsingEntity(j => j.ToTable("UserRoles"));
+                .HasOne(u => u.Role)         // У пользователя одна роль
+                .WithMany(r => r.Users)      // У роли много пользователей
+                .HasForeignKey(u => u.RoleId); // Внешний ключ
         }
 
         public async Task SendOrderAsync(int orderId)
@@ -407,7 +408,7 @@ namespace AppEnteringTrackingAndOrders
             }
         }
 
-        // Инициализация руководителя
+        // Инициализация руководителя (теперь с одной ролью)
         public static void InitializeAdminUser()
         {
             using (var context = new RestaurantContext())
@@ -415,14 +416,15 @@ namespace AppEnteringTrackingAndOrders
                 if (!context.Users.Any())
                 {
                     Env.Load();
-                    string name = Env.GetString("NAME_ADMIN_USER"), password = Env.GetString("PASSWORD_ADMIN_USER");
+                    string name = Env.GetString("NAME_ADMIN_USER"),
+                           password = Env.GetString("PASSWORD_ADMIN_USER");
                     if (name != null && password != null)
                     {
                         var user = new User
                         {
                             Username = name,
                             PasswordHash = PasswordHasher.HashPassword(password),
-                            Roles = context.Roles.Where(r => r.RoleId == 1).ToList()
+                            RoleId = 1  // ID роли "Руководитель"
                         };
                         context.Users.Add(user);
                         context.SaveChanges();
@@ -431,13 +433,63 @@ namespace AppEnteringTrackingAndOrders
             }
         }
 
-        // Логика аутентификации 
+        // Добавление пользователя с одной ролью
+        public static void AddUserWithRoles(string username, string password, string rolename)
+        {
+            using (var context = new RestaurantContext())
+            {
+                var role = context.Roles.FirstOrDefault(r => r.RoleName == rolename);
+                if (role == null) return;
+
+                var user = new User
+                {
+                    Username = username,
+                    PasswordHash = PasswordHasher.HashPassword(password),
+                    RoleId = role.RoleId  // Устанавливаем ID роли
+                };
+                context.Users.Add(user);
+                context.SaveChanges();
+            }
+        }
+
+        // Обновление пользователя (включая смену роли)
+        public static void EditUserWithRoles(string username, string password, string rolename)
+        {
+            using (var context = new RestaurantContext())
+            {
+                var user = context.Users.FirstOrDefault(u => u.Username == username);
+                var role = context.Roles.FirstOrDefault(r => r.RoleName == rolename);
+
+                if (user != null && role != null)
+                {
+                    user.PasswordHash = PasswordHasher.HashPassword(password);
+                    user.RoleId = role.RoleId;  // Меняем роль
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        // Удаление пользователя (теперь не нужно Include для Roles)
+        public static void DeleteUserWithRoles(string username)
+        {
+            using (var context = new RestaurantContext())
+            {
+                var user = context.Users.FirstOrDefault(u => u.Username == username);
+                if (user != null)
+                {
+                    context.Users.Remove(user);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        // Аутентификация пользователя (теперь с одной ролью)
         public static User AuthenticateUser(string username, string password)
         {
             using (var context = new RestaurantContext())
             {
                 var user = context.Users
-                    .Include(u => u.Roles)
+                    .Include(u => u.Role)  // Включаем роль (теперь это одна роль)
                     .FirstOrDefault(u => u.Username == username);
 
                 if (user != null && PasswordHasher.VerifyPassword(password, user.PasswordHash))
@@ -448,84 +500,25 @@ namespace AppEnteringTrackingAndOrders
             }
         }
 
-        // Логика назначения ролей
-        public static void AddUserWithRoles(string username, string password, string rolename)
-        {
-            using (var context = new RestaurantContext())
-            {
-                var user = new User
-                {
-                    Username = username,
-                    PasswordHash = PasswordHasher.HashPassword(password),
-                    Roles = context.Roles.Where(r => r.RoleName == rolename).ToList()
-                };
-                context.Users.Add(user);
-                context.SaveChanges();
-            }
-        }
-
-        public static void EditUserWithRoles(string username, string password, string rolename)
-        {
-            using (var context = new RestaurantContext())
-            {
-                var user = context.Users
-                    .Include(u => u.Roles)
-                    .FirstOrDefault(u => u.Username == username);
-
-                if (user != null)
-                {
-                    user.PasswordHash = PasswordHasher.HashPassword(password);
-                    user.Roles = context.Roles.Where(r => r.RoleName == rolename).ToList();
-
-                    context.Users.Update(user);
-                    context.SaveChanges();
-                }
-            }
-        }
-
-        public static void DeleteUserWithRoles(string username)
-        {
-            using (var context = new RestaurantContext())
-            {
-                var user = context.Users
-                    .Include(u => u.Roles)
-                    .FirstOrDefault(u => u.Username == username);
-
-                if (user != null)
-                {
-                    context.Users.Remove(user);
-                    context.SaveChanges();
-                }
-            }
-        }
-
+        // Проверка существования пользователя
         public static bool FindUser(string username)
         {
             using (var context = new RestaurantContext())
             {
-                var user = context.Users
-                    .Include(u => u.Roles)
-                    .FirstOrDefault(u => u.Username == username);
-
-                if (user != null)
-                {
-                    return true;
-                }
-                return false;
+                return context.Users.Any(u => u.Username == username);
             }
         }
 
+        // Получение ID роли пользователя (теперь просто через RoleId)
         public static int? GetRoleIdForUser(User user)
         {
             using (var context = new RestaurantContext())
             {
-                var roleId = context.Users
-                    .Include(u => u.Roles)
-                    .Where(u => u.UserId == user.UserId)
-                    .SelectMany(u => u.Roles.Select(r => r.RoleId))
-                    .FirstOrDefault();
+                var dbUser = context.Users
+                    .Include(u => u.Role)
+                    .FirstOrDefault(u => u.UserId == user.UserId);
 
-                return roleId == 0 ? null : roleId;
+                return dbUser?.RoleId;  // Возвращает RoleId или null
             }
         }
     }

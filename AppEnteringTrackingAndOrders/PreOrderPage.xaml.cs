@@ -35,6 +35,7 @@ namespace AppEnteringTrackingAndOrders
             using (var context = new RestaurantContext())
             {
                 var existingTables = context.Orders
+                    .Where(i => i.IsClosed == false)
                     .Select(o => o.TableID)
                     .Distinct()
                     .ToList();
@@ -281,7 +282,7 @@ namespace AppEnteringTrackingAndOrders
         {
             using (var context = new RestaurantContext())
             {
-                var check = context.Orders.Where(i => i.TableID == Convert.ToInt32(NumericTableID.Value)).FirstOrDefault();
+                var check = context.Orders.Where(i => i.TableID == Convert.ToInt32(NumericTableID.Value) && i.IsClosed == false).FirstOrDefault();
                 if (check == null)
                 {
                     List<Order> orders = context.Orders.AsNoTracking().ToList();
