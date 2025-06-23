@@ -66,15 +66,22 @@ namespace AppEnteringTrackingAndOrders
 
         private void AddButtonsToWrapPanel(object sender, RoutedEventArgs e)
         {
-            OrdersPage orderpage = new OrdersPage(_user);
-            PreOrderPage preOrderPage = new PreOrderPage(orderpage);
-            orderpage.Unloaded += (s, args) => RefreshMenuDataDefault();
-            if (_theme == false)
-                orderpage.Theme = true;
-            else
-                orderpage.Theme = false;
-            NavigationService.Navigate(preOrderPage);
-
+            using (var context = new RestaurantContext())
+            {
+                OrdersPage orderpage;
+                List<Order> orders = context.Orders.AsNoTracking().ToList();
+                if (orders.LastOrDefault() != null)
+                    orderpage = new OrdersPage(_user, orders.LastOrDefault().Id + 1);
+                else
+                    orderpage = new OrdersPage(_user, 1);
+                PreOrderPage preOrderPage = new PreOrderPage(orderpage);
+                orderpage.Unloaded += (s, args) => RefreshMenuDataDefault();
+                if (_theme == false)
+                    orderpage.Theme = true;
+                else
+                    orderpage.Theme = false;
+                NavigationService.Navigate(preOrderPage);
+            }
         }
 
         private void EditButtonsToWrapPanel(object sender, RoutedEventArgs e)
@@ -137,7 +144,7 @@ namespace AppEnteringTrackingAndOrders
 
                 foreach (var order in orders)
                 {
-                    OrdersPage orderpage = new OrdersPage(_user);
+                    OrdersPage orderpage = new OrdersPage(_user, order.Id);
                     orderpage.Unloaded += (s, args) => RefreshMenuDataDefault();
                     orderpage.ID = order.Id;
 

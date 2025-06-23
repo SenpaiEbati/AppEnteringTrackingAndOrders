@@ -57,10 +57,11 @@ namespace AppEnteringTrackingAndOrders
         private bool _IsClosed = false;
 
 
-        public OrdersPage(User user)
+        public OrdersPage(User user, int ID)
         {
             InitializeComponent();
             _user = user;
+            _ID = ID;
             _IDYourUserRoles = GetRoleIdForUser(user);
             if (_IDYourUserRoles != null)
             {
@@ -86,6 +87,9 @@ namespace AppEnteringTrackingAndOrders
                 context.SaveChanges();
 
             }
+
+            RefreshOrderPanelInfo();
+            RefreshGroupMenuData();
         }
 
         private void YourPage_Loaded(object sender, RoutedEventArgs e)
@@ -103,10 +107,6 @@ namespace AppEnteringTrackingAndOrders
                 ImageDeleteOrder.Source = new BitmapImage(new Uri("/Image/deleteorder.png", UriKind.Relative));
             }
 
-            RefreshGroupMenuData();
-
-            RefreshOrderPanelInfo();
-
             using (var context = new RestaurantContext())
             {
                 var order = context.Orders.FirstOrDefault(i => i.Id == _ID);
@@ -116,6 +116,8 @@ namespace AppEnteringTrackingAndOrders
                     _old_order = order;
                     _TableID = order.TableID;
                     _IsPaid = order.IsPaid;
+                    _IsClosed = order.IsClosed;
+                    _Guest = context.OrderItems.Where(i => i.OrderId == _ID && i.Guest > 0 && order.IsClosed == false).Count();
                     NameOrderTopText.Text = $"Изменение заказа №{_ID}";
                 }
                 else
@@ -196,7 +198,8 @@ namespace AppEnteringTrackingAndOrders
                             {
                                 MenuItemId = menuitem.Id,
                                 Quantity = 1,
-                                OrderId = _old_order.Id
+                                OrderId = _old_order.Id,
+                                Guest = 0
                             };
                             if (_now_guest_id > 0) 
                             {
@@ -404,43 +407,56 @@ namespace AppEnteringTrackingAndOrders
             {
                 using (var context = new RestaurantContext())
                 {
-                    var item = context.OrderItems.Where(i => i.Id == _now_order_item.Id).FirstOrDefault();
+                    var item = context.OrderItems.FirstOrDefault(i => i.Id == _now_order_item.Id);
                     if (item != null)
                     {
-                        var result = MessageBox.Show("Удалить безвозратно?", "Подтверждение",
-                                MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-                        if (result == MessageBoxResult.Yes)
-                        {
-                            context.OrderItems.Remove(item);
-                            context.SaveChanges();
-                            RefreshOrderPanelInfo();
-                        }
+                        // Удаляем из базы данных
+                        context.OrderItems.Remove(item);
+                        context.SaveChanges();
+                        RefreshOrderPanelInfo();
                     }
                     else
                     {
-                        _list_order.Items.Remove(_now_order_item);
-
-                        int dishIndex = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
-                        if (dishIndex > 0 && dishIndex != -1) // Проверяем, что это не нулевой элемент
+                        // Удаляем из временного списка
+                        int itemIndex = _list_order.Items.IndexOf(_now_order_item);
+                        if (itemIndex != -1)
                         {
-                            // Определяем диапазон для удаления (блюдо + модификаторы)
-                            int startIndex = dishIndex;
-                            int endIndex = dishIndex + _now_order_item.Modifiers.Count;
-
-                            // Удаляем в обратном порядке, чтобы индексы не сдвигались
-                            for (int i = endIndex; i >= startIndex; i--)
+                            // Находим индекс элемента в UI
+                            int uiIndex = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
+                            if (uiIndex != -1)
                             {
-                                if (i < OrderPanelInfoWrapPanel.Children.Count)
+                                // Удаляем сам элемент
+                                OrderPanelInfoWrapPanel.Children.RemoveAt(uiIndex);
+
+                                // Удаляем все модификаторы этого элемента
+                                // Идем назад, так как модификаторы следуют сразу после элемента
+                                for (int i = uiIndex; i < OrderPanelInfoWrapPanel.Children.Count;)
                                 {
-                                    OrderPanelInfoWrapPanel.Children.RemoveAt(i);
-                                    if (_Guest != 0 && startIndex == i)
+                                    var child = OrderPanelInfoWrapPanel.Children[i];
+                                    if (child is System.Windows.Controls.Button button && button.Tag is ValueTuple<MenuItemModifier, OrderItemModifier>)
                                     {
-                                        OrderPanelInfoWrapPanel.Children.RemoveAt(i - 1);
+                                        OrderPanelInfoWrapPanel.Children.RemoveAt(i);
+                                    }
+                                    else
+                                    {
+                                        break; // Прерываем, если следующий элемент не модификатор
+                                    }
+                                }
+
+                                // Проверяем, не нужно ли удалить заголовок гостя
+                                if (itemIndex < _list_order.Items.Count && _list_order.Items[itemIndex].Guest > 0)
+                                {
+                                    // Ищем заголовок гостя перед удаленным элементом
+                                    if (uiIndex > 0 && OrderPanelInfoWrapPanel.Children[uiIndex - 1] is System.Windows.Controls.Button guestButton &&
+                                        guestButton.Tag is int guestId && guestId == _list_order.Items[itemIndex].Guest)
+                                    {
+                                        OrderPanelInfoWrapPanel.Children.RemoveAt(uiIndex - 1);
                                         _Guest--;
                                     }
-
                                 }
+
+                                // Удаляем из временного списка
+                                _list_order.Items.RemoveAt(itemIndex);
                             }
                         }
                     }
@@ -451,32 +467,55 @@ namespace AppEnteringTrackingAndOrders
             {
                 using (var context = new RestaurantContext())
                 {
-                    var itemMod = context.OrderItemModifiers.Where(i => i.Id == _now_order_item_modifier.Id).FirstOrDefault();
+                    var itemMod = context.OrderItemModifiers.FirstOrDefault(i => i.Id == _now_order_item_modifier.Id);
                     if (itemMod != null)
                     {
+                        // Удаляем из базы данных
                         context.OrderItemModifiers.Remove(itemMod);
                         context.SaveChanges();
                         RefreshOrderPanelInfo();
                     }
                     else
                     {
-                        int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_modifier_UI_item);
-                        if (a != -1) { 
-                            for (int i = 0; i < _list_order.Items.Count; i++)
+                        // Удаляем из временного списка
+                        int uiIndex = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_modifier_UI_item);
+                        if (uiIndex != -1)
+                        {
+                            // Находим родительский элемент (блюдо) для этого модификатора
+                            int parentIndex = -1;
+                            for (int i = uiIndex - 1; i >= 0; i--)
                             {
-                                int count = _list_order.Items[i].Modifiers.Count;
-                                for (int j = 0; j < count; j++)
-                                    if (j == a - 2)
-                                        _list_order.Items[i].Modifiers.RemoveAt(j);
+                                var child = OrderPanelInfoWrapPanel.Children[i];
+                                if (child is System.Windows.Controls.Button button && button.Tag is ValueTuple<MenuItem, OrderItem>)
+                                {
+                                    parentIndex = i;
+                                    break;
+                                }
                             }
 
-                            OrderPanelInfoWrapPanel.Children.RemoveAt(a);
+                            if (parentIndex != -1)
+                            {
+                                // Находим индекс в списке заказов
+                                var parentTuple = (ValueTuple<MenuItem, OrderItem>)((System.Windows.Controls.Button)OrderPanelInfoWrapPanel.Children[parentIndex]).Tag;
+                                int orderItemIndex = _list_order.Items.IndexOf(parentTuple.Item2);
+
+                                if (orderItemIndex != -1)
+                                {
+                                    // Находим и удаляем модификатор из списка
+                                    var modifierToRemove = (ValueTuple<MenuItemModifier, OrderItemModifier>)((System.Windows.Controls.Button)_now_order_modifier_UI_item).Tag;
+                                    _list_order.Items[orderItemIndex].Modifiers.Remove(modifierToRemove.Item2);
+
+                                    // Удаляем из UI
+                                    OrderPanelInfoWrapPanel.Children.RemoveAt(uiIndex);
+                                }
+                            }
                         }
                     }
                 }
                 RefreshOrderSum();
             }
         }
+
         private void BackListTableWaitersButton_Click(object sender, RoutedEventArgs e)
         {
             // Очищаем список несохраненных изменений
@@ -496,9 +535,16 @@ namespace AppEnteringTrackingAndOrders
                     var item = context.OrderItems.Where(i => i.Id == _now_order_item.Id).FirstOrDefault();
                     if (item != null && item.Guest == 0)
                     {
-                        item.Guest = _Guest++;
+                        item.Guest = ++_Guest; // Увеличиваем счетчик гостей перед использованием
                         context.OrderItems.Update(item);
                         context.SaveChanges();
+
+                        // Получаем индекс текущего элемента в UI
+                        int currentIndex = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
+
+                        // Перемещаем элемент и его модификаторы в конец
+                        MoveItemToBottom(currentIndex, item.Guest);
+
                         RefreshOrderPanelInfo();
                     }
                     else
@@ -509,11 +555,13 @@ namespace AppEnteringTrackingAndOrders
                             int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
                             if (i != -1)
                             {
-                                _Guest++;
-                                _list_order.Items[i].Guest = _Guest;
+                                _now_order_item.Guest = ++_Guest; // Увеличиваем счетчик гостей перед использованием
                             }
                             if (a != -1)
-                                UI_Guest(_Guest, a, RefreshGuestSum(_Guest));
+                            {
+                                // Перемещаем элемент и его модификаторы в конец
+                                MoveItemToBottom(a, _now_order_item.Guest);
+                            }
                         }
                     }
                 }
@@ -527,39 +575,85 @@ namespace AppEnteringTrackingAndOrders
                     {
                         var item = context.OrderItems.Where(i => i.Id == itemMod.OrderItemId).FirstOrDefault();
                         if (item != null && item.Guest == 0)
-                        { 
-                            _Guest++;
-                            item.Guest = _Guest;
+                        {
+                            item.Guest = ++_Guest; // Увеличиваем счетчик гостей перед использованием
                             context.OrderItems.Update(item);
                             context.SaveChanges();
-                            RefreshOrderPanelInfo();
-                        }
-                    }
-                    else
-                    {
-                        int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_modifier_UI_item);
-                        if (a != -1)
-                        {
-                            int indexMod = -1;
-                            for (int i = 0; i < _list_order.Items.Count; i++)
+
+                            // Находим родительский элемент (блюдо) для этого модификатора
+                            int parentIndex = FindParentItemIndex(itemMod.OrderItemId);
+                            if (parentIndex != -1)
                             {
-                                int count = _list_order.Items[i].Modifiers.Count;
-                                for (int j = 0; j < count; j++)
-                                    if (j == a - 2 && _list_order.Items[i].Guest == 0)
-                                    {
-                                        indexMod = j;
-                                        _Guest++;
-                                        _list_order.Items[i].Guest = _Guest;
-                                    }
-                                        
+                                // Перемещаем элемент и его модификаторы в конец
+                                MoveItemToBottom(parentIndex, item.Guest);
                             }
-                            if (indexMod != -1)
-                                UI_Guest(_Guest, a - indexMod - 1, RefreshGuestSum(_Guest));
+
+                            RefreshOrderPanelInfo();
                         }
                     }
                 }
             }
+            TableGuestTopText.Text = $"Стол:{_TableID} Гостей: {_Guest}";
+        }
 
+        // Метод для перемещения элемента и его модификаторов в конец списка
+        private void MoveItemToBottom(int itemIndex, int guestId)
+        {
+            if (itemIndex == -1) return;
+
+            // Находим все элементы, которые нужно переместить (блюдо + модификаторы)
+            var itemsToMove = new List<UIElement>();
+            int modifierCount = 0;
+
+            // Начинаем с текущего элемента (блюда)
+            itemsToMove.Add(OrderPanelInfoWrapPanel.Children[itemIndex]);
+
+            // Проверяем следующие элементы на предмет модификаторов
+            for (int i = itemIndex + 1; i < OrderPanelInfoWrapPanel.Children.Count; i++)
+            {
+                var child = OrderPanelInfoWrapPanel.Children[i];
+                if (child is System.Windows.Controls.Button button && button.Tag is ValueTuple<MenuItemModifier, OrderItemModifier>)
+                {
+                    itemsToMove.Add(child);
+                    modifierCount++;
+                }
+                else
+                {
+                    break; // Прерываем, если следующий элемент не модификатор
+                }
+            }
+
+            // Удаляем все элементы, которые нужно переместить
+            foreach (var item in itemsToMove)
+            {
+                OrderPanelInfoWrapPanel.Children.Remove(item);
+            }
+
+            // Добавляем заголовок гостя в конец
+            UI_Guest(guestId, OrderPanelInfoWrapPanel.Children.Count, RefreshGuestSum(guestId));
+
+            // Добавляем перемещаемые элементы после заголовка гостя
+            foreach (var item in itemsToMove)
+            {
+                OrderPanelInfoWrapPanel.Children.Add(item);
+            }
+
+            RefreshOrderSum();
+        }
+
+        // Метод для поиска индекса родительского элемента (блюда) по ID
+        private int FindParentItemIndex(int orderItemId)
+        {
+            for (int i = 0; i < OrderPanelInfoWrapPanel.Children.Count; i++)
+            {
+                var child = OrderPanelInfoWrapPanel.Children[i];
+                if (child is System.Windows.Controls.Button button && button.Tag is ValueTuple<MenuItem, OrderItem> tuple &&
+                    tuple.Item2.Id == orderItemId)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         private void GroupMenuButtonsWrapPanelAddPositionButton_Click(object sender, RoutedEventArgs e)
@@ -692,48 +786,18 @@ namespace AppEnteringTrackingAndOrders
 
             using (var context = new RestaurantContext())
             {
-                // Получаем все элементы заказа
-                List<OrderItem> allOrderItems = context.OrderItems
-                    .Where(i => i.OrderId == _ID)
-                    .Include(i => i.Modifiers)
-                    .ToList();
-
-                // Разделяем элементы на две группы: без гостей и с гостями
-                var itemsWithoutGuest = allOrderItems.Where(item => item.Guest == 0).ToList();
-                var itemsWithGuest = allOrderItems.Where(item => item.Guest != 0)
-                                                 .GroupBy(item => item.Guest)
-                                                 .OrderBy(group => group.Key)
-                                                 .ToList();
-
-                // Сначала выводим элементы без гостей
-                foreach (OrderItem item in itemsWithoutGuest)
+                var order = context.Orders.Where(i => i.Id == _ID && i.IsClosed == false).FirstOrDefault();
+                if (order != null)
                 {
-                    var menuItem = context.MenuItems.FirstOrDefault(i => i.Id == item.MenuItemId);
-                    if (menuItem != null)
-                    {
-                        UI_OrderItems(menuItem, item);
+                    // Получаем все элементы заказа
+                    List<OrderItem> allOrderItems = context.OrderItems
+                        .Where(i => i.OrderId == _ID)
+                        .Include(i => i.Modifiers)
+                        .ToList();
 
-                        foreach (OrderItemModifier itemMod in item.Modifiers)
-                        {
-                            var menuItemMod = context.MenuItemModifiers.FirstOrDefault(i => i.Id == itemMod.MenuItemModifierId);
-                            if (menuItemMod != null)
-                                UI_OrderItem_Modifiers(menuItemMod, itemMod);
-                        }
-                    }
-                }
-
-                // Затем выводим элементы с гостями, сгруппированные по номеру гостя
-                foreach (var guestGroup in itemsWithGuest)
-                {
-                    int guestId = guestGroup.Key;
-                    decimal guestSum = RefreshGuestSum(guestId);
-
-                    // Добавляем заголовок гостя
-                    int currentIndex = OrderPanelInfoWrapPanel.Children.Count;
-                    UI_Guest(guestId, currentIndex, guestSum);
-
-                    // Добавляем все элементы этого гостя
-                    foreach (OrderItem item in guestGroup)
+                    // Сначала выводим элементы гостя 0 (общие позиции)
+                    var commonItems = allOrderItems.Where(item => item.Guest == 0).ToList();
+                    foreach (OrderItem item in commonItems)
                     {
                         var menuItem = context.MenuItems.FirstOrDefault(i => i.Id == item.MenuItemId);
                         if (menuItem != null)
@@ -745,6 +809,39 @@ namespace AppEnteringTrackingAndOrders
                                 var menuItemMod = context.MenuItemModifiers.FirstOrDefault(i => i.Id == itemMod.MenuItemModifierId);
                                 if (menuItemMod != null)
                                     UI_OrderItem_Modifiers(menuItemMod, itemMod);
+                            }
+                        }
+                    }
+
+                    // Затем выводим элементы с гостями, сгруппированные по номеру гостя
+                    var itemsWithGuest = allOrderItems.Where(item => item.Guest != 0)
+                                                     .GroupBy(item => item.Guest)
+                                                     .OrderBy(group => group.Key)
+                                                     .ToList();
+
+                    foreach (var guestGroup in itemsWithGuest)
+                    {
+                        int guestId = guestGroup.Key;
+                        decimal guestSum = RefreshGuestSum(guestId);
+
+                        // Добавляем заголовок гостя
+                        int currentIndex = OrderPanelInfoWrapPanel.Children.Count;
+                        UI_Guest(guestId, currentIndex, guestSum);
+
+                        // Добавляем все элементы этого гостя
+                        foreach (OrderItem item in guestGroup)
+                        {
+                            var menuItem = context.MenuItems.FirstOrDefault(i => i.Id == item.MenuItemId);
+                            if (menuItem != null)
+                            {
+                                UI_OrderItems(menuItem, item);
+
+                                foreach (OrderItemModifier itemMod in item.Modifiers)
+                                {
+                                    var menuItemMod = context.MenuItemModifiers.FirstOrDefault(i => i.Id == itemMod.MenuItemModifierId);
+                                    if (menuItemMod != null)
+                                        UI_OrderItem_Modifiers(menuItemMod, itemMod);
+                                }
                             }
                         }
                     }
@@ -815,15 +912,25 @@ namespace AppEnteringTrackingAndOrders
             button.GotFocus += ItemOrder_GotFocus;
             button.LostFocus += ItemOrder_LostFocus;
 
-            int a = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
-            int с = OrderPanelInfoWrapPanel.Children.IndexOf(_now_order_UI_item);
-            if (a != -1)
-                OrderPanelInfoWrapPanel.Children.Insert(a + 1, button);
-            else if (_now_guest_id > 0 && с != -1)
-                OrderPanelInfoWrapPanel.Children.Insert(с + 1, button);
-            else
-                OrderPanelInfoWrapPanel.Children.Add(button);
+            // Вставляем элемент сразу после OrderPanelInfoWrapPanelBorderSum (индекс 0)
+            int insertIndex = 1; // После суммы (индекс 0)
 
+            // Если это элемент гостя, ищем место для вставки после заголовка гостя
+            if (item.Guest > 0)
+            {
+                // Находим индекс заголовка гостя
+                for (int i = 0; i < OrderPanelInfoWrapPanel.Children.Count; i++)
+                {
+                    if (OrderPanelInfoWrapPanel.Children[i] is System.Windows.Controls.Button btn &&
+                        btn.Tag is int guestId && guestId == item.Guest)
+                    {
+                        insertIndex = i + 1;
+                        break;
+                    }
+                }
+            }
+
+            OrderPanelInfoWrapPanel.Children.Insert(insertIndex, button);
             RefreshOrderSum();
         }
 
@@ -1027,7 +1134,7 @@ namespace AppEnteringTrackingAndOrders
                     }
                 }
             }
-            //ButtonOrderSum.Text = _sumorder.ToString();
+            RefreshGeneralSum();
             ButtonPaymentOrderSum.Text = _sumorder.ToString();
         }
 
@@ -1073,6 +1180,12 @@ namespace AppEnteringTrackingAndOrders
             }
 
             return sumguest;
+        }
+
+        private void RefreshGeneralSum()
+        {
+            var sum = RefreshGuestSum(0);
+            ButtonOrderSum.Text = sum.ToString();
         }
 
         private void SaveOrder_Click(object sender, RoutedEventArgs e)

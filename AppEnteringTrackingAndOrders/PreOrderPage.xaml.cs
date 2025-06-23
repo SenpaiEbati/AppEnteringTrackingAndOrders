@@ -285,11 +285,6 @@ namespace AppEnteringTrackingAndOrders
                 var check = context.Orders.Where(i => i.TableID == Convert.ToInt32(NumericTableID.Value) && i.IsClosed == false).FirstOrDefault();
                 if (check == null)
                 {
-                    List<Order> orders = context.Orders.AsNoTracking().ToList();
-                    if (orders.LastOrDefault() != null)
-                        _ordersPage.ID = orders.LastOrDefault().Id + 1;
-                    else
-                        _ordersPage.ID = 1;
                     _ordersPage.TableID = Convert.ToInt32(NumericTableID.Value);
                     NavigationService.Navigate(_ordersPage);
                 }

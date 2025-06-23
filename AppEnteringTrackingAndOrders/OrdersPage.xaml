@@ -51,7 +51,7 @@
                             <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="NameOrderTopText" Text="Создание заказа №10" FontSize="24" Margin="10,5,10,5"/>
                         </Grid>
                         <Grid Grid.Column="0" Grid.Row="1">
-                            <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="TableGuestTopText" Text="Стол №1   Гостей: 2" FontSize="24" Margin="10,5,10,5"/>
+                            <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="TableGuestTopText" Text="Стол №1   Гостей: 0" FontSize="24" Margin="10,5,10,5"/>
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="0">
                             <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="TimeTopText" Text="12:30" FontSize="24" Margin="10,5,10,5"/>
@@ -99,7 +99,7 @@
 
                                     <!-- Правая группа (сумма + руб.) -->
                                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
-                                        <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="ButtonOrderSum2" Text="256,00" FontSize="24"/>
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" x:Name="ButtonOrderSum" Text="0,00" FontSize="24"/>
                                         <TextBlock Style="{DynamicResource TextBlockStyle}" Text=" руб." FontSize="24" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </Grid>
