@@ -31,7 +31,7 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
-                    <Border x:Name="BorderTextBoxNameItem" Height="72" Width="598" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Border x:Name="BorderTextBoxNameItem" Height="72" Width="598" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
                         </Border.Effect>
@@ -49,7 +49,7 @@
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="10" Color="#FFD6C6B3" ShadowDepth="0"/>
                         </Border.Effect>
-                        <materialDesign:DecimalUpDown x:Name="DecimalPriceItem" GotFocus="TextBoxPriceItem_GotFocus"  Value="1.00" ValueStep="0.01" materialDesign:HintAssist.Hint="Введите цену" FontSize="24" Minimum="0" Style="{StaticResource MaterialDesignFloatingHintDecimalUpDown}" Margin="38,10,38,10" Maximum="1000000000"/>
+                        <materialDesign:DecimalUpDown x:Name="DecimalPriceItem" GotFocus="TextBoxPriceItem_GotFocus" IsTabStop="True" Focusable="True" ValueStep="0.01" materialDesign:HintAssist.Hint="Введите цену" FontSize="24" Minimum="0" Style="{StaticResource MaterialDesignFloatingHintDecimalUpDown}" Margin="38,10,38,10" Maximum="1000000000"/>
                     </Border>
                     <Border x:Name="BorderComboBoxItem" Height="72" Width="598" Background="#FFEAEAEA" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,249,0,0">
                         <Border.Effect>

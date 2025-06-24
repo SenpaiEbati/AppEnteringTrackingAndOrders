@@ -41,6 +41,59 @@ namespace AppEnteringTrackingAndOrders
 
         // Клавиатура с цифрами
         // ---------------------------------------
+        private void AddDecimalSeparator()
+        {
+            if (!DecimalPriceItem.IsKeyboardFocusWithin)
+                return;
+
+            string currentText = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture);
+
+            // Проверяем, есть ли уже разделитель
+            if (currentText.Contains('.') || currentText.Contains(','))
+                return;
+
+            // Добавляем точку (для InvariantCulture)
+            string newText = currentText + ".";
+
+            if (decimal.TryParse(newText, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal newValue))
+            {
+                DecimalPriceItem.Value = newValue;
+            }
+
+            DecimalPriceItem.Focus();
+        }
+
+        private void AddDigitToDecimalPrice(string digit)
+        {
+            if (!DecimalPriceItem.IsKeyboardFocusWithin)
+                return;
+
+            string currentText = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture);
+
+            // Если введена точка/запятая, но разделитель уже есть - игнорируем
+            if (digit == "." || digit == ",")
+            {
+                AddDecimalSeparator();
+                return;
+            }
+
+            // Добавляем цифру
+            string newText = currentText + digit;
+
+            // Удаляем лишние нули в начале числа
+            if (newText.StartsWith("0") && !newText.Contains(".") && newText.Length > 1)
+            {
+                newText = newText.TrimStart('0');
+            }
+
+            if (decimal.TryParse(newText, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal newValue))
+            {
+                DecimalPriceItem.Value = newValue;
+            }
+
+            DecimalPriceItem.Focus();
+        }
+
         private void TopLeftButtonOne_Click(object sender, RoutedEventArgs e)
         {
             if (TextBoxNameItem.IsKeyboardFocused)
@@ -48,13 +101,9 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "1";
                 TextBoxNameItem.Focus();
             }
-            else if (DecimalPriceItem.IsFocused)
+            else if (DecimalPriceItem.IsKeyboardFocusWithin)
             {
-                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "1";
-                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
-                    DecimalPriceItem.Value = result;
-                
-                DecimalPriceItem.Focus();
+                AddDigitToDecimalPrice("1");
             }
         }
 
@@ -65,12 +114,9 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "2";
                 TextBoxNameItem.Focus();
             }
-            else if (DecimalPriceItem.IsKeyboardFocused)
+            else if (DecimalPriceItem.IsKeyboardFocusWithin)
             {
-                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "2";
-                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
-                    DecimalPriceItem.Value = result;
-                DecimalPriceItem.Focus();
+                AddDigitToDecimalPrice("2");
             }
         }
 
@@ -81,12 +127,9 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "3";
                 TextBoxNameItem.Focus();
             }
-            else if (DecimalPriceItem.IsKeyboardFocused)
+            else if (DecimalPriceItem.IsKeyboardFocusWithin)
             {
-                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "3";
-                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
-                    DecimalPriceItem.Value = result;
-                DecimalPriceItem.Focus();
+                AddDigitToDecimalPrice("3");
             }
         }
 
@@ -97,12 +140,9 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "4";
                 TextBoxNameItem.Focus();
             }
-            else if (DecimalPriceItem.IsKeyboardFocused)
+            else if (DecimalPriceItem.IsKeyboardFocusWithin)
             {
-                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "4";
-                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
-                    DecimalPriceItem.Value = result;
-                DecimalPriceItem.Focus();
+                AddDigitToDecimalPrice("4");
             }
         }
 
@@ -113,12 +153,9 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "5";
                 TextBoxNameItem.Focus();
             }
-            else if (DecimalPriceItem.IsKeyboardFocused)
+            else if (DecimalPriceItem.IsKeyboardFocusWithin)
             {
-                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "5";
-                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
-                    DecimalPriceItem.Value = result;
-                DecimalPriceItem.Focus();
+                AddDigitToDecimalPrice("5");
             }
         }
 
@@ -129,12 +166,9 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "6";
                 TextBoxNameItem.Focus();
             }
-            else if (DecimalPriceItem.IsKeyboardFocused)
+            else if (DecimalPriceItem.IsKeyboardFocusWithin)
             {
-                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "6";
-                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
-                    DecimalPriceItem.Value = result;
-                DecimalPriceItem.Focus();
+                AddDigitToDecimalPrice("6");
             }
         }
 
@@ -145,12 +179,9 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "7";
                 TextBoxNameItem.Focus();
             }
-            else if (DecimalPriceItem.IsKeyboardFocused)
+            else if (DecimalPriceItem.IsKeyboardFocusWithin)
             {
-                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "7";
-                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
-                    DecimalPriceItem.Value = result;
-                DecimalPriceItem.Focus();
+                AddDigitToDecimalPrice("7");
             }
         }
 
@@ -161,12 +192,9 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "8";
                 TextBoxNameItem.Focus();
             }
-            else if (DecimalPriceItem.IsKeyboardFocused)
+            else if (DecimalPriceItem.IsKeyboardFocusWithin)
             {
-                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "8";
-                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
-                    DecimalPriceItem.Value = result;
-                DecimalPriceItem.Focus();
+                AddDigitToDecimalPrice("8");
             }
         }
 
@@ -177,12 +205,9 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "9";
                 TextBoxNameItem.Focus();
             }
-            else if (DecimalPriceItem.IsKeyboardFocused)
+            else if (DecimalPriceItem.IsKeyboardFocusWithin)
             {
-                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "9";
-                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
-                    DecimalPriceItem.Value = result;
-                DecimalPriceItem.Focus();
+                AddDigitToDecimalPrice("9");
             }
         }
 
@@ -194,17 +219,25 @@ namespace AppEnteringTrackingAndOrders
                     TextBoxNameItem.Text = TextBoxNameItem.Text.Substring(0, TextBoxNameItem.Text.Length - 1);
                 TextBoxNameItem.Focus();
             }
-            else if (DecimalPriceItem.IsKeyboardFocused)
+            else if (DecimalPriceItem.IsKeyboardFocusWithin)
             {
-                string currentValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture);
-                if (currentValue.Length > 0)
+                string currentText = DecimalPriceItem.Value.ToString("0.00", CultureInfo.InvariantCulture)
+                                      .Replace(".", ""); // Убираем точку
+
+                if (currentText.Length > 0)
                 {
-                    string newValue = currentValue.Substring(0, currentValue.Length - 1);
-                    if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
-                        DecimalPriceItem.Value = result;
-                    else
-                        DecimalPriceItem.Value = 0; // Если строка пустая, сбрасываем на 0
+                    string newText = currentText.Substring(0, currentText.Length - 1);
+                    if (string.IsNullOrEmpty(newText))
+                    {
+                        DecimalPriceItem.Value = 0m;
+                    }
+                    else if (decimal.TryParse(newText, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal newValue))
+                    {
+                        newValue /= 100; // Учитываем 2 знака после запятой
+                        DecimalPriceItem.Value = Math.Round(newValue, 2);
+                    }
                 }
+
                 DecimalPriceItem.Focus();
             }
         }
@@ -216,12 +249,9 @@ namespace AppEnteringTrackingAndOrders
                 TextBoxNameItem.Text += "0";
                 TextBoxNameItem.Focus();
             }
-            else if (DecimalPriceItem.IsKeyboardFocused)
+            else if (DecimalPriceItem.IsKeyboardFocusWithin)
             {
-                string newValue = DecimalPriceItem.Value.ToString(CultureInfo.InvariantCulture) + "0";
-                if (decimal.TryParse(newValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
-                    DecimalPriceItem.Value = result;
-                DecimalPriceItem.Focus();
+                AddDigitToDecimalPrice("0");
             }
         }
 
@@ -1104,7 +1134,7 @@ namespace AppEnteringTrackingAndOrders
                         var item = new MenuItemModifier()
                         {
                             Name = Convert.ToString(TextBoxNameItem.Text),
-                            AdditionalCost = Convert.ToDecimal(DecimalPriceItem.Value),
+                            AdditionalCost = decimal.Parse(Math.Round(DecimalPriceItem.Value, 2).ToString("0,00", CultureInfo.InvariantCulture)),
                             MenuItemId = _MenuItem.Id
                         };
                         context.MenuItemModifiers.Add(item);
